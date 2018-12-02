@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.136
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BasilTest", "BasilTest\BasilTest.csproj", "{C053EB9E-6A39-40BD-9904-5D7F3510A0CB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C053EB9E-6A39-40BD-9904-5D7F3510A0CB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C053EB9E-6A39-40BD-9904-5D7F3510A0CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C053EB9E-6A39-40BD-9904-5D7F3510A0CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C053EB9E-6A39-40BD-9904-5D7F3510A0CB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B6AE2C60-C2FD-4846-AE59-8F0EC182E392}
+	EndGlobalSection
+EndGlobal

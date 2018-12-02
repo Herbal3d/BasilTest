@@ -1,0 +1,6 @@
+Much of the web socket code was modeled after the examples at
+https://github.com/paulbatum/WebSocket-Samples which are made
+available by Microsoft under the Apache License, Version 2.0:
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
