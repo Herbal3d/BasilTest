@@ -3,10 +3,52 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp2.1</TargetFramework>
+    <StartupObject>org.herbal3d.BasilTest.BasilTest</StartupObject>
+    <Authors>Robert Adams</Authors>
+    <Company>obert Adams</Company>
+    <Description>Test server for Basil viewer</Description>
+    <Copyright>Copyright 2018 Robert Adams</Copyright>
+    <PackageLicenseUrl>http://mozilla.org/MPL/2.0/</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/Misterblue/BasilTest</PackageProjectUrl>
+    <RootNamespace>org.herbal3d.BasilTest</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Properties\BuildDate.txt" />
+    <None Remove="Properties\GitCommit.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\BuildDate.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\GitCommit.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="log4net" Version="2.0.8" />
     <PackageReference Include="RSG.Promise" Version="3.0.1" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Properties\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+    <Exec Command="git rev-parse HEAD &gt; &quot;$(ProjectDir)\Properties\GitCommit.txt&quot;&#xD;&#xA;echo %date% %time% &gt; &quot;$(ProjectDir)\Properties\BuildDate.txt&quot;&#xD;&#xA;" />
+  </Target>
 
 </Project>
