@@ -57,11 +57,11 @@ namespace org.herbal3d.BasilTest {
                 return;
             }
 
-            // 'ConvoarParams' initializes to default values.
-            // Over ride default values with command line parameters.
+            // 'Params' initializes to default values.
+            // Override default values with command line parameters.
             try {
-                // Note that trailing parameters will be put into "InputOAR" parameter
-                BasilTest.parms.MergeCommandLine(args, null, "InputOAR");
+                // Note that trailing parameters will be put into "Extras" parameter
+                BasilTest.parms.MergeCommandLine(args, null, "Extras");
             }
             catch (Exception e) {
                 BasilTest.log.ErrorFormat("ERROR: bad parameters: " + e.Message);
@@ -79,6 +79,8 @@ namespace org.herbal3d.BasilTest {
                             + " commit " + BasilTest.gitCommit
                             );
             }
+
+
 
         }
     }
