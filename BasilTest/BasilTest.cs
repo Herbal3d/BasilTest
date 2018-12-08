@@ -15,6 +15,8 @@ using System.Linq;
 using System.Text;
 using System.Reflection;
 
+using RSG;
+
 namespace org.herbal3d.BasilTest {
     public class BasilTest {
         // Globals for some things that just are global
@@ -78,6 +80,16 @@ namespace org.herbal3d.BasilTest {
                             + " built " + BasilTest.buildDate
                             + " commit " + BasilTest.gitCommit
                             );
+            }
+
+            using (var httpServer = new BHttpServer(BasilTest.parms.P<int>("ListenPort"))) {
+                httpServer.AcceptConnection()
+                    .Then(handle => {
+                        tasks.push(Task.Run(() => ProcessClient(handle)));
+                    })
+                    .Catch(e => {
+                    })
+                
             }
 
 
