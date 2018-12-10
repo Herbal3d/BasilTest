@@ -16,9 +16,9 @@ using System.Text;
 using RSG;
 
 namespace org.herbal3d.BasilTest {
-    public class BHttpServer : IDisposable {
+    public class BTransportWS : BTransport, IDisposable {
 
-        public BHttpServer(int listeningPort) {
+        public BTransportWS(int listeningPort) {
         }
 
         public IPromise<BHttpServer> AcceptConnection() {

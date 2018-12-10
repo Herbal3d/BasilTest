@@ -13,7 +13,9 @@
 using System;
 using System.Linq;
 using System.Text;
+using System.Collections.Generic;
 using System.Reflection;
+using System.Threading.Tasks;
 
 using RSG;
 
@@ -23,6 +25,9 @@ namespace org.herbal3d.BasilTest {
         static public Params parms;
         static public Logger log;
         static public Statistics stats;
+        // Global flag used to let everyone know when to stop processing
+        static public bool KeepRunning = false;
+
         static public string version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
         // A command is added to the pre-build events that generates BuildDate resource:
         //        echo %date% %time% > "$(ProjectDir)\Resources\BuildDate.txt"
@@ -30,6 +35,9 @@ namespace org.herbal3d.BasilTest {
         // A command is added to the pre-build events that generates last commit resource:
         //        git rev-parse HEAD > "$(ProjectDir)\Resources\GitCommit.txt"
         static public string gitCommit = Properties.Resources.GitCommit.Trim();
+
+        // The tasks that are being created for the client
+        List<Task> tasks = new List<Task>();
 
         private static readonly string _logHeader = "[BasilTest]";
 
@@ -82,18 +90,27 @@ namespace org.herbal3d.BasilTest {
                             );
             }
 
+            BasilTest.KeepRunning = true;
+
             using (var httpServer = new BHttpServer(BasilTest.parms.P<int>("ListenPort"))) {
-                httpServer.AcceptConnection()
-                    .Then(handle => {
-                        tasks.push(Task.Run(() => ProcessClient(handle)));
-                    })
-                    .Catch(e => {
-                    })
-                
-            }
-
-
-
+                while (BasilTest.KeepRunning) {
+                    httpServer.AcceptConnection()
+                        .Then(handle => {
+                            // Test that it is a WebSocket connection
+                            // Create a transport for the client logic
+                            using (var transport = new BTransportWS(handle)) {
+                                tasks.Add(Task.Run(() => {
+                                    using (var client = new BasilClient(transport)) {
+                                        var tester = new BasilTester(client);
+                                        tester.DoTests();
+                                    }
+                                }));
+                            }
+                        })
+                        .Catch(e => {
+                        });
+                };
+            };
         }
     }
 }

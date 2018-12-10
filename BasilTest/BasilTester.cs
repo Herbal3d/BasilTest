@@ -16,18 +16,16 @@ using System.Text;
 using RSG;
 
 namespace org.herbal3d.BasilTest {
-    public class BHttpServer : IDisposable {
+    public class BasilTester : IDisposable {
 
-        public BHttpServer(int listeningPort) {
-        }
-
-        public IPromise<BHttpServer> AcceptConnection() {
-            return new Promise<BHttpServer>((resolve, reject) => {
-            });
+        public BasilTester(BasilClient client) {
+            Client = client;
         }
 
         #region IDisposable Support
         private bool disposedValue = false; // To detect redundant calls
+
+        public BasilClient Client { get; }
 
         protected virtual void Dispose(bool disposing) {
             if (!disposedValue) {
@@ -56,5 +54,8 @@ namespace org.herbal3d.BasilTest {
             // GC.SuppressFinalize(this);
         }
         #endregion
+
+        public void DoTests() {
+        }
     }
 }
