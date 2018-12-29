@@ -100,10 +100,11 @@ namespace org.herbal3d.BasilTest {
                             // Create a transport for the client logic
                             using (var transport = new BTransportWS(handle)) {
                                 tasks.Add(Task.Run(() => {
-                                    using (var client = new BasilClient(transport)) {
-                                        var tester = new BasilTester(client);
-                                        tester.DoTests();
-                                    }
+                                    var client = new BasilClient(transport);
+                                    var spaceServer = new SpaceServer(transport);
+                                    var aliveServer = new AliveCheckClient(transport);
+                                    var tester = new BasilTester(client);
+                                    tester.DoTests();
                                 }));
                             }
                         })
