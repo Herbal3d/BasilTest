@@ -44,6 +44,15 @@ namespace org.herbal3d.BasilTest {
         public ParameterDefnBase[] ParameterDefinitions =
         {
             new ParameterDefn<string>("==========", "General Input and Output Parameters", null),
+            new ParameterDefn<bool>("IsSecure", "Boolean saying whether input connection must be secure",
+                false),
+            new ParameterDefn<string>("ConnectionURL", "URL to open to accept connections",
+                "ws://0.0.0.0:11440"),
+            new ParameterDefn<string>("SecureConnectionURL", "URL to open to accept connections",
+                "wss://0.0.0.0:11440"),
+            new ParameterDefn<string>("Certificate", "Certificate to use for wss connections",
+                null),
+
             new ParameterDefn<string>("InputOAR", "The input OAR file",
                 null, "i"),
             new ParameterDefn<string>("OutputDir", "The directory (relative to current dir) to store output files",

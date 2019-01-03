@@ -9,15 +9,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 using System;
 using System.Linq;
 using System.Text;
 using System.Collections.Generic;
+using System.Net;
 using System.Reflection;
+using System.Threading;
 using System.Threading.Tasks;
 
+using Fleck;
+
 using RSG;
+using System.Security.Cryptography.X509Certificates;
 
 namespace org.herbal3d.BasilTest {
     public class BasilTest {
@@ -36,12 +40,11 @@ namespace org.herbal3d.BasilTest {
         //        git rev-parse HEAD > "$(ProjectDir)\Resources\GitCommit.txt"
         static public string gitCommit = Properties.Resources.GitCommit.Trim();
 
-        // The tasks that are being created for the client
-        List<Task> tasks = new List<Task>();
-
         private static readonly string _logHeader = "[BasilTest]";
 
-       private string Invocation() {
+        private List<ClientConnection> _clients = new List<ClientConnection>();
+
+        private string Invocation() {
             StringBuilder buff = new StringBuilder();
             buff.AppendLine("Invocation: BasilTest <parameters>");
             buff.AppendLine("   Possible parameters are (negate bool parameters by prepending 'no'):");
@@ -92,26 +95,41 @@ namespace org.herbal3d.BasilTest {
 
             BasilTest.KeepRunning = true;
 
-            using (var httpServer = new BHttpServer(BasilTest.parms.P<int>("ListenPort"))) {
-                while (BasilTest.KeepRunning) {
-                    httpServer.AcceptConnection()
-                        .Then(handle => {
-                            // Test that it is a WebSocket connection
-                            // Create a transport for the client logic
-                            using (var transport = new BTransportWS(handle)) {
-                                tasks.Add(Task.Run(() => {
-                                    var client = new BasilClient(transport);
-                                    var spaceServer = new SpaceServer(transport);
-                                    var aliveServer = new AliveCheckClient(transport);
-                                    var tester = new BasilTester(client);
-                                    tester.DoTests();
-                                }));
-                            }
-                        })
-                        .Catch(e => {
-                        });
+            FleckLog.Level = LogLevel.Debug;
+            List<ClientConnection> allClientConnections = new List<ClientConnection>();
+            WebSocketServer server = null;
+            if (BasilTest.parms.P<bool>("IsSecure")) {
+                BasilTest.log.DebugFormat("{0} Creating secure server", _logHeader);
+                server = new WebSocketServer(BasilTest.parms.P<string>("SecureConnectionURL")) {
+                    Certificate = new X509Certificate2(BasilTest.parms.P<string>("Certificate")),
+                    EnabledSslProtocols = System.Security.Authentication.SslProtocols.Tls12
                 };
-            };
+            }
+            else {
+                BasilTest.log.DebugFormat("{0} Creating insecure server", _logHeader);
+                server = new WebSocketServer(BasilTest.parms.P<string>("ConnectionURL"));
+            }
+            using (server) {
+                server.Start(socket => {
+                    BasilTest.log.DebugFormat("{0} Received WebSocket connection", _logHeader);
+                    lock (_clients) {
+                        ClientConnection clientConnection = new ClientConnection(socket);
+                        clientConnection.OnDisconnect += client => {
+                            lock (_clients) {
+                                BasilTest.log.InfoFormat("{0} client disconnected", _logHeader);
+                                _clients.Remove(client);
+                            }
+                        };
+                        _clients.Add(clientConnection);
+                    };
+
+                });
+            }
+            while (KeepRunning) {
+                Thread.Sleep(250);
+            }
         }
     }
 }
+
+

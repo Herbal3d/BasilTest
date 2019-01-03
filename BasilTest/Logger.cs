@@ -16,33 +16,38 @@ using log4net;
 namespace org.herbal3d.BasilTest {
 
     public abstract class Logger {
-        public abstract void SetVerbose(bool val);
-        public abstract void Log(string msg, params Object[] args);
-        public abstract void DebugFormat(string msg, params Object[] args);
-        public abstract void ErrorFormat(string msg, params Object[] args);
+        public abstract void SetVerbose(bool pValue);
+        public abstract void Log(string pMsg, params Object[] pArgs);
+        public abstract void InfoFormat(string pMsg, params Object[] pArgs);
+        public abstract void DebugFormat(string pMsg, params Object[] pArgs);
+        public abstract void ErrorFormat(string pMsg, params Object[] pArgs);
     }
 
     public class LoggerConsole : Logger {
         private static readonly ILog _log = LogManager.GetLogger("BasilTest", "BasilTest");
 
         private bool _verbose = false;
-        public override void SetVerbose(bool value) {
-            _verbose = value;
+        public override void SetVerbose(bool pValue) {
+            _verbose = pValue;
         }
 
-        public override void Log(string msg, params Object[] args) {
-            System.Console.WriteLine(msg, args);
+        public override void Log(string pMsg, params Object[] pArgs) {
+            System.Console.WriteLine(pMsg, pArgs);
+        }
+
+        public override void InfoFormat(string pMsg, params Object[] pArgs) {
+            System.Console.WriteLine(pMsg, pArgs);
         }
 
         // Output the message if 'Verbose' is true
-        public override void DebugFormat(string msg, params Object[] args) {
+        public override void DebugFormat(string pMsg, params Object[] pArgs) {
             if (_verbose) {
-                System.Console.WriteLine(msg, args);
+                System.Console.WriteLine(pMsg, pArgs);
             }
         }
 
-        public override void ErrorFormat(string msg, params Object[] args) {
-            System.Console.WriteLine(msg, args);
+        public override void ErrorFormat(string pMsg, params Object[] pArgs) {
+            System.Console.WriteLine(pMsg, pArgs);
         }
     }
 
@@ -52,8 +57,8 @@ namespace org.herbal3d.BasilTest {
         private static readonly string _logHeader = "[Logger]";
 
         private bool _verbose = false;
-        public override void SetVerbose(bool value) {
-            _verbose = value;
+        public override void SetVerbose(bool pValue) {
+            _verbose = pValue;
             bool alreadyDebug = (LogManager.GetRepository("BasilTest").Threshold == log4net.Core.Level.Debug);
             if (_verbose && !alreadyDebug) {
                 // turning Verbose on
@@ -65,17 +70,21 @@ namespace org.herbal3d.BasilTest {
             }
         }
 
-        public override void Log(string msg, params Object[] args) {
-            _log.InfoFormat(msg, args);
+        public override void Log(string pMsg, params Object[] pArgs) {
+            _log.InfoFormat(pMsg, pArgs);
+        }
+
+        public override void InfoFormat(string pMsg, params Object[] pArgs) {
+            _log.InfoFormat(pMsg, pArgs);
         }
 
         // Output the message if 'Verbose' is true
-        public override void DebugFormat(string msg, params Object[] args) {
-            _log.DebugFormat(msg, args);
+        public override void DebugFormat(string pMsg, params Object[] pArgs) {
+            _log.DebugFormat(pMsg, pArgs);
         }
 
-        public override void ErrorFormat(string msg, params Object[] args) {
-            _log.ErrorFormat(msg, args);
+        public override void ErrorFormat(string pMsg, params Object[] pArgs) {
+            _log.ErrorFormat(pMsg, pArgs);
         }
     }
 }

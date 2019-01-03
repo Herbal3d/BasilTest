@@ -25,34 +25,36 @@ namespace org.herbal3d.basil.protocol.BasilServer {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
             "ChFCYXNpbFNlcnZlci5wcm90bxILQmFzaWxTZXJ2ZXIaEEJhc2lsVHlwZXMu",
-            "cHJvdG8ipAEKHElkZW50aWZ5RGlzcGxheWFibGVPYmplY3RSZXESLAoEYXV0",
+            "cHJvdG8i0wEKHElkZW50aWZ5RGlzcGxheWFibGVPYmplY3RSZXESLAoEYXV0",
             "aBgBIAEoCzIeLkJhc2lsVHlwZS5BY2Nlc3NBdXRob3JpemF0aW9uEi4KCWFz",
-            "c2V0SW5mbxgCIAEoCzIbLkJhc2lsVHlwZS5Bc3NldEluZm9ybWF0aW9uEiYK",
-            "BGFhYmIYAyABKAsyGC5CYXNpbFR5cGUuQWFCb3VuZGluZ0JveCJ+Ch1JZGVu",
-            "dGlmeURpc3BsYXlhYmxlT2JqZWN0UmVzcBIsCglleGNlcHRpb24YASABKAsy",
-            "GS5CYXNpbFR5cGUuQmFzaWxFeGNlcHRpb24SLwoKaWRlbnRpZmllchgCIAEo",
-            "CzIbLkJhc2lsVHlwZS5PYmplY3RJZGVudGlmaWVyInsKGkZvcmdldERpc3Bs",
+            "c2V0SW5mbxgCIAEoCzIbLkJhc2lsVHlwZS5Bc3NldEluZm9ybWF0aW9uEi0K",
+            "CG9iamVjdElkGAMgASgLMhsuQmFzaWxUeXBlLk9iamVjdElkZW50aWZpZXIS",
+            "JgoEYWFiYhgEIAEoCzIYLkJhc2lsVHlwZS5BYUJvdW5kaW5nQm94InwKHUlk",
+            "ZW50aWZ5RGlzcGxheWFibGVPYmplY3RSZXNwEiwKCWV4Y2VwdGlvbhgBIAEo",
+            "CzIZLkJhc2lsVHlwZS5CYXNpbEV4Y2VwdGlvbhItCghvYmplY3RJZBgCIAEo",
+            "CzIbLkJhc2lsVHlwZS5PYmplY3RJZGVudGlmaWVyInkKGkZvcmdldERpc3Bs",
             "YXlhYmxlT2JqZWN0UmVxEiwKBGF1dGgYASABKAsyHi5CYXNpbFR5cGUuQWNj",
-            "ZXNzQXV0aG9yaXphdGlvbhIvCgppZGVudGlmaWVyGAIgASgLMhsuQmFzaWxU",
-            "eXBlLk9iamVjdElkZW50aWZpZXIiSwobRm9yZ2V0RGlzcGxheWFibGVPYmpl",
-            "Y3RSZXNwEiwKCWV4Y2VwdGlvbhgBIAEoCzIZLkJhc2lsVHlwZS5CYXNpbEV4",
-            "Y2VwdGlvbiLNAgoXQ3JlYXRlT2JqZWN0SW5zdGFuY2VSZXESLAoEYXV0aBgB",
-            "IAEoCzIeLkJhc2lsVHlwZS5BY2Nlc3NBdXRob3JpemF0aW9uEi8KCmlkZW50",
-            "aWZpZXIYAiABKAsyGy5CYXNpbFR5cGUuT2JqZWN0SWRlbnRpZmllchIsCgNw",
-            "b3MYAyABKAsyHy5CYXNpbFR5cGUuSW5zdGFuY2VQb3NpdGlvbkluZm8SUgoP",
-            "cHJvcGVydGllc1RvU2V0GAQgAygLMjkuQmFzaWxTZXJ2ZXIuQ3JlYXRlT2Jq",
-            "ZWN0SW5zdGFuY2VSZXEuUHJvcGVydGllc1RvU2V0RW50cnkSGQoRSW5zdGFu",
-            "Y2VDb3VudEhpbnQYBSABKAUaNgoUUHJvcGVydGllc1RvU2V0RW50cnkSCwoD",
-            "a2V5GAEgASgJEg0KBXZhbHVlGAIgASgJOgI4ASJ7ChhDcmVhdGVPYmplY3RJ",
-            "bnN0YW5jZVJlc3ASLAoJZXhjZXB0aW9uGAEgASgLMhkuQmFzaWxUeXBlLkJh",
-            "c2lsRXhjZXB0aW9uEjEKCmluc3RhbmNlSWQYAiABKAsyHS5CYXNpbFR5cGUu",
-            "SW5zdGFuY2VJZGVudGlmaWVyInoKF0RlbGV0ZU9iamVjdEluc3RhbmNlUmVx",
-            "EiwKBGF1dGgYASABKAsyHi5CYXNpbFR5cGUuQWNjZXNzQXV0aG9yaXphdGlv",
-            "bhIxCgppbnN0YW5jZUlkGAIgASgLMh0uQmFzaWxUeXBlLkluc3RhbmNlSWRl",
-            "bnRpZmllciJIChhEZWxldGVPYmplY3RJbnN0YW5jZVJlc3ASLAoJZXhjZXB0",
-            "aW9uGAEgASgLMhkuQmFzaWxUeXBlLkJhc2lsRXhjZXB0aW9uIuYBChdVcGRh",
-            "dGVPYmplY3RQcm9wZXJ0eVJlcRIsCgRhdXRoGAEgASgLMh4uQmFzaWxUeXBl",
-            "LkFjY2Vzc0F1dGhvcml6YXRpb24SLwoKaWRlbnRpZmllchgCIAEoCzIbLkJh",
+            "ZXNzQXV0aG9yaXphdGlvbhItCghvYmplY3RJZBgCIAEoCzIbLkJhc2lsVHlw",
+            "ZS5PYmplY3RJZGVudGlmaWVyIksKG0ZvcmdldERpc3BsYXlhYmxlT2JqZWN0",
+            "UmVzcBIsCglleGNlcHRpb24YASABKAsyGS5CYXNpbFR5cGUuQmFzaWxFeGNl",
+            "cHRpb24i/gIKF0NyZWF0ZU9iamVjdEluc3RhbmNlUmVxEiwKBGF1dGgYASAB",
+            "KAsyHi5CYXNpbFR5cGUuQWNjZXNzQXV0aG9yaXphdGlvbhItCghvYmplY3RJ",
+            "ZBgCIAEoCzIbLkJhc2lsVHlwZS5PYmplY3RJZGVudGlmaWVyEjEKCmluc3Rh",
+            "bmNlSWQYAyABKAsyHS5CYXNpbFR5cGUuSW5zdGFuY2VJZGVudGlmaWVyEiwK",
+            "A3BvcxgEIAEoCzIfLkJhc2lsVHlwZS5JbnN0YW5jZVBvc2l0aW9uSW5mbxJS",
+            "Cg9wcm9wZXJ0aWVzVG9TZXQYBSADKAsyOS5CYXNpbFNlcnZlci5DcmVhdGVP",
+            "YmplY3RJbnN0YW5jZVJlcS5Qcm9wZXJ0aWVzVG9TZXRFbnRyeRIZChFJbnN0",
+            "YW5jZUNvdW50SGludBgGIAEoBRo2ChRQcm9wZXJ0aWVzVG9TZXRFbnRyeRIL",
+            "CgNrZXkYASABKAkSDQoFdmFsdWUYAiABKAk6AjgBInsKGENyZWF0ZU9iamVj",
+            "dEluc3RhbmNlUmVzcBIsCglleGNlcHRpb24YASABKAsyGS5CYXNpbFR5cGUu",
+            "QmFzaWxFeGNlcHRpb24SMQoKaW5zdGFuY2VJZBgCIAEoCzIdLkJhc2lsVHlw",
+            "ZS5JbnN0YW5jZUlkZW50aWZpZXIiegoXRGVsZXRlT2JqZWN0SW5zdGFuY2VS",
+            "ZXESLAoEYXV0aBgBIAEoCzIeLkJhc2lsVHlwZS5BY2Nlc3NBdXRob3JpemF0",
+            "aW9uEjEKCmluc3RhbmNlSWQYAiABKAsyHS5CYXNpbFR5cGUuSW5zdGFuY2VJ",
+            "ZGVudGlmaWVyIkgKGERlbGV0ZU9iamVjdEluc3RhbmNlUmVzcBIsCglleGNl",
+            "cHRpb24YASABKAsyGS5CYXNpbFR5cGUuQmFzaWxFeGNlcHRpb24i5AEKF1Vw",
+            "ZGF0ZU9iamVjdFByb3BlcnR5UmVxEiwKBGF1dGgYASABKAsyHi5CYXNpbFR5",
+            "cGUuQWNjZXNzQXV0aG9yaXphdGlvbhItCghvYmplY3RJZBgCIAEoCzIbLkJh",
             "c2lsVHlwZS5PYmplY3RJZGVudGlmaWVyEj4KBXByb3BzGAMgAygLMi8uQmFz",
             "aWxTZXJ2ZXIuVXBkYXRlT2JqZWN0UHJvcGVydHlSZXEuUHJvcHNFbnRyeRos",
             "CgpQcm9wc0VudHJ5EgsKA2tleRgBIAEoCRINCgV2YWx1ZRgCIAEoCToCOAEi",
@@ -70,29 +72,21 @@ namespace org.herbal3d.basil.protocol.BasilServer {
             "ZS5JbnN0YW5jZUlkZW50aWZpZXISLAoDcG9zGAMgASgLMh8uQmFzaWxUeXBl",
             "Lkluc3RhbmNlUG9zaXRpb25JbmZvIkoKGlVwZGF0ZUluc3RhbmNlUG9zaXRp",
             "b25SZXNwEiwKCWV4Y2VwdGlvbhgBIAEoCzIZLkJhc2lsVHlwZS5CYXNpbEV4",
-            "Y2VwdGlvbiKSAQoaUmVxdWVzdE9iamVjdFByb3BlcnRpZXNSZXESLAoEYXV0",
-            "aBgBIAEoCzIeLkJhc2lsVHlwZS5BY2Nlc3NBdXRob3JpemF0aW9uEi8KCmlk",
-            "ZW50aWZpZXIYAiABKAsyGy5CYXNpbFR5cGUuT2JqZWN0SWRlbnRpZmllchIV",
-            "Cg1wcm9wZXJ0eU1hdGNoGAMgASgJIswBChtSZXF1ZXN0T2JqZWN0UHJvcGVy",
+            "Y2VwdGlvbiKQAQoaUmVxdWVzdE9iamVjdFByb3BlcnRpZXNSZXESLAoEYXV0",
+            "aBgBIAEoCzIeLkJhc2lsVHlwZS5BY2Nlc3NBdXRob3JpemF0aW9uEi0KCG9i",
+            "amVjdElkGAIgASgLMhsuQmFzaWxUeXBlLk9iamVjdElkZW50aWZpZXISFQoN",
+            "cHJvcGVydHlNYXRjaBgDIAEoCSLMAQobUmVxdWVzdE9iamVjdFByb3BlcnRp",
+            "ZXNSZXNwEiwKCWV4Y2VwdGlvbhgBIAEoCzIZLkJhc2lsVHlwZS5CYXNpbEV4",
+            "Y2VwdGlvbhJMCgpwcm9wZXJ0aWVzGAIgAygLMjguQmFzaWxTZXJ2ZXIuUmVx",
+            "dWVzdE9iamVjdFByb3BlcnRpZXNSZXNwLlByb3BlcnRpZXNFbnRyeRoxCg9Q",
+            "cm9wZXJ0aWVzRW50cnkSCwoDa2V5GAEgASgJEg0KBXZhbHVlGAIgASgJOgI4",
+            "ASKWAQocUmVxdWVzdEluc3RhbmNlUHJvcGVydGllc1JlcRIsCgRhdXRoGAEg",
+            "ASgLMh4uQmFzaWxUeXBlLkFjY2Vzc0F1dGhvcml6YXRpb24SMQoKaW5zdGFu",
+            "Y2VJZBgCIAEoCzIdLkJhc2lsVHlwZS5JbnN0YW5jZUlkZW50aWZpZXISFQoN",
+            "cHJvcGVydHlNYXRjaBgDIAEoCSLQAQodUmVxdWVzdEluc3RhbmNlUHJvcGVy",
             "dGllc1Jlc3ASLAoJZXhjZXB0aW9uGAEgASgLMhkuQmFzaWxUeXBlLkJhc2ls",
-            "RXhjZXB0aW9uEkwKCnByb3BlcnRpZXMYAiADKAsyOC5CYXNpbFNlcnZlci5S",
-            "ZXF1ZXN0T2JqZWN0UHJvcGVydGllc1Jlc3AuUHJvcGVydGllc0VudHJ5GjEK",
-            "D1Byb3BlcnRpZXNFbnRyeRILCgNrZXkYASABKAkSDQoFdmFsdWUYAiABKAk6",
-            "AjgBIpYBChxSZXF1ZXN0SW5zdGFuY2VQcm9wZXJ0aWVzUmVxEiwKBGF1dGgY",
-            "ASABKAsyHi5CYXNpbFR5cGUuQWNjZXNzQXV0aG9yaXphdGlvbhIxCgppbnN0",
-            "YW5jZUlkGAIgASgLMh0uQmFzaWxUeXBlLkluc3RhbmNlSWRlbnRpZmllchIV",
-            "Cg1wcm9wZXJ0eU1hdGNoGAMgASgJItABCh1SZXF1ZXN0SW5zdGFuY2VQcm9w",
-            "ZXJ0aWVzUmVzcBIsCglleGNlcHRpb24YASABKAsyGS5CYXNpbFR5cGUuQmFz",
-            "aWxFeGNlcHRpb24STgoKcHJvcGVydGllcxgCIAMoCzI6LkJhc2lsU2VydmVy",
-            "LlJlcXVlc3RJbnN0YW5jZVByb3BlcnRpZXNSZXNwLlByb3BlcnRpZXNFbnRy",
-            "eRoxCg9Qcm9wZXJ0aWVzRW50cnkSCwoDa2V5GAEgASgJEg0KBXZhbHVlGAIg",
-            "ASgJOgI4ASKsAQoOT3BlblNlc3Npb25SZXESLAoEYXV0aBgBIAEoCzIeLkJh",
-            "c2lsVHlwZS5BY2Nlc3NBdXRob3JpemF0aW9uEjsKCGZlYXR1cmVzGAIgAygL",
-            "MikuQmFzaWxTZXJ2ZXIuT3BlblNlc3Npb25SZXEuRmVhdHVyZXNFbnRyeRov",
-            "Cg1GZWF0dXJlc0VudHJ5EgsKA2tleRgBIAEoCRINCgV2YWx1ZRgCIAEoCToC",
-            "OAEitAEKD09wZW5TZXNzaW9uUmVzcBIsCglleGNlcHRpb24YASABKAsyGS5C",
-            "YXNpbFR5cGUuQmFzaWxFeGNlcHRpb24SQAoKcHJvcGVydGllcxgCIAMoCzIs",
-            "LkJhc2lsU2VydmVyLk9wZW5TZXNzaW9uUmVzcC5Qcm9wZXJ0aWVzRW50cnka",
+            "RXhjZXB0aW9uEk4KCnByb3BlcnRpZXMYAiADKAsyOi5CYXNpbFNlcnZlci5S",
+            "ZXF1ZXN0SW5zdGFuY2VQcm9wZXJ0aWVzUmVzcC5Qcm9wZXJ0aWVzRW50cnka",
             "MQoPUHJvcGVydGllc0VudHJ5EgsKA2tleRgBIAEoCRINCgV2YWx1ZRgCIAEo",
             "CToCOAEiTwoPQ2xvc2VTZXNzaW9uUmVxEiwKBGF1dGgYASABKAsyHi5CYXNp",
             "bFR5cGUuQWNjZXNzQXV0aG9yaXphdGlvbhIOCgZyZWFzb24YAiABKAkiQAoQ",
@@ -107,108 +101,58 @@ namespace org.herbal3d.basil.protocol.BasilServer {
             "GAEgASgLMh4uQmFzaWxUeXBlLkFjY2Vzc0F1dGhvcml6YXRpb24SDAoEdGlt",
             "ZRgCIAEoBBITCgtzZXF1ZW5jZU51bRgDIAEoBSJmCg5BbGl2ZUNoZWNrUmVz",
             "cBIMCgR0aW1lGAEgASgEEhMKC3NlcXVlbmNlTnVtGAIgASgFEhQKDHRpbWVS",
-            "ZWNlaXZlZBgDIAEoBBIbChNzZXF1ZW5jZU51bVJlY2VpdmVkGAQgASgFIooQ",
-            "ChJCYXNpbFNlcnZlck1lc3NhZ2USUwoTQmFzaWxTZXJ2ZXJNZXNzYWdlcxgB",
-            "IAMoCzI2LkJhc2lsU2VydmVyLkJhc2lsU2VydmVyTWVzc2FnZS5CYXNpbFNl",
-            "cnZlck1lc3NhZ2VCb2R5Gp4PChZCYXNpbFNlcnZlck1lc3NhZ2VCb2R5ElIK",
-            "H0lkZW50aWZ5RGlzcGxheWFibGVPYmplY3RSZXFNc2cYASABKAsyKS5CYXNp",
-            "bFNlcnZlci5JZGVudGlmeURpc3BsYXlhYmxlT2JqZWN0UmVxElQKIElkZW50",
-            "aWZ5RGlzcGxheWFibGVPYmplY3RSZXNwTXNnGAIgASgLMiouQmFzaWxTZXJ2",
-            "ZXIuSWRlbnRpZnlEaXNwbGF5YWJsZU9iamVjdFJlc3ASTgodRm9yZ2V0RGlz",
-            "cGxheWFibGVPYmplY3RSZXFNc2cYAyABKAsyJy5CYXNpbFNlcnZlci5Gb3Jn",
-            "ZXREaXNwbGF5YWJsZU9iamVjdFJlcRJQCh5Gb3JnZXREaXNwbGF5YWJsZU9i",
-            "amVjdFJlc3BNc2cYBCABKAsyKC5CYXNpbFNlcnZlci5Gb3JnZXREaXNwbGF5",
-            "YWJsZU9iamVjdFJlc3ASSAoaQ3JlYXRlT2JqZWN0SW5zdGFuY2VSZXFNc2cY",
-            "BSABKAsyJC5CYXNpbFNlcnZlci5DcmVhdGVPYmplY3RJbnN0YW5jZVJlcRJK",
-            "ChtDcmVhdGVPYmplY3RJbnN0YW5jZVJlc3BNc2cYBiABKAsyJS5CYXNpbFNl",
-            "cnZlci5DcmVhdGVPYmplY3RJbnN0YW5jZVJlc3ASSAoaRGVsZXRlT2JqZWN0",
-            "SW5zdGFuY2VSZXFNc2cYByABKAsyJC5CYXNpbFNlcnZlci5EZWxldGVPYmpl",
-            "Y3RJbnN0YW5jZVJlcRJKChtEZWxldGVPYmplY3RJbnN0YW5jZVJlc3BNc2cY",
-            "CCABKAsyJS5CYXNpbFNlcnZlci5EZWxldGVPYmplY3RJbnN0YW5jZVJlc3AS",
-            "SAoaVXBkYXRlT2JqZWN0UHJvcGVydHlSZXFNc2cYCSABKAsyJC5CYXNpbFNl",
-            "cnZlci5VcGRhdGVPYmplY3RQcm9wZXJ0eVJlcRJKChtVcGRhdGVPYmplY3RQ",
-            "cm9wZXJ0eVJlc3BNc2cYCiABKAsyJS5CYXNpbFNlcnZlci5VcGRhdGVPYmpl",
-            "Y3RQcm9wZXJ0eVJlc3ASTAocVXBkYXRlSW5zdGFuY2VQcm9wZXJ0eVJlcU1z",
-            "ZxgLIAEoCzImLkJhc2lsU2VydmVyLlVwZGF0ZUluc3RhbmNlUHJvcGVydHlS",
-            "ZXESTgodVXBkYXRlSW5zdGFuY2VQcm9wZXJ0eVJlc3BNc2cYDCABKAsyJy5C",
-            "YXNpbFNlcnZlci5VcGRhdGVJbnN0YW5jZVByb3BlcnR5UmVzcBJMChxVcGRh",
-            "dGVJbnN0YW5jZVBvc2l0aW9uUmVxTXNnGA0gASgLMiYuQmFzaWxTZXJ2ZXIu",
-            "VXBkYXRlSW5zdGFuY2VQb3NpdGlvblJlcRJOCh1VcGRhdGVJbnN0YW5jZVBv",
-            "c2l0aW9uUmVzcE1zZxgOIAEoCzInLkJhc2lsU2VydmVyLlVwZGF0ZUluc3Rh",
-            "bmNlUG9zaXRpb25SZXNwEk4KHVJlcXVlc3RPYmplY3RQcm9wZXJ0aWVzUmVx",
-            "TXNnGA8gASgLMicuQmFzaWxTZXJ2ZXIuUmVxdWVzdE9iamVjdFByb3BlcnRp",
-            "ZXNSZXESUAoeUmVxdWVzdE9iamVjdFByb3BlcnRpZXNSZXNwTXNnGBAgASgL",
-            "MiguQmFzaWxTZXJ2ZXIuUmVxdWVzdE9iamVjdFByb3BlcnRpZXNSZXNwElIK",
-            "H1JlcXVlc3RJbnN0YW5jZVByb3BlcnRpZXNSZXFNc2cYESABKAsyKS5CYXNp",
-            "bFNlcnZlci5SZXF1ZXN0SW5zdGFuY2VQcm9wZXJ0aWVzUmVxElQKIFJlcXVl",
-            "c3RJbnN0YW5jZVByb3BlcnRpZXNSZXNwTXNnGBIgASgLMiouQmFzaWxTZXJ2",
-            "ZXIuUmVxdWVzdEluc3RhbmNlUHJvcGVydGllc1Jlc3ASNgoRT3BlblNlc3Np",
-            "b25SZXFNc2cYEyABKAsyGy5CYXNpbFNlcnZlci5PcGVuU2Vzc2lvblJlcRI4",
-            "ChJPcGVuU2Vzc2lvblJlc3BNc2cYFCABKAsyHC5CYXNpbFNlcnZlci5PcGVu",
-            "U2Vzc2lvblJlc3ASOAoSQ2xvc2VTZXNzaW9uUmVxTXNnGBUgASgLMhwuQmFz",
-            "aWxTZXJ2ZXIuQ2xvc2VTZXNzaW9uUmVxEjoKE0Nsb3NlU2Vzc2lvblJlc3BN",
-            "c2cYFiABKAsyHS5CYXNpbFNlcnZlci5DbG9zZVNlc3Npb25SZXNwEjQKEEFs",
-            "aXZlQ2hlY2tSZXFNc2cYFyABKAsyGi5CYXNpbFNlcnZlci5BbGl2ZUNoZWNr",
-            "UmVxEjYKEUFsaXZlQ2hlY2tSZXNwTXNnGBggASgLMhsuQmFzaWxTZXJ2ZXIu",
-            "QWxpdmVDaGVja1Jlc3ASPAoUTWFrZUNvbm5lY3Rpb25SZXFNc2cYGSABKAsy",
-            "Hi5CYXNpbFNlcnZlci5NYWtlQ29ubmVjdGlvblJlcRI+ChVNYWtlQ29ubmVj",
-            "dGlvblJlc3BNc2cYGiABKAsyHy5CYXNpbFNlcnZlci5NYWtlQ29ubmVjdGlv",
-            "blJlc3ASGgoRUlBDUmVxdWVzdFNlc3Npb24Y+gEgASgNMrQICgtCYXNpbFNl",
-            "cnZlchJyChlJZGVudGlmeURpc3BsYXlhYmxlT2JqZWN0EikuQmFzaWxTZXJ2",
-            "ZXIuSWRlbnRpZnlEaXNwbGF5YWJsZU9iamVjdFJlcRoqLkJhc2lsU2VydmVy",
-            "LklkZW50aWZ5RGlzcGxheWFibGVPYmplY3RSZXNwEmMKFENyZWF0ZU9iamVj",
-            "dEluc3RhbmNlEiQuQmFzaWxTZXJ2ZXIuQ3JlYXRlT2JqZWN0SW5zdGFuY2VS",
-            "ZXEaJS5CYXNpbFNlcnZlci5DcmVhdGVPYmplY3RJbnN0YW5jZVJlc3ASYwoU",
-            "VXBkYXRlT2JqZWN0UHJvcGVydHkSJC5CYXNpbFNlcnZlci5VcGRhdGVPYmpl",
-            "Y3RQcm9wZXJ0eVJlcRolLkJhc2lsU2VydmVyLlVwZGF0ZU9iamVjdFByb3Bl",
-            "cnR5UmVzcBJpChZVcGRhdGVJbnN0YW5jZVByb3BlcnR5EiYuQmFzaWxTZXJ2",
-            "ZXIuVXBkYXRlSW5zdGFuY2VQcm9wZXJ0eVJlcRonLkJhc2lsU2VydmVyLlVw",
-            "ZGF0ZUluc3RhbmNlUHJvcGVydHlSZXNwEmkKFlVwZGF0ZUluc3RhbmNlUG9z",
-            "aXRpb24SJi5CYXNpbFNlcnZlci5VcGRhdGVJbnN0YW5jZVBvc2l0aW9uUmVx",
-            "GicuQmFzaWxTZXJ2ZXIuVXBkYXRlSW5zdGFuY2VQb3NpdGlvblJlc3ASbAoX",
-            "UmVxdWVzdE9iamVjdFByb3BlcnRpZXMSJy5CYXNpbFNlcnZlci5SZXF1ZXN0",
-            "T2JqZWN0UHJvcGVydGllc1JlcRooLkJhc2lsU2VydmVyLlJlcXVlc3RPYmpl",
-            "Y3RQcm9wZXJ0aWVzUmVzcBJyChlSZXF1ZXN0SW5zdGFuY2VQcm9wZXJ0aWVz",
-            "EikuQmFzaWxTZXJ2ZXIuUmVxdWVzdEluc3RhbmNlUHJvcGVydGllc1JlcRoq",
-            "LkJhc2lsU2VydmVyLlJlcXVlc3RJbnN0YW5jZVByb3BlcnRpZXNSZXNwEkgK",
-            "C09wZW5TZXNzaW9uEhsuQmFzaWxTZXJ2ZXIuT3BlblNlc3Npb25SZXEaHC5C",
-            "YXNpbFNlcnZlci5PcGVuU2Vzc2lvblJlc3ASSwoMQ2xvc2VTZXNzaW9uEhwu",
-            "QmFzaWxTZXJ2ZXIuQ2xvc2VTZXNzaW9uUmVxGh0uQmFzaWxTZXJ2ZXIuQ2xv",
-            "c2VTZXNzaW9uUmVzcBJRCg5NYWtlQ29ubmVjdGlvbhIeLkJhc2lsU2VydmVy",
-            "Lk1ha2VDb25uZWN0aW9uUmVxGh8uQmFzaWxTZXJ2ZXIuTWFrZUNvbm5lY3Rp",
-            "b25SZXNwEkUKCkFsaXZlQ2hlY2sSGi5CYXNpbFNlcnZlci5BbGl2ZUNoZWNr",
-            "UmVxGhsuQmFzaWxTZXJ2ZXIuQWxpdmVDaGVja1Jlc3BCKqoCJ29yZy5oZXJi",
-            "YWwzZC5iYXNpbC5wcm90b2NvbC5CYXNpbFNlcnZlcmIGcHJvdG8z"));
+            "ZWNlaXZlZBgDIAEoBBIbChNzZXF1ZW5jZU51bVJlY2VpdmVkGAQgASgFMuoH",
+            "CgtCYXNpbFNlcnZlchJyChlJZGVudGlmeURpc3BsYXlhYmxlT2JqZWN0Eiku",
+            "QmFzaWxTZXJ2ZXIuSWRlbnRpZnlEaXNwbGF5YWJsZU9iamVjdFJlcRoqLkJh",
+            "c2lsU2VydmVyLklkZW50aWZ5RGlzcGxheWFibGVPYmplY3RSZXNwEmMKFENy",
+            "ZWF0ZU9iamVjdEluc3RhbmNlEiQuQmFzaWxTZXJ2ZXIuQ3JlYXRlT2JqZWN0",
+            "SW5zdGFuY2VSZXEaJS5CYXNpbFNlcnZlci5DcmVhdGVPYmplY3RJbnN0YW5j",
+            "ZVJlc3ASYwoUVXBkYXRlT2JqZWN0UHJvcGVydHkSJC5CYXNpbFNlcnZlci5V",
+            "cGRhdGVPYmplY3RQcm9wZXJ0eVJlcRolLkJhc2lsU2VydmVyLlVwZGF0ZU9i",
+            "amVjdFByb3BlcnR5UmVzcBJpChZVcGRhdGVJbnN0YW5jZVByb3BlcnR5EiYu",
+            "QmFzaWxTZXJ2ZXIuVXBkYXRlSW5zdGFuY2VQcm9wZXJ0eVJlcRonLkJhc2ls",
+            "U2VydmVyLlVwZGF0ZUluc3RhbmNlUHJvcGVydHlSZXNwEmkKFlVwZGF0ZUlu",
+            "c3RhbmNlUG9zaXRpb24SJi5CYXNpbFNlcnZlci5VcGRhdGVJbnN0YW5jZVBv",
+            "c2l0aW9uUmVxGicuQmFzaWxTZXJ2ZXIuVXBkYXRlSW5zdGFuY2VQb3NpdGlv",
+            "blJlc3ASbAoXUmVxdWVzdE9iamVjdFByb3BlcnRpZXMSJy5CYXNpbFNlcnZl",
+            "ci5SZXF1ZXN0T2JqZWN0UHJvcGVydGllc1JlcRooLkJhc2lsU2VydmVyLlJl",
+            "cXVlc3RPYmplY3RQcm9wZXJ0aWVzUmVzcBJyChlSZXF1ZXN0SW5zdGFuY2VQ",
+            "cm9wZXJ0aWVzEikuQmFzaWxTZXJ2ZXIuUmVxdWVzdEluc3RhbmNlUHJvcGVy",
+            "dGllc1JlcRoqLkJhc2lsU2VydmVyLlJlcXVlc3RJbnN0YW5jZVByb3BlcnRp",
+            "ZXNSZXNwEksKDENsb3NlU2Vzc2lvbhIcLkJhc2lsU2VydmVyLkNsb3NlU2Vz",
+            "c2lvblJlcRodLkJhc2lsU2VydmVyLkNsb3NlU2Vzc2lvblJlc3ASUQoOTWFr",
+            "ZUNvbm5lY3Rpb24SHi5CYXNpbFNlcnZlci5NYWtlQ29ubmVjdGlvblJlcRof",
+            "LkJhc2lsU2VydmVyLk1ha2VDb25uZWN0aW9uUmVzcBJFCgpBbGl2ZUNoZWNr",
+            "EhouQmFzaWxTZXJ2ZXIuQWxpdmVDaGVja1JlcRobLkJhc2lsU2VydmVyLkFs",
+            "aXZlQ2hlY2tSZXNwQiqqAidvcmcuaGVyYmFsM2QuYmFzaWwucHJvdG9jb2wu",
+            "QmFzaWxTZXJ2ZXJiBnByb3RvMw=="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { global::org.herbal3d.basil.protocol.BasilType.BasilTypesReflection.Descriptor, },
           new pbr::GeneratedClrTypeInfo(null, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::org.herbal3d.basil.protocol.BasilServer.IdentifyDisplayableObjectReq), global::org.herbal3d.basil.protocol.BasilServer.IdentifyDisplayableObjectReq.Parser, new[]{ "Auth", "AssetInfo", "Aabb" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::org.herbal3d.basil.protocol.BasilServer.IdentifyDisplayableObjectResp), global::org.herbal3d.basil.protocol.BasilServer.IdentifyDisplayableObjectResp.Parser, new[]{ "Exception", "Identifier" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::org.herbal3d.basil.protocol.BasilServer.ForgetDisplayableObjectReq), global::org.herbal3d.basil.protocol.BasilServer.ForgetDisplayableObjectReq.Parser, new[]{ "Auth", "Identifier" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::org.herbal3d.basil.protocol.BasilServer.IdentifyDisplayableObjectReq), global::org.herbal3d.basil.protocol.BasilServer.IdentifyDisplayableObjectReq.Parser, new[]{ "Auth", "AssetInfo", "ObjectId", "Aabb" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::org.herbal3d.basil.protocol.BasilServer.IdentifyDisplayableObjectResp), global::org.herbal3d.basil.protocol.BasilServer.IdentifyDisplayableObjectResp.Parser, new[]{ "Exception", "ObjectId" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::org.herbal3d.basil.protocol.BasilServer.ForgetDisplayableObjectReq), global::org.herbal3d.basil.protocol.BasilServer.ForgetDisplayableObjectReq.Parser, new[]{ "Auth", "ObjectId" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::org.herbal3d.basil.protocol.BasilServer.ForgetDisplayableObjectResp), global::org.herbal3d.basil.protocol.BasilServer.ForgetDisplayableObjectResp.Parser, new[]{ "Exception" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::org.herbal3d.basil.protocol.BasilServer.CreateObjectInstanceReq), global::org.herbal3d.basil.protocol.BasilServer.CreateObjectInstanceReq.Parser, new[]{ "Auth", "Identifier", "Pos", "PropertiesToSet", "InstanceCountHint" }, null, null, new pbr::GeneratedClrTypeInfo[] { null, }),
+            new pbr::GeneratedClrTypeInfo(typeof(global::org.herbal3d.basil.protocol.BasilServer.CreateObjectInstanceReq), global::org.herbal3d.basil.protocol.BasilServer.CreateObjectInstanceReq.Parser, new[]{ "Auth", "ObjectId", "InstanceId", "Pos", "PropertiesToSet", "InstanceCountHint" }, null, null, new pbr::GeneratedClrTypeInfo[] { null, }),
             new pbr::GeneratedClrTypeInfo(typeof(global::org.herbal3d.basil.protocol.BasilServer.CreateObjectInstanceResp), global::org.herbal3d.basil.protocol.BasilServer.CreateObjectInstanceResp.Parser, new[]{ "Exception", "InstanceId" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::org.herbal3d.basil.protocol.BasilServer.DeleteObjectInstanceReq), global::org.herbal3d.basil.protocol.BasilServer.DeleteObjectInstanceReq.Parser, new[]{ "Auth", "InstanceId" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::org.herbal3d.basil.protocol.BasilServer.DeleteObjectInstanceResp), global::org.herbal3d.basil.protocol.BasilServer.DeleteObjectInstanceResp.Parser, new[]{ "Exception" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::org.herbal3d.basil.protocol.BasilServer.UpdateObjectPropertyReq), global::org.herbal3d.basil.protocol.BasilServer.UpdateObjectPropertyReq.Parser, new[]{ "Auth", "Identifier", "Props" }, null, null, new pbr::GeneratedClrTypeInfo[] { null, }),
+            new pbr::GeneratedClrTypeInfo(typeof(global::org.herbal3d.basil.protocol.BasilServer.UpdateObjectPropertyReq), global::org.herbal3d.basil.protocol.BasilServer.UpdateObjectPropertyReq.Parser, new[]{ "Auth", "ObjectId", "Props" }, null, null, new pbr::GeneratedClrTypeInfo[] { null, }),
             new pbr::GeneratedClrTypeInfo(typeof(global::org.herbal3d.basil.protocol.BasilServer.UpdateObjectPropertyResp), global::org.herbal3d.basil.protocol.BasilServer.UpdateObjectPropertyResp.Parser, new[]{ "Exception" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::org.herbal3d.basil.protocol.BasilServer.UpdateInstancePropertyReq), global::org.herbal3d.basil.protocol.BasilServer.UpdateInstancePropertyReq.Parser, new[]{ "Auth", "InstanceId", "Props" }, null, null, new pbr::GeneratedClrTypeInfo[] { null, }),
             new pbr::GeneratedClrTypeInfo(typeof(global::org.herbal3d.basil.protocol.BasilServer.UpdateInstancePropertyResp), global::org.herbal3d.basil.protocol.BasilServer.UpdateInstancePropertyResp.Parser, new[]{ "Exception" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::org.herbal3d.basil.protocol.BasilServer.UpdateInstancePositionReq), global::org.herbal3d.basil.protocol.BasilServer.UpdateInstancePositionReq.Parser, new[]{ "Auth", "InstanceId", "Pos" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::org.herbal3d.basil.protocol.BasilServer.UpdateInstancePositionResp), global::org.herbal3d.basil.protocol.BasilServer.UpdateInstancePositionResp.Parser, new[]{ "Exception" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::org.herbal3d.basil.protocol.BasilServer.RequestObjectPropertiesReq), global::org.herbal3d.basil.protocol.BasilServer.RequestObjectPropertiesReq.Parser, new[]{ "Auth", "Identifier", "PropertyMatch" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::org.herbal3d.basil.protocol.BasilServer.RequestObjectPropertiesReq), global::org.herbal3d.basil.protocol.BasilServer.RequestObjectPropertiesReq.Parser, new[]{ "Auth", "ObjectId", "PropertyMatch" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::org.herbal3d.basil.protocol.BasilServer.RequestObjectPropertiesResp), global::org.herbal3d.basil.protocol.BasilServer.RequestObjectPropertiesResp.Parser, new[]{ "Exception", "Properties" }, null, null, new pbr::GeneratedClrTypeInfo[] { null, }),
             new pbr::GeneratedClrTypeInfo(typeof(global::org.herbal3d.basil.protocol.BasilServer.RequestInstancePropertiesReq), global::org.herbal3d.basil.protocol.BasilServer.RequestInstancePropertiesReq.Parser, new[]{ "Auth", "InstanceId", "PropertyMatch" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::org.herbal3d.basil.protocol.BasilServer.RequestInstancePropertiesResp), global::org.herbal3d.basil.protocol.BasilServer.RequestInstancePropertiesResp.Parser, new[]{ "Exception", "Properties" }, null, null, new pbr::GeneratedClrTypeInfo[] { null, }),
-            new pbr::GeneratedClrTypeInfo(typeof(global::org.herbal3d.basil.protocol.BasilServer.OpenSessionReq), global::org.herbal3d.basil.protocol.BasilServer.OpenSessionReq.Parser, new[]{ "Auth", "Features" }, null, null, new pbr::GeneratedClrTypeInfo[] { null, }),
-            new pbr::GeneratedClrTypeInfo(typeof(global::org.herbal3d.basil.protocol.BasilServer.OpenSessionResp), global::org.herbal3d.basil.protocol.BasilServer.OpenSessionResp.Parser, new[]{ "Exception", "Properties" }, null, null, new pbr::GeneratedClrTypeInfo[] { null, }),
             new pbr::GeneratedClrTypeInfo(typeof(global::org.herbal3d.basil.protocol.BasilServer.CloseSessionReq), global::org.herbal3d.basil.protocol.BasilServer.CloseSessionReq.Parser, new[]{ "Auth", "Reason" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::org.herbal3d.basil.protocol.BasilServer.CloseSessionResp), global::org.herbal3d.basil.protocol.BasilServer.CloseSessionResp.Parser, new[]{ "Exception" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::org.herbal3d.basil.protocol.BasilServer.MakeConnectionReq), global::org.herbal3d.basil.protocol.BasilServer.MakeConnectionReq.Parser, new[]{ "Auth", "ConnectionParams" }, null, null, new pbr::GeneratedClrTypeInfo[] { null, }),
             new pbr::GeneratedClrTypeInfo(typeof(global::org.herbal3d.basil.protocol.BasilServer.MakeConnectionResp), global::org.herbal3d.basil.protocol.BasilServer.MakeConnectionResp.Parser, new[]{ "Exception" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::org.herbal3d.basil.protocol.BasilServer.AliveCheckReq), global::org.herbal3d.basil.protocol.BasilServer.AliveCheckReq.Parser, new[]{ "Auth", "Time", "SequenceNum" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::org.herbal3d.basil.protocol.BasilServer.AliveCheckResp), global::org.herbal3d.basil.protocol.BasilServer.AliveCheckResp.Parser, new[]{ "Time", "SequenceNum", "TimeReceived", "SequenceNumReceived" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::org.herbal3d.basil.protocol.BasilServer.BasilServerMessage), global::org.herbal3d.basil.protocol.BasilServer.BasilServerMessage.Parser, new[]{ "BasilServerMessages" }, null, null, new pbr::GeneratedClrTypeInfo[] { new pbr::GeneratedClrTypeInfo(typeof(global::org.herbal3d.basil.protocol.BasilServer.BasilServerMessage.Types.BasilServerMessageBody), global::org.herbal3d.basil.protocol.BasilServer.BasilServerMessage.Types.BasilServerMessageBody.Parser, new[]{ "IdentifyDisplayableObjectReqMsg", "IdentifyDisplayableObjectRespMsg", "ForgetDisplayableObjectReqMsg", "ForgetDisplayableObjectRespMsg", "CreateObjectInstanceReqMsg", "CreateObjectInstanceRespMsg", "DeleteObjectInstanceReqMsg", "DeleteObjectInstanceRespMsg", "UpdateObjectPropertyReqMsg", "UpdateObjectPropertyRespMsg", "UpdateInstancePropertyReqMsg", "UpdateInstancePropertyRespMsg", "UpdateInstancePositionReqMsg", "UpdateInstancePositionRespMsg", "RequestObjectPropertiesReqMsg", "RequestObjectPropertiesRespMsg", "RequestInstancePropertiesReqMsg", "RequestInstancePropertiesRespMsg", "OpenSessionReqMsg", "OpenSessionRespMsg", "CloseSessionReqMsg", "CloseSessionRespMsg", "AliveCheckReqMsg", "AliveCheckRespMsg", "MakeConnectionReqMsg", "MakeConnectionRespMsg", "RPCRequestSession" }, null, null, null)})
+            new pbr::GeneratedClrTypeInfo(typeof(global::org.herbal3d.basil.protocol.BasilServer.AliveCheckResp), global::org.herbal3d.basil.protocol.BasilServer.AliveCheckResp.Parser, new[]{ "Time", "SequenceNum", "TimeReceived", "SequenceNumReceived" }, null, null, null)
           }));
     }
     #endregion
@@ -247,6 +191,7 @@ namespace org.herbal3d.basil.protocol.BasilServer {
     public IdentifyDisplayableObjectReq(IdentifyDisplayableObjectReq other) : this() {
       Auth = other.auth_ != null ? other.Auth.Clone() : null;
       AssetInfo = other.assetInfo_ != null ? other.AssetInfo.Clone() : null;
+      ObjectId = other.objectId_ != null ? other.ObjectId.Clone() : null;
       Aabb = other.aabb_ != null ? other.Aabb.Clone() : null;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
@@ -278,8 +223,22 @@ namespace org.herbal3d.basil.protocol.BasilServer {
       }
     }
 
+    /// <summary>Field number for the "objectId" field.</summary>
+    public const int ObjectIdFieldNumber = 3;
+    private global::org.herbal3d.basil.protocol.BasilType.ObjectIdentifier objectId_;
+    /// <summary>
+    /// if supplied, used if unique
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public global::org.herbal3d.basil.protocol.BasilType.ObjectIdentifier ObjectId {
+      get { return objectId_; }
+      set {
+        objectId_ = value;
+      }
+    }
+
     /// <summary>Field number for the "aabb" field.</summary>
-    public const int AabbFieldNumber = 3;
+    public const int AabbFieldNumber = 4;
     private global::org.herbal3d.basil.protocol.BasilType.AaBoundingBox aabb_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public global::org.herbal3d.basil.protocol.BasilType.AaBoundingBox Aabb {
@@ -304,6 +263,7 @@ namespace org.herbal3d.basil.protocol.BasilServer {
       }
       if (!object.Equals(Auth, other.Auth)) return false;
       if (!object.Equals(AssetInfo, other.AssetInfo)) return false;
+      if (!object.Equals(ObjectId, other.ObjectId)) return false;
       if (!object.Equals(Aabb, other.Aabb)) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
@@ -313,6 +273,7 @@ namespace org.herbal3d.basil.protocol.BasilServer {
       int hash = 1;
       if (auth_ != null) hash ^= Auth.GetHashCode();
       if (assetInfo_ != null) hash ^= AssetInfo.GetHashCode();
+      if (objectId_ != null) hash ^= ObjectId.GetHashCode();
       if (aabb_ != null) hash ^= Aabb.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
@@ -335,8 +296,12 @@ namespace org.herbal3d.basil.protocol.BasilServer {
         output.WriteRawTag(18);
         output.WriteMessage(AssetInfo);
       }
-      if (aabb_ != null) {
+      if (objectId_ != null) {
         output.WriteRawTag(26);
+        output.WriteMessage(ObjectId);
+      }
+      if (aabb_ != null) {
+        output.WriteRawTag(34);
         output.WriteMessage(Aabb);
       }
       if (_unknownFields != null) {
@@ -352,6 +317,9 @@ namespace org.herbal3d.basil.protocol.BasilServer {
       }
       if (assetInfo_ != null) {
         size += 1 + pb::CodedOutputStream.ComputeMessageSize(AssetInfo);
+      }
+      if (objectId_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(ObjectId);
       }
       if (aabb_ != null) {
         size += 1 + pb::CodedOutputStream.ComputeMessageSize(Aabb);
@@ -378,6 +346,12 @@ namespace org.herbal3d.basil.protocol.BasilServer {
           assetInfo_ = new global::org.herbal3d.basil.protocol.BasilType.AssetInformation();
         }
         AssetInfo.MergeFrom(other.AssetInfo);
+      }
+      if (other.objectId_ != null) {
+        if (objectId_ == null) {
+          objectId_ = new global::org.herbal3d.basil.protocol.BasilType.ObjectIdentifier();
+        }
+        ObjectId.MergeFrom(other.ObjectId);
       }
       if (other.aabb_ != null) {
         if (aabb_ == null) {
@@ -411,6 +385,13 @@ namespace org.herbal3d.basil.protocol.BasilServer {
             break;
           }
           case 26: {
+            if (objectId_ == null) {
+              objectId_ = new global::org.herbal3d.basil.protocol.BasilType.ObjectIdentifier();
+            }
+            input.ReadMessage(objectId_);
+            break;
+          }
+          case 34: {
             if (aabb_ == null) {
               aabb_ = new global::org.herbal3d.basil.protocol.BasilType.AaBoundingBox();
             }
@@ -449,7 +430,7 @@ namespace org.herbal3d.basil.protocol.BasilServer {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public IdentifyDisplayableObjectResp(IdentifyDisplayableObjectResp other) : this() {
       Exception = other.exception_ != null ? other.Exception.Clone() : null;
-      Identifier = other.identifier_ != null ? other.Identifier.Clone() : null;
+      ObjectId = other.objectId_ != null ? other.ObjectId.Clone() : null;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -469,14 +450,14 @@ namespace org.herbal3d.basil.protocol.BasilServer {
       }
     }
 
-    /// <summary>Field number for the "identifier" field.</summary>
-    public const int IdentifierFieldNumber = 2;
-    private global::org.herbal3d.basil.protocol.BasilType.ObjectIdentifier identifier_;
+    /// <summary>Field number for the "objectId" field.</summary>
+    public const int ObjectIdFieldNumber = 2;
+    private global::org.herbal3d.basil.protocol.BasilType.ObjectIdentifier objectId_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::org.herbal3d.basil.protocol.BasilType.ObjectIdentifier Identifier {
-      get { return identifier_; }
+    public global::org.herbal3d.basil.protocol.BasilType.ObjectIdentifier ObjectId {
+      get { return objectId_; }
       set {
-        identifier_ = value;
+        objectId_ = value;
       }
     }
 
@@ -494,7 +475,7 @@ namespace org.herbal3d.basil.protocol.BasilServer {
         return true;
       }
       if (!object.Equals(Exception, other.Exception)) return false;
-      if (!object.Equals(Identifier, other.Identifier)) return false;
+      if (!object.Equals(ObjectId, other.ObjectId)) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -502,7 +483,7 @@ namespace org.herbal3d.basil.protocol.BasilServer {
     public override int GetHashCode() {
       int hash = 1;
       if (exception_ != null) hash ^= Exception.GetHashCode();
-      if (identifier_ != null) hash ^= Identifier.GetHashCode();
+      if (objectId_ != null) hash ^= ObjectId.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -520,9 +501,9 @@ namespace org.herbal3d.basil.protocol.BasilServer {
         output.WriteRawTag(10);
         output.WriteMessage(Exception);
       }
-      if (identifier_ != null) {
+      if (objectId_ != null) {
         output.WriteRawTag(18);
-        output.WriteMessage(Identifier);
+        output.WriteMessage(ObjectId);
       }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
@@ -535,8 +516,8 @@ namespace org.herbal3d.basil.protocol.BasilServer {
       if (exception_ != null) {
         size += 1 + pb::CodedOutputStream.ComputeMessageSize(Exception);
       }
-      if (identifier_ != null) {
-        size += 1 + pb::CodedOutputStream.ComputeMessageSize(Identifier);
+      if (objectId_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(ObjectId);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -555,11 +536,11 @@ namespace org.herbal3d.basil.protocol.BasilServer {
         }
         Exception.MergeFrom(other.Exception);
       }
-      if (other.identifier_ != null) {
-        if (identifier_ == null) {
-          identifier_ = new global::org.herbal3d.basil.protocol.BasilType.ObjectIdentifier();
+      if (other.objectId_ != null) {
+        if (objectId_ == null) {
+          objectId_ = new global::org.herbal3d.basil.protocol.BasilType.ObjectIdentifier();
         }
-        Identifier.MergeFrom(other.Identifier);
+        ObjectId.MergeFrom(other.ObjectId);
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
@@ -580,10 +561,10 @@ namespace org.herbal3d.basil.protocol.BasilServer {
             break;
           }
           case 18: {
-            if (identifier_ == null) {
-              identifier_ = new global::org.herbal3d.basil.protocol.BasilType.ObjectIdentifier();
+            if (objectId_ == null) {
+              objectId_ = new global::org.herbal3d.basil.protocol.BasilType.ObjectIdentifier();
             }
-            input.ReadMessage(identifier_);
+            input.ReadMessage(objectId_);
             break;
           }
         }
@@ -618,7 +599,7 @@ namespace org.herbal3d.basil.protocol.BasilServer {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public ForgetDisplayableObjectReq(ForgetDisplayableObjectReq other) : this() {
       Auth = other.auth_ != null ? other.Auth.Clone() : null;
-      Identifier = other.identifier_ != null ? other.Identifier.Clone() : null;
+      ObjectId = other.objectId_ != null ? other.ObjectId.Clone() : null;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -638,14 +619,14 @@ namespace org.herbal3d.basil.protocol.BasilServer {
       }
     }
 
-    /// <summary>Field number for the "identifier" field.</summary>
-    public const int IdentifierFieldNumber = 2;
-    private global::org.herbal3d.basil.protocol.BasilType.ObjectIdentifier identifier_;
+    /// <summary>Field number for the "objectId" field.</summary>
+    public const int ObjectIdFieldNumber = 2;
+    private global::org.herbal3d.basil.protocol.BasilType.ObjectIdentifier objectId_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::org.herbal3d.basil.protocol.BasilType.ObjectIdentifier Identifier {
-      get { return identifier_; }
+    public global::org.herbal3d.basil.protocol.BasilType.ObjectIdentifier ObjectId {
+      get { return objectId_; }
       set {
-        identifier_ = value;
+        objectId_ = value;
       }
     }
 
@@ -663,7 +644,7 @@ namespace org.herbal3d.basil.protocol.BasilServer {
         return true;
       }
       if (!object.Equals(Auth, other.Auth)) return false;
-      if (!object.Equals(Identifier, other.Identifier)) return false;
+      if (!object.Equals(ObjectId, other.ObjectId)) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -671,7 +652,7 @@ namespace org.herbal3d.basil.protocol.BasilServer {
     public override int GetHashCode() {
       int hash = 1;
       if (auth_ != null) hash ^= Auth.GetHashCode();
-      if (identifier_ != null) hash ^= Identifier.GetHashCode();
+      if (objectId_ != null) hash ^= ObjectId.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -689,9 +670,9 @@ namespace org.herbal3d.basil.protocol.BasilServer {
         output.WriteRawTag(10);
         output.WriteMessage(Auth);
       }
-      if (identifier_ != null) {
+      if (objectId_ != null) {
         output.WriteRawTag(18);
-        output.WriteMessage(Identifier);
+        output.WriteMessage(ObjectId);
       }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
@@ -704,8 +685,8 @@ namespace org.herbal3d.basil.protocol.BasilServer {
       if (auth_ != null) {
         size += 1 + pb::CodedOutputStream.ComputeMessageSize(Auth);
       }
-      if (identifier_ != null) {
-        size += 1 + pb::CodedOutputStream.ComputeMessageSize(Identifier);
+      if (objectId_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(ObjectId);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -724,11 +705,11 @@ namespace org.herbal3d.basil.protocol.BasilServer {
         }
         Auth.MergeFrom(other.Auth);
       }
-      if (other.identifier_ != null) {
-        if (identifier_ == null) {
-          identifier_ = new global::org.herbal3d.basil.protocol.BasilType.ObjectIdentifier();
+      if (other.objectId_ != null) {
+        if (objectId_ == null) {
+          objectId_ = new global::org.herbal3d.basil.protocol.BasilType.ObjectIdentifier();
         }
-        Identifier.MergeFrom(other.Identifier);
+        ObjectId.MergeFrom(other.ObjectId);
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
@@ -749,10 +730,10 @@ namespace org.herbal3d.basil.protocol.BasilServer {
             break;
           }
           case 18: {
-            if (identifier_ == null) {
-              identifier_ = new global::org.herbal3d.basil.protocol.BasilType.ObjectIdentifier();
+            if (objectId_ == null) {
+              objectId_ = new global::org.herbal3d.basil.protocol.BasilType.ObjectIdentifier();
             }
-            input.ReadMessage(identifier_);
+            input.ReadMessage(objectId_);
             break;
           }
         }
@@ -927,7 +908,8 @@ namespace org.herbal3d.basil.protocol.BasilServer {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public CreateObjectInstanceReq(CreateObjectInstanceReq other) : this() {
       Auth = other.auth_ != null ? other.Auth.Clone() : null;
-      Identifier = other.identifier_ != null ? other.Identifier.Clone() : null;
+      ObjectId = other.objectId_ != null ? other.ObjectId.Clone() : null;
+      InstanceId = other.instanceId_ != null ? other.InstanceId.Clone() : null;
       Pos = other.pos_ != null ? other.Pos.Clone() : null;
       propertiesToSet_ = other.propertiesToSet_.Clone();
       instanceCountHint_ = other.instanceCountHint_;
@@ -950,19 +932,33 @@ namespace org.herbal3d.basil.protocol.BasilServer {
       }
     }
 
-    /// <summary>Field number for the "identifier" field.</summary>
-    public const int IdentifierFieldNumber = 2;
-    private global::org.herbal3d.basil.protocol.BasilType.ObjectIdentifier identifier_;
+    /// <summary>Field number for the "objectId" field.</summary>
+    public const int ObjectIdFieldNumber = 2;
+    private global::org.herbal3d.basil.protocol.BasilType.ObjectIdentifier objectId_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::org.herbal3d.basil.protocol.BasilType.ObjectIdentifier Identifier {
-      get { return identifier_; }
+    public global::org.herbal3d.basil.protocol.BasilType.ObjectIdentifier ObjectId {
+      get { return objectId_; }
       set {
-        identifier_ = value;
+        objectId_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "instanceId" field.</summary>
+    public const int InstanceIdFieldNumber = 3;
+    private global::org.herbal3d.basil.protocol.BasilType.InstanceIdentifier instanceId_;
+    /// <summary>
+    /// if supplied, used if unique
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public global::org.herbal3d.basil.protocol.BasilType.InstanceIdentifier InstanceId {
+      get { return instanceId_; }
+      set {
+        instanceId_ = value;
       }
     }
 
     /// <summary>Field number for the "pos" field.</summary>
-    public const int PosFieldNumber = 3;
+    public const int PosFieldNumber = 4;
     private global::org.herbal3d.basil.protocol.BasilType.InstancePositionInfo pos_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public global::org.herbal3d.basil.protocol.BasilType.InstancePositionInfo Pos {
@@ -973,9 +969,9 @@ namespace org.herbal3d.basil.protocol.BasilServer {
     }
 
     /// <summary>Field number for the "propertiesToSet" field.</summary>
-    public const int PropertiesToSetFieldNumber = 4;
+    public const int PropertiesToSetFieldNumber = 5;
     private static readonly pbc::MapField<string, string>.Codec _map_propertiesToSet_codec
-        = new pbc::MapField<string, string>.Codec(pb::FieldCodec.ForString(10), pb::FieldCodec.ForString(18), 34);
+        = new pbc::MapField<string, string>.Codec(pb::FieldCodec.ForString(10), pb::FieldCodec.ForString(18), 42);
     private readonly pbc::MapField<string, string> propertiesToSet_ = new pbc::MapField<string, string>();
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public pbc::MapField<string, string> PropertiesToSet {
@@ -983,7 +979,7 @@ namespace org.herbal3d.basil.protocol.BasilServer {
     }
 
     /// <summary>Field number for the "InstanceCountHint" field.</summary>
-    public const int InstanceCountHintFieldNumber = 5;
+    public const int InstanceCountHintFieldNumber = 6;
     private int instanceCountHint_;
     /// <summary>
     /// hint as to total number of instances (zero means no hint)
@@ -1010,7 +1006,8 @@ namespace org.herbal3d.basil.protocol.BasilServer {
         return true;
       }
       if (!object.Equals(Auth, other.Auth)) return false;
-      if (!object.Equals(Identifier, other.Identifier)) return false;
+      if (!object.Equals(ObjectId, other.ObjectId)) return false;
+      if (!object.Equals(InstanceId, other.InstanceId)) return false;
       if (!object.Equals(Pos, other.Pos)) return false;
       if (!PropertiesToSet.Equals(other.PropertiesToSet)) return false;
       if (InstanceCountHint != other.InstanceCountHint) return false;
@@ -1021,7 +1018,8 @@ namespace org.herbal3d.basil.protocol.BasilServer {
     public override int GetHashCode() {
       int hash = 1;
       if (auth_ != null) hash ^= Auth.GetHashCode();
-      if (identifier_ != null) hash ^= Identifier.GetHashCode();
+      if (objectId_ != null) hash ^= ObjectId.GetHashCode();
+      if (instanceId_ != null) hash ^= InstanceId.GetHashCode();
       if (pos_ != null) hash ^= Pos.GetHashCode();
       hash ^= PropertiesToSet.GetHashCode();
       if (InstanceCountHint != 0) hash ^= InstanceCountHint.GetHashCode();
@@ -1042,17 +1040,21 @@ namespace org.herbal3d.basil.protocol.BasilServer {
         output.WriteRawTag(10);
         output.WriteMessage(Auth);
       }
-      if (identifier_ != null) {
+      if (objectId_ != null) {
         output.WriteRawTag(18);
-        output.WriteMessage(Identifier);
+        output.WriteMessage(ObjectId);
+      }
+      if (instanceId_ != null) {
+        output.WriteRawTag(26);
+        output.WriteMessage(InstanceId);
       }
       if (pos_ != null) {
-        output.WriteRawTag(26);
+        output.WriteRawTag(34);
         output.WriteMessage(Pos);
       }
       propertiesToSet_.WriteTo(output, _map_propertiesToSet_codec);
       if (InstanceCountHint != 0) {
-        output.WriteRawTag(40);
+        output.WriteRawTag(48);
         output.WriteInt32(InstanceCountHint);
       }
       if (_unknownFields != null) {
@@ -1066,8 +1068,11 @@ namespace org.herbal3d.basil.protocol.BasilServer {
       if (auth_ != null) {
         size += 1 + pb::CodedOutputStream.ComputeMessageSize(Auth);
       }
-      if (identifier_ != null) {
-        size += 1 + pb::CodedOutputStream.ComputeMessageSize(Identifier);
+      if (objectId_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(ObjectId);
+      }
+      if (instanceId_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(InstanceId);
       }
       if (pos_ != null) {
         size += 1 + pb::CodedOutputStream.ComputeMessageSize(Pos);
@@ -1093,11 +1098,17 @@ namespace org.herbal3d.basil.protocol.BasilServer {
         }
         Auth.MergeFrom(other.Auth);
       }
-      if (other.identifier_ != null) {
-        if (identifier_ == null) {
-          identifier_ = new global::org.herbal3d.basil.protocol.BasilType.ObjectIdentifier();
+      if (other.objectId_ != null) {
+        if (objectId_ == null) {
+          objectId_ = new global::org.herbal3d.basil.protocol.BasilType.ObjectIdentifier();
         }
-        Identifier.MergeFrom(other.Identifier);
+        ObjectId.MergeFrom(other.ObjectId);
+      }
+      if (other.instanceId_ != null) {
+        if (instanceId_ == null) {
+          instanceId_ = new global::org.herbal3d.basil.protocol.BasilType.InstanceIdentifier();
+        }
+        InstanceId.MergeFrom(other.InstanceId);
       }
       if (other.pos_ != null) {
         if (pos_ == null) {
@@ -1128,24 +1139,31 @@ namespace org.herbal3d.basil.protocol.BasilServer {
             break;
           }
           case 18: {
-            if (identifier_ == null) {
-              identifier_ = new global::org.herbal3d.basil.protocol.BasilType.ObjectIdentifier();
+            if (objectId_ == null) {
+              objectId_ = new global::org.herbal3d.basil.protocol.BasilType.ObjectIdentifier();
             }
-            input.ReadMessage(identifier_);
+            input.ReadMessage(objectId_);
             break;
           }
           case 26: {
+            if (instanceId_ == null) {
+              instanceId_ = new global::org.herbal3d.basil.protocol.BasilType.InstanceIdentifier();
+            }
+            input.ReadMessage(instanceId_);
+            break;
+          }
+          case 34: {
             if (pos_ == null) {
               pos_ = new global::org.herbal3d.basil.protocol.BasilType.InstancePositionInfo();
             }
             input.ReadMessage(pos_);
             break;
           }
-          case 34: {
+          case 42: {
             propertiesToSet_.AddEntriesFrom(input, _map_propertiesToSet_codec);
             break;
           }
-          case 40: {
+          case 48: {
             InstanceCountHint = input.ReadInt32();
             break;
           }
@@ -1657,7 +1675,7 @@ namespace org.herbal3d.basil.protocol.BasilServer {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public UpdateObjectPropertyReq(UpdateObjectPropertyReq other) : this() {
       Auth = other.auth_ != null ? other.Auth.Clone() : null;
-      Identifier = other.identifier_ != null ? other.Identifier.Clone() : null;
+      ObjectId = other.objectId_ != null ? other.ObjectId.Clone() : null;
       props_ = other.props_.Clone();
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
@@ -1678,14 +1696,14 @@ namespace org.herbal3d.basil.protocol.BasilServer {
       }
     }
 
-    /// <summary>Field number for the "identifier" field.</summary>
-    public const int IdentifierFieldNumber = 2;
-    private global::org.herbal3d.basil.protocol.BasilType.ObjectIdentifier identifier_;
+    /// <summary>Field number for the "objectId" field.</summary>
+    public const int ObjectIdFieldNumber = 2;
+    private global::org.herbal3d.basil.protocol.BasilType.ObjectIdentifier objectId_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::org.herbal3d.basil.protocol.BasilType.ObjectIdentifier Identifier {
-      get { return identifier_; }
+    public global::org.herbal3d.basil.protocol.BasilType.ObjectIdentifier ObjectId {
+      get { return objectId_; }
       set {
-        identifier_ = value;
+        objectId_ = value;
       }
     }
 
@@ -1713,7 +1731,7 @@ namespace org.herbal3d.basil.protocol.BasilServer {
         return true;
       }
       if (!object.Equals(Auth, other.Auth)) return false;
-      if (!object.Equals(Identifier, other.Identifier)) return false;
+      if (!object.Equals(ObjectId, other.ObjectId)) return false;
       if (!Props.Equals(other.Props)) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
@@ -1722,7 +1740,7 @@ namespace org.herbal3d.basil.protocol.BasilServer {
     public override int GetHashCode() {
       int hash = 1;
       if (auth_ != null) hash ^= Auth.GetHashCode();
-      if (identifier_ != null) hash ^= Identifier.GetHashCode();
+      if (objectId_ != null) hash ^= ObjectId.GetHashCode();
       hash ^= Props.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
@@ -1741,9 +1759,9 @@ namespace org.herbal3d.basil.protocol.BasilServer {
         output.WriteRawTag(10);
         output.WriteMessage(Auth);
       }
-      if (identifier_ != null) {
+      if (objectId_ != null) {
         output.WriteRawTag(18);
-        output.WriteMessage(Identifier);
+        output.WriteMessage(ObjectId);
       }
       props_.WriteTo(output, _map_props_codec);
       if (_unknownFields != null) {
@@ -1757,8 +1775,8 @@ namespace org.herbal3d.basil.protocol.BasilServer {
       if (auth_ != null) {
         size += 1 + pb::CodedOutputStream.ComputeMessageSize(Auth);
       }
-      if (identifier_ != null) {
-        size += 1 + pb::CodedOutputStream.ComputeMessageSize(Identifier);
+      if (objectId_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(ObjectId);
       }
       size += props_.CalculateSize(_map_props_codec);
       if (_unknownFields != null) {
@@ -1778,11 +1796,11 @@ namespace org.herbal3d.basil.protocol.BasilServer {
         }
         Auth.MergeFrom(other.Auth);
       }
-      if (other.identifier_ != null) {
-        if (identifier_ == null) {
-          identifier_ = new global::org.herbal3d.basil.protocol.BasilType.ObjectIdentifier();
+      if (other.objectId_ != null) {
+        if (objectId_ == null) {
+          objectId_ = new global::org.herbal3d.basil.protocol.BasilType.ObjectIdentifier();
         }
-        Identifier.MergeFrom(other.Identifier);
+        ObjectId.MergeFrom(other.ObjectId);
       }
       props_.Add(other.props_);
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
@@ -1804,10 +1822,10 @@ namespace org.herbal3d.basil.protocol.BasilServer {
             break;
           }
           case 18: {
-            if (identifier_ == null) {
-              identifier_ = new global::org.herbal3d.basil.protocol.BasilType.ObjectIdentifier();
+            if (objectId_ == null) {
+              objectId_ = new global::org.herbal3d.basil.protocol.BasilType.ObjectIdentifier();
             }
-            input.ReadMessage(identifier_);
+            input.ReadMessage(objectId_);
             break;
           }
           case 26: {
@@ -2652,7 +2670,7 @@ namespace org.herbal3d.basil.protocol.BasilServer {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public RequestObjectPropertiesReq(RequestObjectPropertiesReq other) : this() {
       Auth = other.auth_ != null ? other.Auth.Clone() : null;
-      Identifier = other.identifier_ != null ? other.Identifier.Clone() : null;
+      ObjectId = other.objectId_ != null ? other.ObjectId.Clone() : null;
       propertyMatch_ = other.propertyMatch_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
@@ -2673,14 +2691,14 @@ namespace org.herbal3d.basil.protocol.BasilServer {
       }
     }
 
-    /// <summary>Field number for the "identifier" field.</summary>
-    public const int IdentifierFieldNumber = 2;
-    private global::org.herbal3d.basil.protocol.BasilType.ObjectIdentifier identifier_;
+    /// <summary>Field number for the "objectId" field.</summary>
+    public const int ObjectIdFieldNumber = 2;
+    private global::org.herbal3d.basil.protocol.BasilType.ObjectIdentifier objectId_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::org.herbal3d.basil.protocol.BasilType.ObjectIdentifier Identifier {
-      get { return identifier_; }
+    public global::org.herbal3d.basil.protocol.BasilType.ObjectIdentifier ObjectId {
+      get { return objectId_; }
       set {
-        identifier_ = value;
+        objectId_ = value;
       }
     }
 
@@ -2712,7 +2730,7 @@ namespace org.herbal3d.basil.protocol.BasilServer {
         return true;
       }
       if (!object.Equals(Auth, other.Auth)) return false;
-      if (!object.Equals(Identifier, other.Identifier)) return false;
+      if (!object.Equals(ObjectId, other.ObjectId)) return false;
       if (PropertyMatch != other.PropertyMatch) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
@@ -2721,7 +2739,7 @@ namespace org.herbal3d.basil.protocol.BasilServer {
     public override int GetHashCode() {
       int hash = 1;
       if (auth_ != null) hash ^= Auth.GetHashCode();
-      if (identifier_ != null) hash ^= Identifier.GetHashCode();
+      if (objectId_ != null) hash ^= ObjectId.GetHashCode();
       if (PropertyMatch.Length != 0) hash ^= PropertyMatch.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
@@ -2740,9 +2758,9 @@ namespace org.herbal3d.basil.protocol.BasilServer {
         output.WriteRawTag(10);
         output.WriteMessage(Auth);
       }
-      if (identifier_ != null) {
+      if (objectId_ != null) {
         output.WriteRawTag(18);
-        output.WriteMessage(Identifier);
+        output.WriteMessage(ObjectId);
       }
       if (PropertyMatch.Length != 0) {
         output.WriteRawTag(26);
@@ -2759,8 +2777,8 @@ namespace org.herbal3d.basil.protocol.BasilServer {
       if (auth_ != null) {
         size += 1 + pb::CodedOutputStream.ComputeMessageSize(Auth);
       }
-      if (identifier_ != null) {
-        size += 1 + pb::CodedOutputStream.ComputeMessageSize(Identifier);
+      if (objectId_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(ObjectId);
       }
       if (PropertyMatch.Length != 0) {
         size += 1 + pb::CodedOutputStream.ComputeStringSize(PropertyMatch);
@@ -2782,11 +2800,11 @@ namespace org.herbal3d.basil.protocol.BasilServer {
         }
         Auth.MergeFrom(other.Auth);
       }
-      if (other.identifier_ != null) {
-        if (identifier_ == null) {
-          identifier_ = new global::org.herbal3d.basil.protocol.BasilType.ObjectIdentifier();
+      if (other.objectId_ != null) {
+        if (objectId_ == null) {
+          objectId_ = new global::org.herbal3d.basil.protocol.BasilType.ObjectIdentifier();
         }
-        Identifier.MergeFrom(other.Identifier);
+        ObjectId.MergeFrom(other.ObjectId);
       }
       if (other.PropertyMatch.Length != 0) {
         PropertyMatch = other.PropertyMatch;
@@ -2810,10 +2828,10 @@ namespace org.herbal3d.basil.protocol.BasilServer {
             break;
           }
           case 18: {
-            if (identifier_ == null) {
-              identifier_ = new global::org.herbal3d.basil.protocol.BasilType.ObjectIdentifier();
+            if (objectId_ == null) {
+              objectId_ = new global::org.herbal3d.basil.protocol.BasilType.ObjectIdentifier();
             }
-            input.ReadMessage(identifier_);
+            input.ReadMessage(objectId_);
             break;
           }
           case 26: {
@@ -3339,323 +3357,6 @@ namespace org.herbal3d.basil.protocol.BasilServer {
 
   }
 
-  /// <summary>
-  /// A client initiates a connection.
-  /// Returned property list is a collection of Basil renderer capabilities.
-  /// </summary>
-  public sealed partial class OpenSessionReq : pb::IMessage<OpenSessionReq> {
-    private static readonly pb::MessageParser<OpenSessionReq> _parser = new pb::MessageParser<OpenSessionReq>(() => new OpenSessionReq());
-    private pb::UnknownFieldSet _unknownFields;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pb::MessageParser<OpenSessionReq> Parser { get { return _parser; } }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pbr::MessageDescriptor Descriptor {
-      get { return global::org.herbal3d.basil.protocol.BasilServer.BasilServerReflection.Descriptor.MessageTypes[18]; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    pbr::MessageDescriptor pb::IMessage.Descriptor {
-      get { return Descriptor; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public OpenSessionReq() {
-      OnConstruction();
-    }
-
-    partial void OnConstruction();
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public OpenSessionReq(OpenSessionReq other) : this() {
-      Auth = other.auth_ != null ? other.Auth.Clone() : null;
-      features_ = other.features_.Clone();
-      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public OpenSessionReq Clone() {
-      return new OpenSessionReq(this);
-    }
-
-    /// <summary>Field number for the "auth" field.</summary>
-    public const int AuthFieldNumber = 1;
-    private global::org.herbal3d.basil.protocol.BasilType.AccessAuthorization auth_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::org.herbal3d.basil.protocol.BasilType.AccessAuthorization Auth {
-      get { return auth_; }
-      set {
-        auth_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "features" field.</summary>
-    public const int FeaturesFieldNumber = 2;
-    private static readonly pbc::MapField<string, string>.Codec _map_features_codec
-        = new pbc::MapField<string, string>.Codec(pb::FieldCodec.ForString(10), pb::FieldCodec.ForString(18), 18);
-    private readonly pbc::MapField<string, string> features_ = new pbc::MapField<string, string>();
-    /// <summary>
-    /// features requested
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public pbc::MapField<string, string> Features {
-      get { return features_; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override bool Equals(object other) {
-      return Equals(other as OpenSessionReq);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public bool Equals(OpenSessionReq other) {
-      if (ReferenceEquals(other, null)) {
-        return false;
-      }
-      if (ReferenceEquals(other, this)) {
-        return true;
-      }
-      if (!object.Equals(Auth, other.Auth)) return false;
-      if (!Features.Equals(other.Features)) return false;
-      return Equals(_unknownFields, other._unknownFields);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override int GetHashCode() {
-      int hash = 1;
-      if (auth_ != null) hash ^= Auth.GetHashCode();
-      hash ^= Features.GetHashCode();
-      if (_unknownFields != null) {
-        hash ^= _unknownFields.GetHashCode();
-      }
-      return hash;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override string ToString() {
-      return pb::JsonFormatter.ToDiagnosticString(this);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void WriteTo(pb::CodedOutputStream output) {
-      if (auth_ != null) {
-        output.WriteRawTag(10);
-        output.WriteMessage(Auth);
-      }
-      features_.WriteTo(output, _map_features_codec);
-      if (_unknownFields != null) {
-        _unknownFields.WriteTo(output);
-      }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int CalculateSize() {
-      int size = 0;
-      if (auth_ != null) {
-        size += 1 + pb::CodedOutputStream.ComputeMessageSize(Auth);
-      }
-      size += features_.CalculateSize(_map_features_codec);
-      if (_unknownFields != null) {
-        size += _unknownFields.CalculateSize();
-      }
-      return size;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(OpenSessionReq other) {
-      if (other == null) {
-        return;
-      }
-      if (other.auth_ != null) {
-        if (auth_ == null) {
-          auth_ = new global::org.herbal3d.basil.protocol.BasilType.AccessAuthorization();
-        }
-        Auth.MergeFrom(other.Auth);
-      }
-      features_.Add(other.features_);
-      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(pb::CodedInputStream input) {
-      uint tag;
-      while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
-          default:
-            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
-            break;
-          case 10: {
-            if (auth_ == null) {
-              auth_ = new global::org.herbal3d.basil.protocol.BasilType.AccessAuthorization();
-            }
-            input.ReadMessage(auth_);
-            break;
-          }
-          case 18: {
-            features_.AddEntriesFrom(input, _map_features_codec);
-            break;
-          }
-        }
-      }
-    }
-
-  }
-
-  public sealed partial class OpenSessionResp : pb::IMessage<OpenSessionResp> {
-    private static readonly pb::MessageParser<OpenSessionResp> _parser = new pb::MessageParser<OpenSessionResp>(() => new OpenSessionResp());
-    private pb::UnknownFieldSet _unknownFields;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pb::MessageParser<OpenSessionResp> Parser { get { return _parser; } }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pbr::MessageDescriptor Descriptor {
-      get { return global::org.herbal3d.basil.protocol.BasilServer.BasilServerReflection.Descriptor.MessageTypes[19]; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    pbr::MessageDescriptor pb::IMessage.Descriptor {
-      get { return Descriptor; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public OpenSessionResp() {
-      OnConstruction();
-    }
-
-    partial void OnConstruction();
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public OpenSessionResp(OpenSessionResp other) : this() {
-      Exception = other.exception_ != null ? other.Exception.Clone() : null;
-      properties_ = other.properties_.Clone();
-      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public OpenSessionResp Clone() {
-      return new OpenSessionResp(this);
-    }
-
-    /// <summary>Field number for the "exception" field.</summary>
-    public const int ExceptionFieldNumber = 1;
-    private global::org.herbal3d.basil.protocol.BasilType.BasilException exception_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::org.herbal3d.basil.protocol.BasilType.BasilException Exception {
-      get { return exception_; }
-      set {
-        exception_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "properties" field.</summary>
-    public const int PropertiesFieldNumber = 2;
-    private static readonly pbc::MapField<string, string>.Codec _map_properties_codec
-        = new pbc::MapField<string, string>.Codec(pb::FieldCodec.ForString(10), pb::FieldCodec.ForString(18), 18);
-    private readonly pbc::MapField<string, string> properties_ = new pbc::MapField<string, string>();
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public pbc::MapField<string, string> Properties {
-      get { return properties_; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override bool Equals(object other) {
-      return Equals(other as OpenSessionResp);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public bool Equals(OpenSessionResp other) {
-      if (ReferenceEquals(other, null)) {
-        return false;
-      }
-      if (ReferenceEquals(other, this)) {
-        return true;
-      }
-      if (!object.Equals(Exception, other.Exception)) return false;
-      if (!Properties.Equals(other.Properties)) return false;
-      return Equals(_unknownFields, other._unknownFields);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override int GetHashCode() {
-      int hash = 1;
-      if (exception_ != null) hash ^= Exception.GetHashCode();
-      hash ^= Properties.GetHashCode();
-      if (_unknownFields != null) {
-        hash ^= _unknownFields.GetHashCode();
-      }
-      return hash;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override string ToString() {
-      return pb::JsonFormatter.ToDiagnosticString(this);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void WriteTo(pb::CodedOutputStream output) {
-      if (exception_ != null) {
-        output.WriteRawTag(10);
-        output.WriteMessage(Exception);
-      }
-      properties_.WriteTo(output, _map_properties_codec);
-      if (_unknownFields != null) {
-        _unknownFields.WriteTo(output);
-      }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int CalculateSize() {
-      int size = 0;
-      if (exception_ != null) {
-        size += 1 + pb::CodedOutputStream.ComputeMessageSize(Exception);
-      }
-      size += properties_.CalculateSize(_map_properties_codec);
-      if (_unknownFields != null) {
-        size += _unknownFields.CalculateSize();
-      }
-      return size;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(OpenSessionResp other) {
-      if (other == null) {
-        return;
-      }
-      if (other.exception_ != null) {
-        if (exception_ == null) {
-          exception_ = new global::org.herbal3d.basil.protocol.BasilType.BasilException();
-        }
-        Exception.MergeFrom(other.Exception);
-      }
-      properties_.Add(other.properties_);
-      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(pb::CodedInputStream input) {
-      uint tag;
-      while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
-          default:
-            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
-            break;
-          case 10: {
-            if (exception_ == null) {
-              exception_ = new global::org.herbal3d.basil.protocol.BasilType.BasilException();
-            }
-            input.ReadMessage(exception_);
-            break;
-          }
-          case 18: {
-            properties_.AddEntriesFrom(input, _map_properties_codec);
-            break;
-          }
-        }
-      }
-    }
-
-  }
-
   public sealed partial class CloseSessionReq : pb::IMessage<CloseSessionReq> {
     private static readonly pb::MessageParser<CloseSessionReq> _parser = new pb::MessageParser<CloseSessionReq>(() => new CloseSessionReq());
     private pb::UnknownFieldSet _unknownFields;
@@ -3664,7 +3365,7 @@ namespace org.herbal3d.basil.protocol.BasilServer {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::org.herbal3d.basil.protocol.BasilServer.BasilServerReflection.Descriptor.MessageTypes[20]; }
+      get { return global::org.herbal3d.basil.protocol.BasilServer.BasilServerReflection.Descriptor.MessageTypes[18]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -3830,7 +3531,7 @@ namespace org.herbal3d.basil.protocol.BasilServer {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::org.herbal3d.basil.protocol.BasilServer.BasilServerReflection.Descriptor.MessageTypes[21]; }
+      get { return global::org.herbal3d.basil.protocol.BasilServer.BasilServerReflection.Descriptor.MessageTypes[19]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -3968,7 +3669,7 @@ namespace org.herbal3d.basil.protocol.BasilServer {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::org.herbal3d.basil.protocol.BasilServer.BasilServerReflection.Descriptor.MessageTypes[22]; }
+      get { return global::org.herbal3d.basil.protocol.BasilServer.BasilServerReflection.Descriptor.MessageTypes[20]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -4123,7 +3824,7 @@ namespace org.herbal3d.basil.protocol.BasilServer {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::org.herbal3d.basil.protocol.BasilServer.BasilServerReflection.Descriptor.MessageTypes[23]; }
+      get { return global::org.herbal3d.basil.protocol.BasilServer.BasilServerReflection.Descriptor.MessageTypes[21]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -4261,7 +3962,7 @@ namespace org.herbal3d.basil.protocol.BasilServer {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::org.herbal3d.basil.protocol.BasilServer.BasilServerReflection.Descriptor.MessageTypes[24]; }
+      get { return global::org.herbal3d.basil.protocol.BasilServer.BasilServerReflection.Descriptor.MessageTypes[22]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -4455,7 +4156,7 @@ namespace org.herbal3d.basil.protocol.BasilServer {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::org.herbal3d.basil.protocol.BasilServer.BasilServerReflection.Descriptor.MessageTypes[25]; }
+      get { return global::org.herbal3d.basil.protocol.BasilServer.BasilServerReflection.Descriptor.MessageTypes[23]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -4663,1156 +4364,6 @@ namespace org.herbal3d.basil.protocol.BasilServer {
         }
       }
     }
-
-  }
-
-  /// <summary>
-  /// TRANSPORT MESSAGE DEFINITION  =======================================
-  /// </summary>
-  public sealed partial class BasilServerMessage : pb::IMessage<BasilServerMessage> {
-    private static readonly pb::MessageParser<BasilServerMessage> _parser = new pb::MessageParser<BasilServerMessage>(() => new BasilServerMessage());
-    private pb::UnknownFieldSet _unknownFields;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pb::MessageParser<BasilServerMessage> Parser { get { return _parser; } }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pbr::MessageDescriptor Descriptor {
-      get { return global::org.herbal3d.basil.protocol.BasilServer.BasilServerReflection.Descriptor.MessageTypes[26]; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    pbr::MessageDescriptor pb::IMessage.Descriptor {
-      get { return Descriptor; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public BasilServerMessage() {
-      OnConstruction();
-    }
-
-    partial void OnConstruction();
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public BasilServerMessage(BasilServerMessage other) : this() {
-      basilServerMessages_ = other.basilServerMessages_.Clone();
-      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public BasilServerMessage Clone() {
-      return new BasilServerMessage(this);
-    }
-
-    /// <summary>Field number for the "BasilServerMessages" field.</summary>
-    public const int BasilServerMessagesFieldNumber = 1;
-    private static readonly pb::FieldCodec<global::org.herbal3d.basil.protocol.BasilServer.BasilServerMessage.Types.BasilServerMessageBody> _repeated_basilServerMessages_codec
-        = pb::FieldCodec.ForMessage(10, global::org.herbal3d.basil.protocol.BasilServer.BasilServerMessage.Types.BasilServerMessageBody.Parser);
-    private readonly pbc::RepeatedField<global::org.herbal3d.basil.protocol.BasilServer.BasilServerMessage.Types.BasilServerMessageBody> basilServerMessages_ = new pbc::RepeatedField<global::org.herbal3d.basil.protocol.BasilServer.BasilServerMessage.Types.BasilServerMessageBody>();
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public pbc::RepeatedField<global::org.herbal3d.basil.protocol.BasilServer.BasilServerMessage.Types.BasilServerMessageBody> BasilServerMessages {
-      get { return basilServerMessages_; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override bool Equals(object other) {
-      return Equals(other as BasilServerMessage);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public bool Equals(BasilServerMessage other) {
-      if (ReferenceEquals(other, null)) {
-        return false;
-      }
-      if (ReferenceEquals(other, this)) {
-        return true;
-      }
-      if(!basilServerMessages_.Equals(other.basilServerMessages_)) return false;
-      return Equals(_unknownFields, other._unknownFields);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override int GetHashCode() {
-      int hash = 1;
-      hash ^= basilServerMessages_.GetHashCode();
-      if (_unknownFields != null) {
-        hash ^= _unknownFields.GetHashCode();
-      }
-      return hash;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override string ToString() {
-      return pb::JsonFormatter.ToDiagnosticString(this);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void WriteTo(pb::CodedOutputStream output) {
-      basilServerMessages_.WriteTo(output, _repeated_basilServerMessages_codec);
-      if (_unknownFields != null) {
-        _unknownFields.WriteTo(output);
-      }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int CalculateSize() {
-      int size = 0;
-      size += basilServerMessages_.CalculateSize(_repeated_basilServerMessages_codec);
-      if (_unknownFields != null) {
-        size += _unknownFields.CalculateSize();
-      }
-      return size;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(BasilServerMessage other) {
-      if (other == null) {
-        return;
-      }
-      basilServerMessages_.Add(other.basilServerMessages_);
-      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(pb::CodedInputStream input) {
-      uint tag;
-      while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
-          default:
-            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
-            break;
-          case 10: {
-            basilServerMessages_.AddEntriesFrom(input, _repeated_basilServerMessages_codec);
-            break;
-          }
-        }
-      }
-    }
-
-    #region Nested types
-    /// <summary>Container for nested types declared in the BasilServerMessage message type.</summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static partial class Types {
-      /// <summary>
-      /// This is used as a 'oneof'.
-      /// </summary>
-      public sealed partial class BasilServerMessageBody : pb::IMessage<BasilServerMessageBody> {
-        private static readonly pb::MessageParser<BasilServerMessageBody> _parser = new pb::MessageParser<BasilServerMessageBody>(() => new BasilServerMessageBody());
-        private pb::UnknownFieldSet _unknownFields;
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-        public static pb::MessageParser<BasilServerMessageBody> Parser { get { return _parser; } }
-
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-        public static pbr::MessageDescriptor Descriptor {
-          get { return global::org.herbal3d.basil.protocol.BasilServer.BasilServerMessage.Descriptor.NestedTypes[0]; }
-        }
-
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-        pbr::MessageDescriptor pb::IMessage.Descriptor {
-          get { return Descriptor; }
-        }
-
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-        public BasilServerMessageBody() {
-          OnConstruction();
-        }
-
-        partial void OnConstruction();
-
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-        public BasilServerMessageBody(BasilServerMessageBody other) : this() {
-          IdentifyDisplayableObjectReqMsg = other.identifyDisplayableObjectReqMsg_ != null ? other.IdentifyDisplayableObjectReqMsg.Clone() : null;
-          IdentifyDisplayableObjectRespMsg = other.identifyDisplayableObjectRespMsg_ != null ? other.IdentifyDisplayableObjectRespMsg.Clone() : null;
-          ForgetDisplayableObjectReqMsg = other.forgetDisplayableObjectReqMsg_ != null ? other.ForgetDisplayableObjectReqMsg.Clone() : null;
-          ForgetDisplayableObjectRespMsg = other.forgetDisplayableObjectRespMsg_ != null ? other.ForgetDisplayableObjectRespMsg.Clone() : null;
-          CreateObjectInstanceReqMsg = other.createObjectInstanceReqMsg_ != null ? other.CreateObjectInstanceReqMsg.Clone() : null;
-          CreateObjectInstanceRespMsg = other.createObjectInstanceRespMsg_ != null ? other.CreateObjectInstanceRespMsg.Clone() : null;
-          DeleteObjectInstanceReqMsg = other.deleteObjectInstanceReqMsg_ != null ? other.DeleteObjectInstanceReqMsg.Clone() : null;
-          DeleteObjectInstanceRespMsg = other.deleteObjectInstanceRespMsg_ != null ? other.DeleteObjectInstanceRespMsg.Clone() : null;
-          UpdateObjectPropertyReqMsg = other.updateObjectPropertyReqMsg_ != null ? other.UpdateObjectPropertyReqMsg.Clone() : null;
-          UpdateObjectPropertyRespMsg = other.updateObjectPropertyRespMsg_ != null ? other.UpdateObjectPropertyRespMsg.Clone() : null;
-          UpdateInstancePropertyReqMsg = other.updateInstancePropertyReqMsg_ != null ? other.UpdateInstancePropertyReqMsg.Clone() : null;
-          UpdateInstancePropertyRespMsg = other.updateInstancePropertyRespMsg_ != null ? other.UpdateInstancePropertyRespMsg.Clone() : null;
-          UpdateInstancePositionReqMsg = other.updateInstancePositionReqMsg_ != null ? other.UpdateInstancePositionReqMsg.Clone() : null;
-          UpdateInstancePositionRespMsg = other.updateInstancePositionRespMsg_ != null ? other.UpdateInstancePositionRespMsg.Clone() : null;
-          RequestObjectPropertiesReqMsg = other.requestObjectPropertiesReqMsg_ != null ? other.RequestObjectPropertiesReqMsg.Clone() : null;
-          RequestObjectPropertiesRespMsg = other.requestObjectPropertiesRespMsg_ != null ? other.RequestObjectPropertiesRespMsg.Clone() : null;
-          RequestInstancePropertiesReqMsg = other.requestInstancePropertiesReqMsg_ != null ? other.RequestInstancePropertiesReqMsg.Clone() : null;
-          RequestInstancePropertiesRespMsg = other.requestInstancePropertiesRespMsg_ != null ? other.RequestInstancePropertiesRespMsg.Clone() : null;
-          OpenSessionReqMsg = other.openSessionReqMsg_ != null ? other.OpenSessionReqMsg.Clone() : null;
-          OpenSessionRespMsg = other.openSessionRespMsg_ != null ? other.OpenSessionRespMsg.Clone() : null;
-          CloseSessionReqMsg = other.closeSessionReqMsg_ != null ? other.CloseSessionReqMsg.Clone() : null;
-          CloseSessionRespMsg = other.closeSessionRespMsg_ != null ? other.CloseSessionRespMsg.Clone() : null;
-          AliveCheckReqMsg = other.aliveCheckReqMsg_ != null ? other.AliveCheckReqMsg.Clone() : null;
-          AliveCheckRespMsg = other.aliveCheckRespMsg_ != null ? other.AliveCheckRespMsg.Clone() : null;
-          MakeConnectionReqMsg = other.makeConnectionReqMsg_ != null ? other.MakeConnectionReqMsg.Clone() : null;
-          MakeConnectionRespMsg = other.makeConnectionRespMsg_ != null ? other.MakeConnectionRespMsg.Clone() : null;
-          rPCRequestSession_ = other.rPCRequestSession_;
-          _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
-        }
-
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-        public BasilServerMessageBody Clone() {
-          return new BasilServerMessageBody(this);
-        }
-
-        /// <summary>Field number for the "IdentifyDisplayableObjectReqMsg" field.</summary>
-        public const int IdentifyDisplayableObjectReqMsgFieldNumber = 1;
-        private global::org.herbal3d.basil.protocol.BasilServer.IdentifyDisplayableObjectReq identifyDisplayableObjectReqMsg_;
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-        public global::org.herbal3d.basil.protocol.BasilServer.IdentifyDisplayableObjectReq IdentifyDisplayableObjectReqMsg {
-          get { return identifyDisplayableObjectReqMsg_; }
-          set {
-            identifyDisplayableObjectReqMsg_ = value;
-          }
-        }
-
-        /// <summary>Field number for the "IdentifyDisplayableObjectRespMsg" field.</summary>
-        public const int IdentifyDisplayableObjectRespMsgFieldNumber = 2;
-        private global::org.herbal3d.basil.protocol.BasilServer.IdentifyDisplayableObjectResp identifyDisplayableObjectRespMsg_;
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-        public global::org.herbal3d.basil.protocol.BasilServer.IdentifyDisplayableObjectResp IdentifyDisplayableObjectRespMsg {
-          get { return identifyDisplayableObjectRespMsg_; }
-          set {
-            identifyDisplayableObjectRespMsg_ = value;
-          }
-        }
-
-        /// <summary>Field number for the "ForgetDisplayableObjectReqMsg" field.</summary>
-        public const int ForgetDisplayableObjectReqMsgFieldNumber = 3;
-        private global::org.herbal3d.basil.protocol.BasilServer.ForgetDisplayableObjectReq forgetDisplayableObjectReqMsg_;
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-        public global::org.herbal3d.basil.protocol.BasilServer.ForgetDisplayableObjectReq ForgetDisplayableObjectReqMsg {
-          get { return forgetDisplayableObjectReqMsg_; }
-          set {
-            forgetDisplayableObjectReqMsg_ = value;
-          }
-        }
-
-        /// <summary>Field number for the "ForgetDisplayableObjectRespMsg" field.</summary>
-        public const int ForgetDisplayableObjectRespMsgFieldNumber = 4;
-        private global::org.herbal3d.basil.protocol.BasilServer.ForgetDisplayableObjectResp forgetDisplayableObjectRespMsg_;
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-        public global::org.herbal3d.basil.protocol.BasilServer.ForgetDisplayableObjectResp ForgetDisplayableObjectRespMsg {
-          get { return forgetDisplayableObjectRespMsg_; }
-          set {
-            forgetDisplayableObjectRespMsg_ = value;
-          }
-        }
-
-        /// <summary>Field number for the "CreateObjectInstanceReqMsg" field.</summary>
-        public const int CreateObjectInstanceReqMsgFieldNumber = 5;
-        private global::org.herbal3d.basil.protocol.BasilServer.CreateObjectInstanceReq createObjectInstanceReqMsg_;
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-        public global::org.herbal3d.basil.protocol.BasilServer.CreateObjectInstanceReq CreateObjectInstanceReqMsg {
-          get { return createObjectInstanceReqMsg_; }
-          set {
-            createObjectInstanceReqMsg_ = value;
-          }
-        }
-
-        /// <summary>Field number for the "CreateObjectInstanceRespMsg" field.</summary>
-        public const int CreateObjectInstanceRespMsgFieldNumber = 6;
-        private global::org.herbal3d.basil.protocol.BasilServer.CreateObjectInstanceResp createObjectInstanceRespMsg_;
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-        public global::org.herbal3d.basil.protocol.BasilServer.CreateObjectInstanceResp CreateObjectInstanceRespMsg {
-          get { return createObjectInstanceRespMsg_; }
-          set {
-            createObjectInstanceRespMsg_ = value;
-          }
-        }
-
-        /// <summary>Field number for the "DeleteObjectInstanceReqMsg" field.</summary>
-        public const int DeleteObjectInstanceReqMsgFieldNumber = 7;
-        private global::org.herbal3d.basil.protocol.BasilServer.DeleteObjectInstanceReq deleteObjectInstanceReqMsg_;
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-        public global::org.herbal3d.basil.protocol.BasilServer.DeleteObjectInstanceReq DeleteObjectInstanceReqMsg {
-          get { return deleteObjectInstanceReqMsg_; }
-          set {
-            deleteObjectInstanceReqMsg_ = value;
-          }
-        }
-
-        /// <summary>Field number for the "DeleteObjectInstanceRespMsg" field.</summary>
-        public const int DeleteObjectInstanceRespMsgFieldNumber = 8;
-        private global::org.herbal3d.basil.protocol.BasilServer.DeleteObjectInstanceResp deleteObjectInstanceRespMsg_;
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-        public global::org.herbal3d.basil.protocol.BasilServer.DeleteObjectInstanceResp DeleteObjectInstanceRespMsg {
-          get { return deleteObjectInstanceRespMsg_; }
-          set {
-            deleteObjectInstanceRespMsg_ = value;
-          }
-        }
-
-        /// <summary>Field number for the "UpdateObjectPropertyReqMsg" field.</summary>
-        public const int UpdateObjectPropertyReqMsgFieldNumber = 9;
-        private global::org.herbal3d.basil.protocol.BasilServer.UpdateObjectPropertyReq updateObjectPropertyReqMsg_;
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-        public global::org.herbal3d.basil.protocol.BasilServer.UpdateObjectPropertyReq UpdateObjectPropertyReqMsg {
-          get { return updateObjectPropertyReqMsg_; }
-          set {
-            updateObjectPropertyReqMsg_ = value;
-          }
-        }
-
-        /// <summary>Field number for the "UpdateObjectPropertyRespMsg" field.</summary>
-        public const int UpdateObjectPropertyRespMsgFieldNumber = 10;
-        private global::org.herbal3d.basil.protocol.BasilServer.UpdateObjectPropertyResp updateObjectPropertyRespMsg_;
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-        public global::org.herbal3d.basil.protocol.BasilServer.UpdateObjectPropertyResp UpdateObjectPropertyRespMsg {
-          get { return updateObjectPropertyRespMsg_; }
-          set {
-            updateObjectPropertyRespMsg_ = value;
-          }
-        }
-
-        /// <summary>Field number for the "UpdateInstancePropertyReqMsg" field.</summary>
-        public const int UpdateInstancePropertyReqMsgFieldNumber = 11;
-        private global::org.herbal3d.basil.protocol.BasilServer.UpdateInstancePropertyReq updateInstancePropertyReqMsg_;
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-        public global::org.herbal3d.basil.protocol.BasilServer.UpdateInstancePropertyReq UpdateInstancePropertyReqMsg {
-          get { return updateInstancePropertyReqMsg_; }
-          set {
-            updateInstancePropertyReqMsg_ = value;
-          }
-        }
-
-        /// <summary>Field number for the "UpdateInstancePropertyRespMsg" field.</summary>
-        public const int UpdateInstancePropertyRespMsgFieldNumber = 12;
-        private global::org.herbal3d.basil.protocol.BasilServer.UpdateInstancePropertyResp updateInstancePropertyRespMsg_;
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-        public global::org.herbal3d.basil.protocol.BasilServer.UpdateInstancePropertyResp UpdateInstancePropertyRespMsg {
-          get { return updateInstancePropertyRespMsg_; }
-          set {
-            updateInstancePropertyRespMsg_ = value;
-          }
-        }
-
-        /// <summary>Field number for the "UpdateInstancePositionReqMsg" field.</summary>
-        public const int UpdateInstancePositionReqMsgFieldNumber = 13;
-        private global::org.herbal3d.basil.protocol.BasilServer.UpdateInstancePositionReq updateInstancePositionReqMsg_;
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-        public global::org.herbal3d.basil.protocol.BasilServer.UpdateInstancePositionReq UpdateInstancePositionReqMsg {
-          get { return updateInstancePositionReqMsg_; }
-          set {
-            updateInstancePositionReqMsg_ = value;
-          }
-        }
-
-        /// <summary>Field number for the "UpdateInstancePositionRespMsg" field.</summary>
-        public const int UpdateInstancePositionRespMsgFieldNumber = 14;
-        private global::org.herbal3d.basil.protocol.BasilServer.UpdateInstancePositionResp updateInstancePositionRespMsg_;
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-        public global::org.herbal3d.basil.protocol.BasilServer.UpdateInstancePositionResp UpdateInstancePositionRespMsg {
-          get { return updateInstancePositionRespMsg_; }
-          set {
-            updateInstancePositionRespMsg_ = value;
-          }
-        }
-
-        /// <summary>Field number for the "RequestObjectPropertiesReqMsg" field.</summary>
-        public const int RequestObjectPropertiesReqMsgFieldNumber = 15;
-        private global::org.herbal3d.basil.protocol.BasilServer.RequestObjectPropertiesReq requestObjectPropertiesReqMsg_;
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-        public global::org.herbal3d.basil.protocol.BasilServer.RequestObjectPropertiesReq RequestObjectPropertiesReqMsg {
-          get { return requestObjectPropertiesReqMsg_; }
-          set {
-            requestObjectPropertiesReqMsg_ = value;
-          }
-        }
-
-        /// <summary>Field number for the "RequestObjectPropertiesRespMsg" field.</summary>
-        public const int RequestObjectPropertiesRespMsgFieldNumber = 16;
-        private global::org.herbal3d.basil.protocol.BasilServer.RequestObjectPropertiesResp requestObjectPropertiesRespMsg_;
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-        public global::org.herbal3d.basil.protocol.BasilServer.RequestObjectPropertiesResp RequestObjectPropertiesRespMsg {
-          get { return requestObjectPropertiesRespMsg_; }
-          set {
-            requestObjectPropertiesRespMsg_ = value;
-          }
-        }
-
-        /// <summary>Field number for the "RequestInstancePropertiesReqMsg" field.</summary>
-        public const int RequestInstancePropertiesReqMsgFieldNumber = 17;
-        private global::org.herbal3d.basil.protocol.BasilServer.RequestInstancePropertiesReq requestInstancePropertiesReqMsg_;
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-        public global::org.herbal3d.basil.protocol.BasilServer.RequestInstancePropertiesReq RequestInstancePropertiesReqMsg {
-          get { return requestInstancePropertiesReqMsg_; }
-          set {
-            requestInstancePropertiesReqMsg_ = value;
-          }
-        }
-
-        /// <summary>Field number for the "RequestInstancePropertiesRespMsg" field.</summary>
-        public const int RequestInstancePropertiesRespMsgFieldNumber = 18;
-        private global::org.herbal3d.basil.protocol.BasilServer.RequestInstancePropertiesResp requestInstancePropertiesRespMsg_;
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-        public global::org.herbal3d.basil.protocol.BasilServer.RequestInstancePropertiesResp RequestInstancePropertiesRespMsg {
-          get { return requestInstancePropertiesRespMsg_; }
-          set {
-            requestInstancePropertiesRespMsg_ = value;
-          }
-        }
-
-        /// <summary>Field number for the "OpenSessionReqMsg" field.</summary>
-        public const int OpenSessionReqMsgFieldNumber = 19;
-        private global::org.herbal3d.basil.protocol.BasilServer.OpenSessionReq openSessionReqMsg_;
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-        public global::org.herbal3d.basil.protocol.BasilServer.OpenSessionReq OpenSessionReqMsg {
-          get { return openSessionReqMsg_; }
-          set {
-            openSessionReqMsg_ = value;
-          }
-        }
-
-        /// <summary>Field number for the "OpenSessionRespMsg" field.</summary>
-        public const int OpenSessionRespMsgFieldNumber = 20;
-        private global::org.herbal3d.basil.protocol.BasilServer.OpenSessionResp openSessionRespMsg_;
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-        public global::org.herbal3d.basil.protocol.BasilServer.OpenSessionResp OpenSessionRespMsg {
-          get { return openSessionRespMsg_; }
-          set {
-            openSessionRespMsg_ = value;
-          }
-        }
-
-        /// <summary>Field number for the "CloseSessionReqMsg" field.</summary>
-        public const int CloseSessionReqMsgFieldNumber = 21;
-        private global::org.herbal3d.basil.protocol.BasilServer.CloseSessionReq closeSessionReqMsg_;
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-        public global::org.herbal3d.basil.protocol.BasilServer.CloseSessionReq CloseSessionReqMsg {
-          get { return closeSessionReqMsg_; }
-          set {
-            closeSessionReqMsg_ = value;
-          }
-        }
-
-        /// <summary>Field number for the "CloseSessionRespMsg" field.</summary>
-        public const int CloseSessionRespMsgFieldNumber = 22;
-        private global::org.herbal3d.basil.protocol.BasilServer.CloseSessionResp closeSessionRespMsg_;
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-        public global::org.herbal3d.basil.protocol.BasilServer.CloseSessionResp CloseSessionRespMsg {
-          get { return closeSessionRespMsg_; }
-          set {
-            closeSessionRespMsg_ = value;
-          }
-        }
-
-        /// <summary>Field number for the "AliveCheckReqMsg" field.</summary>
-        public const int AliveCheckReqMsgFieldNumber = 23;
-        private global::org.herbal3d.basil.protocol.BasilServer.AliveCheckReq aliveCheckReqMsg_;
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-        public global::org.herbal3d.basil.protocol.BasilServer.AliveCheckReq AliveCheckReqMsg {
-          get { return aliveCheckReqMsg_; }
-          set {
-            aliveCheckReqMsg_ = value;
-          }
-        }
-
-        /// <summary>Field number for the "AliveCheckRespMsg" field.</summary>
-        public const int AliveCheckRespMsgFieldNumber = 24;
-        private global::org.herbal3d.basil.protocol.BasilServer.AliveCheckResp aliveCheckRespMsg_;
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-        public global::org.herbal3d.basil.protocol.BasilServer.AliveCheckResp AliveCheckRespMsg {
-          get { return aliveCheckRespMsg_; }
-          set {
-            aliveCheckRespMsg_ = value;
-          }
-        }
-
-        /// <summary>Field number for the "MakeConnectionReqMsg" field.</summary>
-        public const int MakeConnectionReqMsgFieldNumber = 25;
-        private global::org.herbal3d.basil.protocol.BasilServer.MakeConnectionReq makeConnectionReqMsg_;
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-        public global::org.herbal3d.basil.protocol.BasilServer.MakeConnectionReq MakeConnectionReqMsg {
-          get { return makeConnectionReqMsg_; }
-          set {
-            makeConnectionReqMsg_ = value;
-          }
-        }
-
-        /// <summary>Field number for the "MakeConnectionRespMsg" field.</summary>
-        public const int MakeConnectionRespMsgFieldNumber = 26;
-        private global::org.herbal3d.basil.protocol.BasilServer.MakeConnectionResp makeConnectionRespMsg_;
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-        public global::org.herbal3d.basil.protocol.BasilServer.MakeConnectionResp MakeConnectionRespMsg {
-          get { return makeConnectionRespMsg_; }
-          set {
-            makeConnectionRespMsg_ = value;
-          }
-        }
-
-        /// <summary>Field number for the "RPCRequestSession" field.</summary>
-        public const int RPCRequestSessionFieldNumber = 250;
-        private uint rPCRequestSession_;
-        /// <summary>
-        /// RPC. If non-zero, build bindings so a request can have a response
-        /// </summary>
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-        public uint RPCRequestSession {
-          get { return rPCRequestSession_; }
-          set {
-            rPCRequestSession_ = value;
-          }
-        }
-
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-        public override bool Equals(object other) {
-          return Equals(other as BasilServerMessageBody);
-        }
-
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-        public bool Equals(BasilServerMessageBody other) {
-          if (ReferenceEquals(other, null)) {
-            return false;
-          }
-          if (ReferenceEquals(other, this)) {
-            return true;
-          }
-          if (!object.Equals(IdentifyDisplayableObjectReqMsg, other.IdentifyDisplayableObjectReqMsg)) return false;
-          if (!object.Equals(IdentifyDisplayableObjectRespMsg, other.IdentifyDisplayableObjectRespMsg)) return false;
-          if (!object.Equals(ForgetDisplayableObjectReqMsg, other.ForgetDisplayableObjectReqMsg)) return false;
-          if (!object.Equals(ForgetDisplayableObjectRespMsg, other.ForgetDisplayableObjectRespMsg)) return false;
-          if (!object.Equals(CreateObjectInstanceReqMsg, other.CreateObjectInstanceReqMsg)) return false;
-          if (!object.Equals(CreateObjectInstanceRespMsg, other.CreateObjectInstanceRespMsg)) return false;
-          if (!object.Equals(DeleteObjectInstanceReqMsg, other.DeleteObjectInstanceReqMsg)) return false;
-          if (!object.Equals(DeleteObjectInstanceRespMsg, other.DeleteObjectInstanceRespMsg)) return false;
-          if (!object.Equals(UpdateObjectPropertyReqMsg, other.UpdateObjectPropertyReqMsg)) return false;
-          if (!object.Equals(UpdateObjectPropertyRespMsg, other.UpdateObjectPropertyRespMsg)) return false;
-          if (!object.Equals(UpdateInstancePropertyReqMsg, other.UpdateInstancePropertyReqMsg)) return false;
-          if (!object.Equals(UpdateInstancePropertyRespMsg, other.UpdateInstancePropertyRespMsg)) return false;
-          if (!object.Equals(UpdateInstancePositionReqMsg, other.UpdateInstancePositionReqMsg)) return false;
-          if (!object.Equals(UpdateInstancePositionRespMsg, other.UpdateInstancePositionRespMsg)) return false;
-          if (!object.Equals(RequestObjectPropertiesReqMsg, other.RequestObjectPropertiesReqMsg)) return false;
-          if (!object.Equals(RequestObjectPropertiesRespMsg, other.RequestObjectPropertiesRespMsg)) return false;
-          if (!object.Equals(RequestInstancePropertiesReqMsg, other.RequestInstancePropertiesReqMsg)) return false;
-          if (!object.Equals(RequestInstancePropertiesRespMsg, other.RequestInstancePropertiesRespMsg)) return false;
-          if (!object.Equals(OpenSessionReqMsg, other.OpenSessionReqMsg)) return false;
-          if (!object.Equals(OpenSessionRespMsg, other.OpenSessionRespMsg)) return false;
-          if (!object.Equals(CloseSessionReqMsg, other.CloseSessionReqMsg)) return false;
-          if (!object.Equals(CloseSessionRespMsg, other.CloseSessionRespMsg)) return false;
-          if (!object.Equals(AliveCheckReqMsg, other.AliveCheckReqMsg)) return false;
-          if (!object.Equals(AliveCheckRespMsg, other.AliveCheckRespMsg)) return false;
-          if (!object.Equals(MakeConnectionReqMsg, other.MakeConnectionReqMsg)) return false;
-          if (!object.Equals(MakeConnectionRespMsg, other.MakeConnectionRespMsg)) return false;
-          if (RPCRequestSession != other.RPCRequestSession) return false;
-          return Equals(_unknownFields, other._unknownFields);
-        }
-
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-        public override int GetHashCode() {
-          int hash = 1;
-          if (identifyDisplayableObjectReqMsg_ != null) hash ^= IdentifyDisplayableObjectReqMsg.GetHashCode();
-          if (identifyDisplayableObjectRespMsg_ != null) hash ^= IdentifyDisplayableObjectRespMsg.GetHashCode();
-          if (forgetDisplayableObjectReqMsg_ != null) hash ^= ForgetDisplayableObjectReqMsg.GetHashCode();
-          if (forgetDisplayableObjectRespMsg_ != null) hash ^= ForgetDisplayableObjectRespMsg.GetHashCode();
-          if (createObjectInstanceReqMsg_ != null) hash ^= CreateObjectInstanceReqMsg.GetHashCode();
-          if (createObjectInstanceRespMsg_ != null) hash ^= CreateObjectInstanceRespMsg.GetHashCode();
-          if (deleteObjectInstanceReqMsg_ != null) hash ^= DeleteObjectInstanceReqMsg.GetHashCode();
-          if (deleteObjectInstanceRespMsg_ != null) hash ^= DeleteObjectInstanceRespMsg.GetHashCode();
-          if (updateObjectPropertyReqMsg_ != null) hash ^= UpdateObjectPropertyReqMsg.GetHashCode();
-          if (updateObjectPropertyRespMsg_ != null) hash ^= UpdateObjectPropertyRespMsg.GetHashCode();
-          if (updateInstancePropertyReqMsg_ != null) hash ^= UpdateInstancePropertyReqMsg.GetHashCode();
-          if (updateInstancePropertyRespMsg_ != null) hash ^= UpdateInstancePropertyRespMsg.GetHashCode();
-          if (updateInstancePositionReqMsg_ != null) hash ^= UpdateInstancePositionReqMsg.GetHashCode();
-          if (updateInstancePositionRespMsg_ != null) hash ^= UpdateInstancePositionRespMsg.GetHashCode();
-          if (requestObjectPropertiesReqMsg_ != null) hash ^= RequestObjectPropertiesReqMsg.GetHashCode();
-          if (requestObjectPropertiesRespMsg_ != null) hash ^= RequestObjectPropertiesRespMsg.GetHashCode();
-          if (requestInstancePropertiesReqMsg_ != null) hash ^= RequestInstancePropertiesReqMsg.GetHashCode();
-          if (requestInstancePropertiesRespMsg_ != null) hash ^= RequestInstancePropertiesRespMsg.GetHashCode();
-          if (openSessionReqMsg_ != null) hash ^= OpenSessionReqMsg.GetHashCode();
-          if (openSessionRespMsg_ != null) hash ^= OpenSessionRespMsg.GetHashCode();
-          if (closeSessionReqMsg_ != null) hash ^= CloseSessionReqMsg.GetHashCode();
-          if (closeSessionRespMsg_ != null) hash ^= CloseSessionRespMsg.GetHashCode();
-          if (aliveCheckReqMsg_ != null) hash ^= AliveCheckReqMsg.GetHashCode();
-          if (aliveCheckRespMsg_ != null) hash ^= AliveCheckRespMsg.GetHashCode();
-          if (makeConnectionReqMsg_ != null) hash ^= MakeConnectionReqMsg.GetHashCode();
-          if (makeConnectionRespMsg_ != null) hash ^= MakeConnectionRespMsg.GetHashCode();
-          if (RPCRequestSession != 0) hash ^= RPCRequestSession.GetHashCode();
-          if (_unknownFields != null) {
-            hash ^= _unknownFields.GetHashCode();
-          }
-          return hash;
-        }
-
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-        public override string ToString() {
-          return pb::JsonFormatter.ToDiagnosticString(this);
-        }
-
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-        public void WriteTo(pb::CodedOutputStream output) {
-          if (identifyDisplayableObjectReqMsg_ != null) {
-            output.WriteRawTag(10);
-            output.WriteMessage(IdentifyDisplayableObjectReqMsg);
-          }
-          if (identifyDisplayableObjectRespMsg_ != null) {
-            output.WriteRawTag(18);
-            output.WriteMessage(IdentifyDisplayableObjectRespMsg);
-          }
-          if (forgetDisplayableObjectReqMsg_ != null) {
-            output.WriteRawTag(26);
-            output.WriteMessage(ForgetDisplayableObjectReqMsg);
-          }
-          if (forgetDisplayableObjectRespMsg_ != null) {
-            output.WriteRawTag(34);
-            output.WriteMessage(ForgetDisplayableObjectRespMsg);
-          }
-          if (createObjectInstanceReqMsg_ != null) {
-            output.WriteRawTag(42);
-            output.WriteMessage(CreateObjectInstanceReqMsg);
-          }
-          if (createObjectInstanceRespMsg_ != null) {
-            output.WriteRawTag(50);
-            output.WriteMessage(CreateObjectInstanceRespMsg);
-          }
-          if (deleteObjectInstanceReqMsg_ != null) {
-            output.WriteRawTag(58);
-            output.WriteMessage(DeleteObjectInstanceReqMsg);
-          }
-          if (deleteObjectInstanceRespMsg_ != null) {
-            output.WriteRawTag(66);
-            output.WriteMessage(DeleteObjectInstanceRespMsg);
-          }
-          if (updateObjectPropertyReqMsg_ != null) {
-            output.WriteRawTag(74);
-            output.WriteMessage(UpdateObjectPropertyReqMsg);
-          }
-          if (updateObjectPropertyRespMsg_ != null) {
-            output.WriteRawTag(82);
-            output.WriteMessage(UpdateObjectPropertyRespMsg);
-          }
-          if (updateInstancePropertyReqMsg_ != null) {
-            output.WriteRawTag(90);
-            output.WriteMessage(UpdateInstancePropertyReqMsg);
-          }
-          if (updateInstancePropertyRespMsg_ != null) {
-            output.WriteRawTag(98);
-            output.WriteMessage(UpdateInstancePropertyRespMsg);
-          }
-          if (updateInstancePositionReqMsg_ != null) {
-            output.WriteRawTag(106);
-            output.WriteMessage(UpdateInstancePositionReqMsg);
-          }
-          if (updateInstancePositionRespMsg_ != null) {
-            output.WriteRawTag(114);
-            output.WriteMessage(UpdateInstancePositionRespMsg);
-          }
-          if (requestObjectPropertiesReqMsg_ != null) {
-            output.WriteRawTag(122);
-            output.WriteMessage(RequestObjectPropertiesReqMsg);
-          }
-          if (requestObjectPropertiesRespMsg_ != null) {
-            output.WriteRawTag(130, 1);
-            output.WriteMessage(RequestObjectPropertiesRespMsg);
-          }
-          if (requestInstancePropertiesReqMsg_ != null) {
-            output.WriteRawTag(138, 1);
-            output.WriteMessage(RequestInstancePropertiesReqMsg);
-          }
-          if (requestInstancePropertiesRespMsg_ != null) {
-            output.WriteRawTag(146, 1);
-            output.WriteMessage(RequestInstancePropertiesRespMsg);
-          }
-          if (openSessionReqMsg_ != null) {
-            output.WriteRawTag(154, 1);
-            output.WriteMessage(OpenSessionReqMsg);
-          }
-          if (openSessionRespMsg_ != null) {
-            output.WriteRawTag(162, 1);
-            output.WriteMessage(OpenSessionRespMsg);
-          }
-          if (closeSessionReqMsg_ != null) {
-            output.WriteRawTag(170, 1);
-            output.WriteMessage(CloseSessionReqMsg);
-          }
-          if (closeSessionRespMsg_ != null) {
-            output.WriteRawTag(178, 1);
-            output.WriteMessage(CloseSessionRespMsg);
-          }
-          if (aliveCheckReqMsg_ != null) {
-            output.WriteRawTag(186, 1);
-            output.WriteMessage(AliveCheckReqMsg);
-          }
-          if (aliveCheckRespMsg_ != null) {
-            output.WriteRawTag(194, 1);
-            output.WriteMessage(AliveCheckRespMsg);
-          }
-          if (makeConnectionReqMsg_ != null) {
-            output.WriteRawTag(202, 1);
-            output.WriteMessage(MakeConnectionReqMsg);
-          }
-          if (makeConnectionRespMsg_ != null) {
-            output.WriteRawTag(210, 1);
-            output.WriteMessage(MakeConnectionRespMsg);
-          }
-          if (RPCRequestSession != 0) {
-            output.WriteRawTag(208, 15);
-            output.WriteUInt32(RPCRequestSession);
-          }
-          if (_unknownFields != null) {
-            _unknownFields.WriteTo(output);
-          }
-        }
-
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-        public int CalculateSize() {
-          int size = 0;
-          if (identifyDisplayableObjectReqMsg_ != null) {
-            size += 1 + pb::CodedOutputStream.ComputeMessageSize(IdentifyDisplayableObjectReqMsg);
-          }
-          if (identifyDisplayableObjectRespMsg_ != null) {
-            size += 1 + pb::CodedOutputStream.ComputeMessageSize(IdentifyDisplayableObjectRespMsg);
-          }
-          if (forgetDisplayableObjectReqMsg_ != null) {
-            size += 1 + pb::CodedOutputStream.ComputeMessageSize(ForgetDisplayableObjectReqMsg);
-          }
-          if (forgetDisplayableObjectRespMsg_ != null) {
-            size += 1 + pb::CodedOutputStream.ComputeMessageSize(ForgetDisplayableObjectRespMsg);
-          }
-          if (createObjectInstanceReqMsg_ != null) {
-            size += 1 + pb::CodedOutputStream.ComputeMessageSize(CreateObjectInstanceReqMsg);
-          }
-          if (createObjectInstanceRespMsg_ != null) {
-            size += 1 + pb::CodedOutputStream.ComputeMessageSize(CreateObjectInstanceRespMsg);
-          }
-          if (deleteObjectInstanceReqMsg_ != null) {
-            size += 1 + pb::CodedOutputStream.ComputeMessageSize(DeleteObjectInstanceReqMsg);
-          }
-          if (deleteObjectInstanceRespMsg_ != null) {
-            size += 1 + pb::CodedOutputStream.ComputeMessageSize(DeleteObjectInstanceRespMsg);
-          }
-          if (updateObjectPropertyReqMsg_ != null) {
-            size += 1 + pb::CodedOutputStream.ComputeMessageSize(UpdateObjectPropertyReqMsg);
-          }
-          if (updateObjectPropertyRespMsg_ != null) {
-            size += 1 + pb::CodedOutputStream.ComputeMessageSize(UpdateObjectPropertyRespMsg);
-          }
-          if (updateInstancePropertyReqMsg_ != null) {
-            size += 1 + pb::CodedOutputStream.ComputeMessageSize(UpdateInstancePropertyReqMsg);
-          }
-          if (updateInstancePropertyRespMsg_ != null) {
-            size += 1 + pb::CodedOutputStream.ComputeMessageSize(UpdateInstancePropertyRespMsg);
-          }
-          if (updateInstancePositionReqMsg_ != null) {
-            size += 1 + pb::CodedOutputStream.ComputeMessageSize(UpdateInstancePositionReqMsg);
-          }
-          if (updateInstancePositionRespMsg_ != null) {
-            size += 1 + pb::CodedOutputStream.ComputeMessageSize(UpdateInstancePositionRespMsg);
-          }
-          if (requestObjectPropertiesReqMsg_ != null) {
-            size += 1 + pb::CodedOutputStream.ComputeMessageSize(RequestObjectPropertiesReqMsg);
-          }
-          if (requestObjectPropertiesRespMsg_ != null) {
-            size += 2 + pb::CodedOutputStream.ComputeMessageSize(RequestObjectPropertiesRespMsg);
-          }
-          if (requestInstancePropertiesReqMsg_ != null) {
-            size += 2 + pb::CodedOutputStream.ComputeMessageSize(RequestInstancePropertiesReqMsg);
-          }
-          if (requestInstancePropertiesRespMsg_ != null) {
-            size += 2 + pb::CodedOutputStream.ComputeMessageSize(RequestInstancePropertiesRespMsg);
-          }
-          if (openSessionReqMsg_ != null) {
-            size += 2 + pb::CodedOutputStream.ComputeMessageSize(OpenSessionReqMsg);
-          }
-          if (openSessionRespMsg_ != null) {
-            size += 2 + pb::CodedOutputStream.ComputeMessageSize(OpenSessionRespMsg);
-          }
-          if (closeSessionReqMsg_ != null) {
-            size += 2 + pb::CodedOutputStream.ComputeMessageSize(CloseSessionReqMsg);
-          }
-          if (closeSessionRespMsg_ != null) {
-            size += 2 + pb::CodedOutputStream.ComputeMessageSize(CloseSessionRespMsg);
-          }
-          if (aliveCheckReqMsg_ != null) {
-            size += 2 + pb::CodedOutputStream.ComputeMessageSize(AliveCheckReqMsg);
-          }
-          if (aliveCheckRespMsg_ != null) {
-            size += 2 + pb::CodedOutputStream.ComputeMessageSize(AliveCheckRespMsg);
-          }
-          if (makeConnectionReqMsg_ != null) {
-            size += 2 + pb::CodedOutputStream.ComputeMessageSize(MakeConnectionReqMsg);
-          }
-          if (makeConnectionRespMsg_ != null) {
-            size += 2 + pb::CodedOutputStream.ComputeMessageSize(MakeConnectionRespMsg);
-          }
-          if (RPCRequestSession != 0) {
-            size += 2 + pb::CodedOutputStream.ComputeUInt32Size(RPCRequestSession);
-          }
-          if (_unknownFields != null) {
-            size += _unknownFields.CalculateSize();
-          }
-          return size;
-        }
-
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-        public void MergeFrom(BasilServerMessageBody other) {
-          if (other == null) {
-            return;
-          }
-          if (other.identifyDisplayableObjectReqMsg_ != null) {
-            if (identifyDisplayableObjectReqMsg_ == null) {
-              identifyDisplayableObjectReqMsg_ = new global::org.herbal3d.basil.protocol.BasilServer.IdentifyDisplayableObjectReq();
-            }
-            IdentifyDisplayableObjectReqMsg.MergeFrom(other.IdentifyDisplayableObjectReqMsg);
-          }
-          if (other.identifyDisplayableObjectRespMsg_ != null) {
-            if (identifyDisplayableObjectRespMsg_ == null) {
-              identifyDisplayableObjectRespMsg_ = new global::org.herbal3d.basil.protocol.BasilServer.IdentifyDisplayableObjectResp();
-            }
-            IdentifyDisplayableObjectRespMsg.MergeFrom(other.IdentifyDisplayableObjectRespMsg);
-          }
-          if (other.forgetDisplayableObjectReqMsg_ != null) {
-            if (forgetDisplayableObjectReqMsg_ == null) {
-              forgetDisplayableObjectReqMsg_ = new global::org.herbal3d.basil.protocol.BasilServer.ForgetDisplayableObjectReq();
-            }
-            ForgetDisplayableObjectReqMsg.MergeFrom(other.ForgetDisplayableObjectReqMsg);
-          }
-          if (other.forgetDisplayableObjectRespMsg_ != null) {
-            if (forgetDisplayableObjectRespMsg_ == null) {
-              forgetDisplayableObjectRespMsg_ = new global::org.herbal3d.basil.protocol.BasilServer.ForgetDisplayableObjectResp();
-            }
-            ForgetDisplayableObjectRespMsg.MergeFrom(other.ForgetDisplayableObjectRespMsg);
-          }
-          if (other.createObjectInstanceReqMsg_ != null) {
-            if (createObjectInstanceReqMsg_ == null) {
-              createObjectInstanceReqMsg_ = new global::org.herbal3d.basil.protocol.BasilServer.CreateObjectInstanceReq();
-            }
-            CreateObjectInstanceReqMsg.MergeFrom(other.CreateObjectInstanceReqMsg);
-          }
-          if (other.createObjectInstanceRespMsg_ != null) {
-            if (createObjectInstanceRespMsg_ == null) {
-              createObjectInstanceRespMsg_ = new global::org.herbal3d.basil.protocol.BasilServer.CreateObjectInstanceResp();
-            }
-            CreateObjectInstanceRespMsg.MergeFrom(other.CreateObjectInstanceRespMsg);
-          }
-          if (other.deleteObjectInstanceReqMsg_ != null) {
-            if (deleteObjectInstanceReqMsg_ == null) {
-              deleteObjectInstanceReqMsg_ = new global::org.herbal3d.basil.protocol.BasilServer.DeleteObjectInstanceReq();
-            }
-            DeleteObjectInstanceReqMsg.MergeFrom(other.DeleteObjectInstanceReqMsg);
-          }
-          if (other.deleteObjectInstanceRespMsg_ != null) {
-            if (deleteObjectInstanceRespMsg_ == null) {
-              deleteObjectInstanceRespMsg_ = new global::org.herbal3d.basil.protocol.BasilServer.DeleteObjectInstanceResp();
-            }
-            DeleteObjectInstanceRespMsg.MergeFrom(other.DeleteObjectInstanceRespMsg);
-          }
-          if (other.updateObjectPropertyReqMsg_ != null) {
-            if (updateObjectPropertyReqMsg_ == null) {
-              updateObjectPropertyReqMsg_ = new global::org.herbal3d.basil.protocol.BasilServer.UpdateObjectPropertyReq();
-            }
-            UpdateObjectPropertyReqMsg.MergeFrom(other.UpdateObjectPropertyReqMsg);
-          }
-          if (other.updateObjectPropertyRespMsg_ != null) {
-            if (updateObjectPropertyRespMsg_ == null) {
-              updateObjectPropertyRespMsg_ = new global::org.herbal3d.basil.protocol.BasilServer.UpdateObjectPropertyResp();
-            }
-            UpdateObjectPropertyRespMsg.MergeFrom(other.UpdateObjectPropertyRespMsg);
-          }
-          if (other.updateInstancePropertyReqMsg_ != null) {
-            if (updateInstancePropertyReqMsg_ == null) {
-              updateInstancePropertyReqMsg_ = new global::org.herbal3d.basil.protocol.BasilServer.UpdateInstancePropertyReq();
-            }
-            UpdateInstancePropertyReqMsg.MergeFrom(other.UpdateInstancePropertyReqMsg);
-          }
-          if (other.updateInstancePropertyRespMsg_ != null) {
-            if (updateInstancePropertyRespMsg_ == null) {
-              updateInstancePropertyRespMsg_ = new global::org.herbal3d.basil.protocol.BasilServer.UpdateInstancePropertyResp();
-            }
-            UpdateInstancePropertyRespMsg.MergeFrom(other.UpdateInstancePropertyRespMsg);
-          }
-          if (other.updateInstancePositionReqMsg_ != null) {
-            if (updateInstancePositionReqMsg_ == null) {
-              updateInstancePositionReqMsg_ = new global::org.herbal3d.basil.protocol.BasilServer.UpdateInstancePositionReq();
-            }
-            UpdateInstancePositionReqMsg.MergeFrom(other.UpdateInstancePositionReqMsg);
-          }
-          if (other.updateInstancePositionRespMsg_ != null) {
-            if (updateInstancePositionRespMsg_ == null) {
-              updateInstancePositionRespMsg_ = new global::org.herbal3d.basil.protocol.BasilServer.UpdateInstancePositionResp();
-            }
-            UpdateInstancePositionRespMsg.MergeFrom(other.UpdateInstancePositionRespMsg);
-          }
-          if (other.requestObjectPropertiesReqMsg_ != null) {
-            if (requestObjectPropertiesReqMsg_ == null) {
-              requestObjectPropertiesReqMsg_ = new global::org.herbal3d.basil.protocol.BasilServer.RequestObjectPropertiesReq();
-            }
-            RequestObjectPropertiesReqMsg.MergeFrom(other.RequestObjectPropertiesReqMsg);
-          }
-          if (other.requestObjectPropertiesRespMsg_ != null) {
-            if (requestObjectPropertiesRespMsg_ == null) {
-              requestObjectPropertiesRespMsg_ = new global::org.herbal3d.basil.protocol.BasilServer.RequestObjectPropertiesResp();
-            }
-            RequestObjectPropertiesRespMsg.MergeFrom(other.RequestObjectPropertiesRespMsg);
-          }
-          if (other.requestInstancePropertiesReqMsg_ != null) {
-            if (requestInstancePropertiesReqMsg_ == null) {
-              requestInstancePropertiesReqMsg_ = new global::org.herbal3d.basil.protocol.BasilServer.RequestInstancePropertiesReq();
-            }
-            RequestInstancePropertiesReqMsg.MergeFrom(other.RequestInstancePropertiesReqMsg);
-          }
-          if (other.requestInstancePropertiesRespMsg_ != null) {
-            if (requestInstancePropertiesRespMsg_ == null) {
-              requestInstancePropertiesRespMsg_ = new global::org.herbal3d.basil.protocol.BasilServer.RequestInstancePropertiesResp();
-            }
-            RequestInstancePropertiesRespMsg.MergeFrom(other.RequestInstancePropertiesRespMsg);
-          }
-          if (other.openSessionReqMsg_ != null) {
-            if (openSessionReqMsg_ == null) {
-              openSessionReqMsg_ = new global::org.herbal3d.basil.protocol.BasilServer.OpenSessionReq();
-            }
-            OpenSessionReqMsg.MergeFrom(other.OpenSessionReqMsg);
-          }
-          if (other.openSessionRespMsg_ != null) {
-            if (openSessionRespMsg_ == null) {
-              openSessionRespMsg_ = new global::org.herbal3d.basil.protocol.BasilServer.OpenSessionResp();
-            }
-            OpenSessionRespMsg.MergeFrom(other.OpenSessionRespMsg);
-          }
-          if (other.closeSessionReqMsg_ != null) {
-            if (closeSessionReqMsg_ == null) {
-              closeSessionReqMsg_ = new global::org.herbal3d.basil.protocol.BasilServer.CloseSessionReq();
-            }
-            CloseSessionReqMsg.MergeFrom(other.CloseSessionReqMsg);
-          }
-          if (other.closeSessionRespMsg_ != null) {
-            if (closeSessionRespMsg_ == null) {
-              closeSessionRespMsg_ = new global::org.herbal3d.basil.protocol.BasilServer.CloseSessionResp();
-            }
-            CloseSessionRespMsg.MergeFrom(other.CloseSessionRespMsg);
-          }
-          if (other.aliveCheckReqMsg_ != null) {
-            if (aliveCheckReqMsg_ == null) {
-              aliveCheckReqMsg_ = new global::org.herbal3d.basil.protocol.BasilServer.AliveCheckReq();
-            }
-            AliveCheckReqMsg.MergeFrom(other.AliveCheckReqMsg);
-          }
-          if (other.aliveCheckRespMsg_ != null) {
-            if (aliveCheckRespMsg_ == null) {
-              aliveCheckRespMsg_ = new global::org.herbal3d.basil.protocol.BasilServer.AliveCheckResp();
-            }
-            AliveCheckRespMsg.MergeFrom(other.AliveCheckRespMsg);
-          }
-          if (other.makeConnectionReqMsg_ != null) {
-            if (makeConnectionReqMsg_ == null) {
-              makeConnectionReqMsg_ = new global::org.herbal3d.basil.protocol.BasilServer.MakeConnectionReq();
-            }
-            MakeConnectionReqMsg.MergeFrom(other.MakeConnectionReqMsg);
-          }
-          if (other.makeConnectionRespMsg_ != null) {
-            if (makeConnectionRespMsg_ == null) {
-              makeConnectionRespMsg_ = new global::org.herbal3d.basil.protocol.BasilServer.MakeConnectionResp();
-            }
-            MakeConnectionRespMsg.MergeFrom(other.MakeConnectionRespMsg);
-          }
-          if (other.RPCRequestSession != 0) {
-            RPCRequestSession = other.RPCRequestSession;
-          }
-          _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
-        }
-
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-        public void MergeFrom(pb::CodedInputStream input) {
-          uint tag;
-          while ((tag = input.ReadTag()) != 0) {
-            switch(tag) {
-              default:
-                _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
-                break;
-              case 10: {
-                if (identifyDisplayableObjectReqMsg_ == null) {
-                  identifyDisplayableObjectReqMsg_ = new global::org.herbal3d.basil.protocol.BasilServer.IdentifyDisplayableObjectReq();
-                }
-                input.ReadMessage(identifyDisplayableObjectReqMsg_);
-                break;
-              }
-              case 18: {
-                if (identifyDisplayableObjectRespMsg_ == null) {
-                  identifyDisplayableObjectRespMsg_ = new global::org.herbal3d.basil.protocol.BasilServer.IdentifyDisplayableObjectResp();
-                }
-                input.ReadMessage(identifyDisplayableObjectRespMsg_);
-                break;
-              }
-              case 26: {
-                if (forgetDisplayableObjectReqMsg_ == null) {
-                  forgetDisplayableObjectReqMsg_ = new global::org.herbal3d.basil.protocol.BasilServer.ForgetDisplayableObjectReq();
-                }
-                input.ReadMessage(forgetDisplayableObjectReqMsg_);
-                break;
-              }
-              case 34: {
-                if (forgetDisplayableObjectRespMsg_ == null) {
-                  forgetDisplayableObjectRespMsg_ = new global::org.herbal3d.basil.protocol.BasilServer.ForgetDisplayableObjectResp();
-                }
-                input.ReadMessage(forgetDisplayableObjectRespMsg_);
-                break;
-              }
-              case 42: {
-                if (createObjectInstanceReqMsg_ == null) {
-                  createObjectInstanceReqMsg_ = new global::org.herbal3d.basil.protocol.BasilServer.CreateObjectInstanceReq();
-                }
-                input.ReadMessage(createObjectInstanceReqMsg_);
-                break;
-              }
-              case 50: {
-                if (createObjectInstanceRespMsg_ == null) {
-                  createObjectInstanceRespMsg_ = new global::org.herbal3d.basil.protocol.BasilServer.CreateObjectInstanceResp();
-                }
-                input.ReadMessage(createObjectInstanceRespMsg_);
-                break;
-              }
-              case 58: {
-                if (deleteObjectInstanceReqMsg_ == null) {
-                  deleteObjectInstanceReqMsg_ = new global::org.herbal3d.basil.protocol.BasilServer.DeleteObjectInstanceReq();
-                }
-                input.ReadMessage(deleteObjectInstanceReqMsg_);
-                break;
-              }
-              case 66: {
-                if (deleteObjectInstanceRespMsg_ == null) {
-                  deleteObjectInstanceRespMsg_ = new global::org.herbal3d.basil.protocol.BasilServer.DeleteObjectInstanceResp();
-                }
-                input.ReadMessage(deleteObjectInstanceRespMsg_);
-                break;
-              }
-              case 74: {
-                if (updateObjectPropertyReqMsg_ == null) {
-                  updateObjectPropertyReqMsg_ = new global::org.herbal3d.basil.protocol.BasilServer.UpdateObjectPropertyReq();
-                }
-                input.ReadMessage(updateObjectPropertyReqMsg_);
-                break;
-              }
-              case 82: {
-                if (updateObjectPropertyRespMsg_ == null) {
-                  updateObjectPropertyRespMsg_ = new global::org.herbal3d.basil.protocol.BasilServer.UpdateObjectPropertyResp();
-                }
-                input.ReadMessage(updateObjectPropertyRespMsg_);
-                break;
-              }
-              case 90: {
-                if (updateInstancePropertyReqMsg_ == null) {
-                  updateInstancePropertyReqMsg_ = new global::org.herbal3d.basil.protocol.BasilServer.UpdateInstancePropertyReq();
-                }
-                input.ReadMessage(updateInstancePropertyReqMsg_);
-                break;
-              }
-              case 98: {
-                if (updateInstancePropertyRespMsg_ == null) {
-                  updateInstancePropertyRespMsg_ = new global::org.herbal3d.basil.protocol.BasilServer.UpdateInstancePropertyResp();
-                }
-                input.ReadMessage(updateInstancePropertyRespMsg_);
-                break;
-              }
-              case 106: {
-                if (updateInstancePositionReqMsg_ == null) {
-                  updateInstancePositionReqMsg_ = new global::org.herbal3d.basil.protocol.BasilServer.UpdateInstancePositionReq();
-                }
-                input.ReadMessage(updateInstancePositionReqMsg_);
-                break;
-              }
-              case 114: {
-                if (updateInstancePositionRespMsg_ == null) {
-                  updateInstancePositionRespMsg_ = new global::org.herbal3d.basil.protocol.BasilServer.UpdateInstancePositionResp();
-                }
-                input.ReadMessage(updateInstancePositionRespMsg_);
-                break;
-              }
-              case 122: {
-                if (requestObjectPropertiesReqMsg_ == null) {
-                  requestObjectPropertiesReqMsg_ = new global::org.herbal3d.basil.protocol.BasilServer.RequestObjectPropertiesReq();
-                }
-                input.ReadMessage(requestObjectPropertiesReqMsg_);
-                break;
-              }
-              case 130: {
-                if (requestObjectPropertiesRespMsg_ == null) {
-                  requestObjectPropertiesRespMsg_ = new global::org.herbal3d.basil.protocol.BasilServer.RequestObjectPropertiesResp();
-                }
-                input.ReadMessage(requestObjectPropertiesRespMsg_);
-                break;
-              }
-              case 138: {
-                if (requestInstancePropertiesReqMsg_ == null) {
-                  requestInstancePropertiesReqMsg_ = new global::org.herbal3d.basil.protocol.BasilServer.RequestInstancePropertiesReq();
-                }
-                input.ReadMessage(requestInstancePropertiesReqMsg_);
-                break;
-              }
-              case 146: {
-                if (requestInstancePropertiesRespMsg_ == null) {
-                  requestInstancePropertiesRespMsg_ = new global::org.herbal3d.basil.protocol.BasilServer.RequestInstancePropertiesResp();
-                }
-                input.ReadMessage(requestInstancePropertiesRespMsg_);
-                break;
-              }
-              case 154: {
-                if (openSessionReqMsg_ == null) {
-                  openSessionReqMsg_ = new global::org.herbal3d.basil.protocol.BasilServer.OpenSessionReq();
-                }
-                input.ReadMessage(openSessionReqMsg_);
-                break;
-              }
-              case 162: {
-                if (openSessionRespMsg_ == null) {
-                  openSessionRespMsg_ = new global::org.herbal3d.basil.protocol.BasilServer.OpenSessionResp();
-                }
-                input.ReadMessage(openSessionRespMsg_);
-                break;
-              }
-              case 170: {
-                if (closeSessionReqMsg_ == null) {
-                  closeSessionReqMsg_ = new global::org.herbal3d.basil.protocol.BasilServer.CloseSessionReq();
-                }
-                input.ReadMessage(closeSessionReqMsg_);
-                break;
-              }
-              case 178: {
-                if (closeSessionRespMsg_ == null) {
-                  closeSessionRespMsg_ = new global::org.herbal3d.basil.protocol.BasilServer.CloseSessionResp();
-                }
-                input.ReadMessage(closeSessionRespMsg_);
-                break;
-              }
-              case 186: {
-                if (aliveCheckReqMsg_ == null) {
-                  aliveCheckReqMsg_ = new global::org.herbal3d.basil.protocol.BasilServer.AliveCheckReq();
-                }
-                input.ReadMessage(aliveCheckReqMsg_);
-                break;
-              }
-              case 194: {
-                if (aliveCheckRespMsg_ == null) {
-                  aliveCheckRespMsg_ = new global::org.herbal3d.basil.protocol.BasilServer.AliveCheckResp();
-                }
-                input.ReadMessage(aliveCheckRespMsg_);
-                break;
-              }
-              case 202: {
-                if (makeConnectionReqMsg_ == null) {
-                  makeConnectionReqMsg_ = new global::org.herbal3d.basil.protocol.BasilServer.MakeConnectionReq();
-                }
-                input.ReadMessage(makeConnectionReqMsg_);
-                break;
-              }
-              case 210: {
-                if (makeConnectionRespMsg_ == null) {
-                  makeConnectionRespMsg_ = new global::org.herbal3d.basil.protocol.BasilServer.MakeConnectionResp();
-                }
-                input.ReadMessage(makeConnectionRespMsg_);
-                break;
-              }
-              case 2000: {
-                RPCRequestSession = input.ReadUInt32();
-                break;
-              }
-            }
-          }
-        }
-
-      }
-
-    }
-    #endregion
 
   }
 

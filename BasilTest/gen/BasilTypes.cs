@@ -54,12 +54,13 @@ namespace org.herbal3d.basil.protocol.BasilType {
             "Y2Vzc1Byb3BlcnRpZXMYASADKAsyNC5CYXNpbFR5cGUuQWNjZXNzQXV0aG9y",
             "aXphdGlvbi5BY2Nlc3NQcm9wZXJ0aWVzRW50cnkaNwoVQWNjZXNzUHJvcGVy",
             "dGllc0VudHJ5EgsKA2tleRgBIAEoCRINCgV2YWx1ZRgCIAEoCToCOAEiGQoJ",
-            "VHJhY2VJbmZvEgwKBGluZm8YASABKAkqcgoLQ29vcmRTeXN0ZW0SCQoFV0dT",
-            "ODYQABIKCgZDQU1FUkEQARINCglDQU1FUkFBQlMQAhILCgdWSVJUVUFMEAMS",
-            "CAoETU9PThAEEggKBE1BUlMQBRIICgRSRUwxEAYSCAoEUkVMMhAHEggKBFJF",
-            "TDMQCCozCg5Sb3RhdGlvblN5c3RlbRIKCgZXT1JMRFIQABIICgRGT1JSEAES",
-            "CwoHQ0FNRVJBUhACQiiqAiVvcmcuaGVyYmFsM2QuYmFzaWwucHJvdG9jb2wu",
-            "QmFzaWxUeXBlYgZwcm90bzM="));
+            "VHJhY2VJbmZvEgwKBGluZm8YASABKAkiRwoQQlJlc3BvbnNlUmVxdWVzdBIX",
+            "Cg9yZXNwb25zZVNlc3Npb24YASABKA0SGgoScmVzcG9uc2VTZXNzaW9uS2V5",
+            "GAIgASgJKnIKC0Nvb3JkU3lzdGVtEgkKBVdHUzg2EAASCgoGQ0FNRVJBEAES",
+            "DQoJQ0FNRVJBQUJTEAISCwoHVklSVFVBTBADEggKBE1PT04QBBIICgRNQVJT",
+            "EAUSCAoEUkVMMRAGEggKBFJFTDIQBxIICgRSRUwzEAgqMwoOUm90YXRpb25T",
+            "eXN0ZW0SCgoGV09STERSEAASCAoERk9SUhABEgsKB0NBTUVSQVIQAkIoqgIl",
+            "b3JnLmhlcmJhbDNkLmJhc2lsLnByb3RvY29sLkJhc2lsVHlwZWIGcHJvdG8z"));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(new[] {typeof(global::org.herbal3d.basil.protocol.BasilType.CoordSystem), typeof(global::org.herbal3d.basil.protocol.BasilType.RotationSystem), }, new pbr::GeneratedClrTypeInfo[] {
@@ -76,7 +77,8 @@ namespace org.herbal3d.basil.protocol.BasilType {
             new pbr::GeneratedClrTypeInfo(typeof(global::org.herbal3d.basil.protocol.BasilType.PathDescription), global::org.herbal3d.basil.protocol.BasilType.PathDescription.Parser, new[]{ "PathType" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::org.herbal3d.basil.protocol.BasilType.InstancePositionInfo), global::org.herbal3d.basil.protocol.BasilType.InstancePositionInfo.Parser, new[]{ "Id", "Pos", "Vel", "Path" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::org.herbal3d.basil.protocol.BasilType.AccessAuthorization), global::org.herbal3d.basil.protocol.BasilType.AccessAuthorization.Parser, new[]{ "AccessProperties" }, null, null, new pbr::GeneratedClrTypeInfo[] { null, }),
-            new pbr::GeneratedClrTypeInfo(typeof(global::org.herbal3d.basil.protocol.BasilType.TraceInfo), global::org.herbal3d.basil.protocol.BasilType.TraceInfo.Parser, new[]{ "Info" }, null, null, null)
+            new pbr::GeneratedClrTypeInfo(typeof(global::org.herbal3d.basil.protocol.BasilType.TraceInfo), global::org.herbal3d.basil.protocol.BasilType.TraceInfo.Parser, new[]{ "Info" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::org.herbal3d.basil.protocol.BasilType.BResponseRequest), global::org.herbal3d.basil.protocol.BasilType.BResponseRequest.Parser, new[]{ "ResponseSession", "ResponseSessionKey" }, null, null, null)
           }));
     }
     #endregion
@@ -2506,6 +2508,171 @@ namespace org.herbal3d.basil.protocol.BasilType {
             break;
           case 10: {
             Info = input.ReadString();
+            break;
+          }
+        }
+      }
+    }
+
+  }
+
+  public sealed partial class BResponseRequest : pb::IMessage<BResponseRequest> {
+    private static readonly pb::MessageParser<BResponseRequest> _parser = new pb::MessageParser<BResponseRequest>(() => new BResponseRequest());
+    private pb::UnknownFieldSet _unknownFields;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pb::MessageParser<BResponseRequest> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::org.herbal3d.basil.protocol.BasilType.BasilTypesReflection.Descriptor.MessageTypes[14]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public BResponseRequest() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public BResponseRequest(BResponseRequest other) : this() {
+      responseSession_ = other.responseSession_;
+      responseSessionKey_ = other.responseSessionKey_;
+      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public BResponseRequest Clone() {
+      return new BResponseRequest(this);
+    }
+
+    /// <summary>Field number for the "responseSession" field.</summary>
+    public const int ResponseSessionFieldNumber = 1;
+    private uint responseSession_;
+    /// <summary>
+    /// The next variables implement a simple RPC mechanism.
+    /// If defined in a request, they are returned in a response so the receiver
+    ///     can match the response with the request.
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public uint ResponseSession {
+      get { return responseSession_; }
+      set {
+        responseSession_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "responseSessionKey" field.</summary>
+    public const int ResponseSessionKeyFieldNumber = 2;
+    private string responseSessionKey_ = "";
+    /// <summary>
+    /// a key used to verify a response
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public string ResponseSessionKey {
+      get { return responseSessionKey_; }
+      set {
+        responseSessionKey_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override bool Equals(object other) {
+      return Equals(other as BResponseRequest);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Equals(BResponseRequest other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (ResponseSession != other.ResponseSession) return false;
+      if (ResponseSessionKey != other.ResponseSessionKey) return false;
+      return Equals(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override int GetHashCode() {
+      int hash = 1;
+      if (ResponseSession != 0) hash ^= ResponseSession.GetHashCode();
+      if (ResponseSessionKey.Length != 0) hash ^= ResponseSessionKey.GetHashCode();
+      if (_unknownFields != null) {
+        hash ^= _unknownFields.GetHashCode();
+      }
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void WriteTo(pb::CodedOutputStream output) {
+      if (ResponseSession != 0) {
+        output.WriteRawTag(8);
+        output.WriteUInt32(ResponseSession);
+      }
+      if (ResponseSessionKey.Length != 0) {
+        output.WriteRawTag(18);
+        output.WriteString(ResponseSessionKey);
+      }
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(output);
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int CalculateSize() {
+      int size = 0;
+      if (ResponseSession != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(ResponseSession);
+      }
+      if (ResponseSessionKey.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(ResponseSessionKey);
+      }
+      if (_unknownFields != null) {
+        size += _unknownFields.CalculateSize();
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(BResponseRequest other) {
+      if (other == null) {
+        return;
+      }
+      if (other.ResponseSession != 0) {
+        ResponseSession = other.ResponseSession;
+      }
+      if (other.ResponseSessionKey.Length != 0) {
+        ResponseSessionKey = other.ResponseSessionKey;
+      }
+      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(pb::CodedInputStream input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+            break;
+          case 8: {
+            ResponseSession = input.ReadUInt32();
+            break;
+          }
+          case 18: {
+            ResponseSessionKey = input.ReadString();
             break;
           }
         }

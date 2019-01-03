@@ -12,46 +12,22 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.IO;
 
 using RSG;
+using Google.Protobuf;
 
 using BasilType = org.herbal3d.basil.protocol.BasilType;
 using BasilServer = org.herbal3d.basil.protocol.BasilServer;
+using BasilSpaceStream = org.herbal3d.basil.protocol.BasilSpaceStream;
+
 
 using Google.Protobuf.Collections;
 
 namespace org.herbal3d.BasilTest {
-    public class BasilClient {
+    public class BasilClient : MsgProcessor {
 
-        private struct SentRPC<RESP> {
-            public UInt64 session;
-            public BasilClient context;
-            public UInt64 timeRPCCreated;
-            public Action<RESP> resolver;
-            public Action<Exception> rejector;
-            public string requestName;
-        };
-        private BTransport xport;
-        private Dictionary<UInt64, Object> outstandingRPC = new Dictionary<ulong, Object>();
-        private UInt64 rpcSession = 11;
-
-        public BasilClient(BTransport pXport) {
-            xport = pXport;
-        }
-
-        private IPromise<RESP> SendAndPromiseResponse<REQ,RESP>(REQ req) {
-            var thisSession = this.rpcSession++;
-            return new Promise<RESP>((resolve, reject) => {
-                outstandingRPC.Add(thisSession, new SentRPC<RESP> {
-                    session = thisSession,
-                    context = this,
-                    timeRPCCreated = (ulong)DateTime.UtcNow.ToBinary(),
-                    resolver = resolve,
-                    rejector = reject
-                });
-                
-
-            });
+        public BasilClient(BasilConnection pBasilConnection) : base(pBasilConnection) {
         }
 
         public IPromise<BasilServer.IdentifyDisplayableObjectResp> IdentifyDisplayableObject(
@@ -64,7 +40,8 @@ namespace org.herbal3d.BasilTest {
                 Aabb = pAabb
             };
             return this.SendAndPromiseResponse<BasilServer.IdentifyDisplayableObjectReq,
-                                               BasilServer.IdentifyDisplayableObjectResp>(req);
+                                               BasilServer.IdentifyDisplayableObjectResp>(req,
+                                               "IdentifyDisplayableObjectReq");
         }
 
         public IPromise<BasilServer.ForgetDisplayableObjectResp> ForgetDisplayableObject(
@@ -72,10 +49,11 @@ namespace org.herbal3d.BasilTest {
                         BasilType.ObjectIdentifier pId) {
             var req = new BasilServer.ForgetDisplayableObjectReq {
                 Auth = pAuth,
-                Identifier = pId
+                ObjectId = pId
             };
             return this.SendAndPromiseResponse<BasilServer.ForgetDisplayableObjectReq,
-                                               BasilServer.ForgetDisplayableObjectResp>(req);
+                                               BasilServer.ForgetDisplayableObjectResp>(req,
+                                               "ForgetDisplayableObjectReq");
         }
 
         public IPromise<BasilServer.CreateObjectInstanceResp> CreateObjectInstance(
@@ -85,12 +63,13 @@ namespace org.herbal3d.BasilTest {
                         Dictionary<string,string> pPropertyList) {
             var req = new BasilServer.CreateObjectInstanceReq {
                 Auth = pAuth,
-                Identifier = pId,
+                ObjectId = pId,
                 Pos = pInstancePositionInfo,
             };
             req.PropertiesToSet.Add(pPropertyList);
             return this.SendAndPromiseResponse<BasilServer.CreateObjectInstanceReq,
-                                               BasilServer.CreateObjectInstanceResp>(req);
+                                               BasilServer.CreateObjectInstanceResp>(req,
+                                               "CreateObjectInstanceReq");
         }
 
         public IPromise<BasilServer.DeleteObjectInstanceResp> DeleteObjectInstance(
@@ -101,7 +80,8 @@ namespace org.herbal3d.BasilTest {
                 InstanceId = pId
             };
             return this.SendAndPromiseResponse<BasilServer.DeleteObjectInstanceReq,
-                                               BasilServer.DeleteObjectInstanceResp>(req);
+                                               BasilServer.DeleteObjectInstanceResp>(req,
+                                               "DeleteObjectInstanceReq");
         }
 
         public IPromise<BasilServer.UpdateObjectPropertyResp> UpdateObjectProperty(
@@ -110,11 +90,12 @@ namespace org.herbal3d.BasilTest {
                         Dictionary<string,string> pPropertyList) {
             var req = new BasilServer.UpdateObjectPropertyReq {
                 Auth = pAuth,
-                Identifier = pId
+                ObjectId = pId
             };
             req.Props.Add(pPropertyList);
             return this.SendAndPromiseResponse<BasilServer.UpdateObjectPropertyReq,
-                                               BasilServer.UpdateObjectPropertyResp>(req);
+                                               BasilServer.UpdateObjectPropertyResp>(req,
+                                               "UpdateObjectPropertyReq");
         }
 
         public IPromise<BasilServer.UpdateInstancePropertyResp> UpdateInstanceProperty(
@@ -127,7 +108,8 @@ namespace org.herbal3d.BasilTest {
             };
             req.Props.Add(pPropertyList);
             return this.SendAndPromiseResponse<BasilServer.UpdateInstancePropertyReq,
-                                               BasilServer.UpdateInstancePropertyResp>(req);
+                                               BasilServer.UpdateInstancePropertyResp>(req,
+                                               "UpdateInstancePropertyReq");
         }
         public IPromise<BasilServer.UpdateInstancePositionResp> UpdateInstancePosition(
                         BasilType.AccessAuthorization pAuth,
@@ -139,7 +121,8 @@ namespace org.herbal3d.BasilTest {
                 Pos = pInstancePositionInfo
             };
             return this.SendAndPromiseResponse<BasilServer.UpdateInstancePositionReq,
-                                               BasilServer.UpdateInstancePositionResp>(req);
+                                               BasilServer.UpdateInstancePositionResp>(req,
+                                               "UpdateInstancePositionReq");
         }
         public IPromise<BasilServer.RequestObjectPropertiesResp> RequestObjectProperties(
                         BasilType.AccessAuthorization pAuth,
@@ -147,11 +130,12 @@ namespace org.herbal3d.BasilTest {
                         string pPropertyMatch) {
             var req = new BasilServer.RequestObjectPropertiesReq {
                 Auth = pAuth,
-                Identifier = pId,
+                ObjectId = pId,
                 PropertyMatch = pPropertyMatch
             };
             return this.SendAndPromiseResponse<BasilServer.RequestObjectPropertiesReq,
-                                               BasilServer.RequestObjectPropertiesResp>(req);
+                                               BasilServer.RequestObjectPropertiesResp>(req,
+                                               "RequestObjectPropertiesReq");
         }
 
         public IPromise<BasilServer.RequestInstancePropertiesResp> RequestInstanceProperties(
@@ -164,23 +148,13 @@ namespace org.herbal3d.BasilTest {
                 PropertyMatch = pPropertyMatch
             };
             return this.SendAndPromiseResponse<BasilServer.RequestInstancePropertiesReq,
-                                               BasilServer.RequestInstancePropertiesResp>(req);
+                                               BasilServer.RequestInstancePropertiesResp>(req,
+                                               "RequestInstancePropertiesReq");
         }
 
         // RESOURCE MANAGEMENT =========================================
 
         // CONNECTION MANAGEMENT =======================================
-
-        public IPromise<BasilServer.OpenSessionResp> OpenSession(
-                        BasilType.AccessAuthorization pAuth,
-                        Dictionary<string,string> pFeatures) {
-            var req = new BasilServer.OpenSessionReq {
-                Auth = pAuth,
-            };
-            req.Features.Add(pFeatures);
-            return this.SendAndPromiseResponse<BasilServer.OpenSessionReq,
-                                               BasilServer.OpenSessionResp>(req);
-        }
 
         public IPromise<BasilServer.CloseSessionResp> CloseSession(
                         BasilType.AccessAuthorization pAuth,
@@ -190,7 +164,8 @@ namespace org.herbal3d.BasilTest {
                 Reason = pReason
             };
             return this.SendAndPromiseResponse<BasilServer.CloseSessionReq,
-                                               BasilServer.CloseSessionResp>(req);
+                                               BasilServer.CloseSessionResp>(req,
+                                               "CloseSessionReq");
         }
 
         public IPromise<BasilServer.MakeConnectionResp> MakeConnection(
@@ -201,7 +176,8 @@ namespace org.herbal3d.BasilTest {
             };
             req.ConnectionParams.Add(pConnectionParams);
             return this.SendAndPromiseResponse<BasilServer.MakeConnectionReq,
-                                               BasilServer.MakeConnectionResp>(req);
+                                               BasilServer.MakeConnectionResp>(req,
+                                               "MakeConnectionReq");
         }
 
         public IPromise<BasilServer.AliveCheckResp> AliveCheck(
@@ -214,7 +190,8 @@ namespace org.herbal3d.BasilTest {
                 SequenceNum = pSequenceNum
             };
             return this.SendAndPromiseResponse<BasilServer.AliveCheckReq,
-                                               BasilServer.AliveCheckResp>(req);
+                                               BasilServer.AliveCheckResp>(req,
+                                               "AliveCheckReq");
         }
     }
 }
