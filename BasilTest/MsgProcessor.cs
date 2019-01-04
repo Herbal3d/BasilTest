@@ -106,14 +106,23 @@ namespace org.herbal3d.BasilTest {
         //     the response to the request.
         protected void SendResponse<RESP>(RESP pResponseMsg, string pResponseMsgName,
                                 BasilSpaceStream.SpaceStreamMessage pEnclosing) {
+            BasilTest.log.DebugFormat("{0} SendResponse: {1}", _logHeader, pResponseMsgName);
             BasilSpaceStream.BasilStreamMessage msg = new BasilSpaceStream.BasilStreamMessage();
             if (pEnclosing != null && pEnclosing.ResponseReq != null) {
                 msg.ResponseReq = pEnclosing.ResponseReq;
             }
-            BasilSpaceStream.BasilStreamMessage.Descriptor.FindFieldByName(pResponseMsgName).Accessor.SetValue(msg, pResponseMsg);
+            var field = BasilSpaceStream.BasilStreamMessage.Descriptor.FindFieldByName(pResponseMsgName + "Msg");
+            if (field != null) {
+                field.Accessor.SetValue(msg, pResponseMsg);
+            }
+            else {
+                BasilTest.log.ErrorFormat("{0} SendResponse. Sending unknown response field: {1}",
+                            _logHeader, pResponseMsgName);
+            }
             _basilConnection.Send(msg.ToByteArray());
         }
 
+        // Overwrite function for when data is received.
         public virtual bool Receive(BasilSpaceStream.SpaceStreamMessage pMsg, BasilConnection pConnection) {
             return false;
         }

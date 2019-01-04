@@ -52,7 +52,7 @@
   </ItemGroup>
 
   <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
-    <Exec Command="git rev-parse HEAD &gt; &quot;$(ProjectDir)\Properties\GitCommit.txt&quot;&#xD;&#xA;&#xD;&#xA;echo %date% %time% &gt; &quot;$(ProjectDir)\Properties\BuildDate.txt&quot;&#xD;&#xA;" />
+    <Exec Command="call UpdateProperties.bat &quot;$(ProjectDir)\Properties&quot;&#xD;&#xA;" />
   </Target>
 
 </Project>

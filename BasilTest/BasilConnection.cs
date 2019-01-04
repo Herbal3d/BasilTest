@@ -19,12 +19,15 @@ using BasilSpaceStream = org.herbal3d.basil.protocol.BasilSpaceStream;
 
 namespace org.herbal3d.BasilTest {
     public class BasilConnection  {
+        private static readonly string _logHeader = "[BasilConnection]";
 
+        private ClientConnection _clientConnection;
         private List<MsgProcessor> _MsgProcessors = new List<MsgProcessor>();
 
         // A socket connection has been made to a Basil Server.
         // Initialize message receivers and senders.
         public BasilConnection(ClientConnection pConnection) {
+            _clientConnection = pConnection;
             _MsgProcessors.Add(new AliveCheckProcessor(this));
             _MsgProcessors.Add(new SpaceServerProcessor(this));
             _MsgProcessors.Add(new BasilClientProcessor(this));
@@ -41,6 +44,7 @@ namespace org.herbal3d.BasilTest {
                 }
             }
 
+            /*
             switch (rcvdMsg.SpaceMessageCase) {
                 case BasilSpaceStream.SpaceStreamMessage.SpaceMessageOneofCase.AliveCheckReqMsg:
                     
@@ -78,9 +82,11 @@ namespace org.herbal3d.BasilTest {
                 default:
                     break;
             }
+            */
         }
 
         public void Send(byte[] pMsg) {
+            _clientConnection.Send(pMsg);
         }
 
         public void AbortConnection() {

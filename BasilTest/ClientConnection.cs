@@ -103,6 +103,12 @@ namespace org.herbal3d.BasilTest {
             }
         }
 
+        public void Send(byte[] pMsg) {
+            if (IsConnected) {
+                _connection.Send(pMsg);
+            }
+        }
+
         private void AbortAppConnection() {
         }
     }

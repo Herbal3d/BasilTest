@@ -13,15 +13,55 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
+using BasilType = org.herbal3d.basil.protocol.BasilType;
+using SpaceServer = org.herbal3d.basil.protocol.SpaceServer;
 using BasilSpaceStream = org.herbal3d.basil.protocol.BasilSpaceStream;
 
 namespace org.herbal3d.BasilTest {
     public class SpaceServerProcessor : MsgProcessor {
+        private static readonly string _logHeader = "[SpaceServerProcessor]";
+
         public SpaceServerProcessor(BasilConnection pConnection) : base(pConnection) {
         }
 
         public override bool Receive(BasilSpaceStream.SpaceStreamMessage pMsg, BasilConnection pConnection) {
-            return base.Receive(pMsg, pConnection);
+            bool ret = false;
+            if (pMsg.CameraViewReqMsg != null) {
+                ret = true;
+                SendResponse<SpaceServer.CameraViewResp>(
+                    ProcCameraViewReq(pMsg.CameraViewReqMsg), "CameraViewResp", pMsg);
+            }
+            if (pMsg.OpenSessionReqMsg != null) {
+                ret = true;
+                SendResponse<SpaceServer.OpenSessionResp>(
+                    ProcOpenSessionReq(pMsg.OpenSessionReqMsg), "OpenSessionResp", pMsg);
+            }
+            if (pMsg.CloseSessionReqMsg != null) {
+                ret = true;
+                SendResponse<SpaceServer.CloseSessionResp>(
+                    ProcCloseSessionReq(pMsg.CloseSessionReqMsg), "CloseSessionResp", pMsg);
+            }
+            return ret;
         }
+
+        private SpaceServer.CameraViewResp ProcCameraViewReq(
+                        SpaceServer.CameraViewReq pReq) {
+            BasilTest.log.DebugFormat("{0} CameraViewReq", _logHeader);
+            return new SpaceServer.CameraViewResp {
+            };
+        }
+        private SpaceServer.OpenSessionResp ProcOpenSessionReq(
+                        SpaceServer.OpenSessionReq pReq) {
+            BasilTest.log.DebugFormat("{0} OpenSessionReq", _logHeader);
+            return new SpaceServer.OpenSessionResp {
+            };
+        }
+        private SpaceServer.CloseSessionResp ProcCloseSessionReq(
+                        SpaceServer.CloseSessionReq pReq) {
+            BasilTest.log.DebugFormat("{0} CloseSessionReq", _logHeader);
+            return new SpaceServer.CloseSessionResp {
+            };
+        }
+
     }
 }

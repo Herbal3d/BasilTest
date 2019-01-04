@@ -22,11 +22,9 @@ using BasilSpaceStream = org.herbal3d.basil.protocol.BasilSpaceStream;
 namespace org.herbal3d.BasilTest {
     public class AliveCheckProcessor : MsgProcessor {
 
-        private readonly BasilConnection _connection;
         private int _AliveSequenceNumber = 111;
 
         public AliveCheckProcessor(BasilConnection pConnection) : base(pConnection) {
-            _connection = pConnection;
         }
 
         public override bool Receive(BasilSpaceStream.SpaceStreamMessage pMsg,

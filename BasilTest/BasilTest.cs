@@ -124,10 +124,11 @@ namespace org.herbal3d.BasilTest {
                     };
 
                 });
+                while (KeepRunning) {
+                    Thread.Sleep(250);
+                }
             }
-            while (KeepRunning) {
-                Thread.Sleep(250);
-            }
+
         }
     }
 }

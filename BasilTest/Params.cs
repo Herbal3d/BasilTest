@@ -52,13 +52,8 @@ namespace org.herbal3d.BasilTest {
                 "wss://0.0.0.0:11440"),
             new ParameterDefn<string>("Certificate", "Certificate to use for wss connections",
                 null),
-
-            new ParameterDefn<string>("InputOAR", "The input OAR file",
-                null, "i"),
-            new ParameterDefn<string>("OutputDir", "The directory (relative to current dir) to store output files",
-                "./convoar", "d" ),
-            new ParameterDefn<string>("URIBase", "the string added to be beginning of asset name to create URI",
-                "" ),
+            new ParameterDefn<bool>("Verbose", "Boolean saying whether input connection must be secure",
+                true, "v"),
 
             new ParameterDefn<string>("==========", "OAR Reading Specific Parameters", null),
             new ParameterDefn<string>("ConvoarID", "GUID for 'convoar' identity (used for CreatorID, ...)",
