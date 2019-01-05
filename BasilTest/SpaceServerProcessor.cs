@@ -12,6 +12,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 using BasilType = org.herbal3d.basil.protocol.BasilType;
 using SpaceServer = org.herbal3d.basil.protocol.SpaceServer;
@@ -49,10 +50,15 @@ namespace org.herbal3d.BasilTest {
             BasilTest.log.DebugFormat("{0} CameraViewReq", _logHeader);
             return new SpaceServer.CameraViewResp {
             };
+
         }
         private SpaceServer.OpenSessionResp ProcOpenSessionReq(
                         SpaceServer.OpenSessionReq pReq) {
             BasilTest.log.DebugFormat("{0} OpenSessionReq", _logHeader);
+            var tester = new BasilTester(_basilConnection);
+            Task.Run(() => {
+                tester.DoTests();
+            });
             return new SpaceServer.OpenSessionResp {
             };
         }
@@ -62,6 +68,7 @@ namespace org.herbal3d.BasilTest {
             return new SpaceServer.CloseSessionResp {
             };
         }
+
 
     }
 }

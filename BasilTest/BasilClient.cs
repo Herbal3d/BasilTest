@@ -15,14 +15,9 @@ using System.Text;
 using System.IO;
 
 using RSG;
-using Google.Protobuf;
 
 using BasilType = org.herbal3d.basil.protocol.BasilType;
 using BasilServer = org.herbal3d.basil.protocol.BasilServer;
-using BasilSpaceStream = org.herbal3d.basil.protocol.BasilSpaceStream;
-
-
-using Google.Protobuf.Collections;
 
 namespace org.herbal3d.BasilTest {
     public class BasilClient : MsgProcessor {
@@ -54,6 +49,14 @@ namespace org.herbal3d.BasilTest {
             return this.SendAndPromiseResponse<BasilServer.ForgetDisplayableObjectReq,
                                                BasilServer.ForgetDisplayableObjectResp>(req,
                                                "ForgetDisplayableObjectReq");
+        }
+
+        public IPromise<BasilServer.CreateObjectInstanceResp> CreateObjectInstance(
+                        BasilType.AccessAuthorization pAuth,
+                        BasilType.ObjectIdentifier pId,
+                        BasilType.InstancePositionInfo pInstancePositionInfo) {
+            Dictionary<string, string> propertyList = null;
+            return CreateObjectInstance(pAuth, pId, pInstancePositionInfo, propertyList);
         }
 
         public IPromise<BasilServer.CreateObjectInstanceResp> CreateObjectInstance(

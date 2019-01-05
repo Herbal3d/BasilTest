@@ -42,7 +42,7 @@ namespace org.herbal3d.BasilTest {
 
         private static readonly string _logHeader = "[BasilTest]";
 
-        private List<ClientConnection> _clients = new List<ClientConnection>();
+        private List<TransportConnection> _transports = new List<TransportConnection>();
 
         private string Invocation() {
             StringBuilder buff = new StringBuilder();
@@ -96,7 +96,7 @@ namespace org.herbal3d.BasilTest {
             BasilTest.KeepRunning = true;
 
             FleckLog.Level = LogLevel.Debug;
-            List<ClientConnection> allClientConnections = new List<ClientConnection>();
+            List<TransportConnection> allClientConnections = new List<TransportConnection>();
             WebSocketServer server = null;
             if (BasilTest.parms.P<bool>("IsSecure")) {
                 BasilTest.log.DebugFormat("{0} Creating secure server", _logHeader);
@@ -112,15 +112,15 @@ namespace org.herbal3d.BasilTest {
             using (server) {
                 server.Start(socket => {
                     BasilTest.log.DebugFormat("{0} Received WebSocket connection", _logHeader);
-                    lock (_clients) {
-                        ClientConnection clientConnection = new ClientConnection(socket);
-                        clientConnection.OnDisconnect += client => {
-                            lock (_clients) {
+                    lock (_transports) {
+                        TransportConnection transportConnection = new TransportConnection(socket);
+                        transportConnection.OnDisconnect += client => {
+                            lock (_transports) {
                                 BasilTest.log.InfoFormat("{0} client disconnected", _logHeader);
-                                _clients.Remove(client);
+                                _transports.Remove(client);
                             }
                         };
-                        _clients.Add(clientConnection);
+                        _transports.Add(transportConnection);
                     };
 
                 });

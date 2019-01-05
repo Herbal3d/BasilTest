@@ -12,14 +12,21 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Linq;
 
 using RSG;
+
+using BasilType = org.herbal3d.basil.protocol.BasilType;
 
 namespace org.herbal3d.BasilTest {
     public class BasilTester : IDisposable {
 
-        public BasilTester(BasilClient client) {
-            Client = client;
+        private static readonly string _logHeader = "[BasilTest]";
+
+        private readonly BasilConnection _connection;
+
+        public BasilTester(BasilConnection pConnection) {
+            _connection = pConnection;
         }
 
         #region IDisposable Support
@@ -56,6 +63,44 @@ namespace org.herbal3d.BasilTest {
         #endregion
 
         public void DoTests() {
+            BasilType.AccessAuthorization auth = null;
+            var anAsset = new BasilType.AssetInformation() {
+                DisplayInfo = new BasilType.DisplayableInfo() {
+                    DisplayableType = "meshset",
+                }
+            };
+            anAsset.DisplayInfo.Asset.Add("url", "http://files.misterblue.com/BasilTest/convoar/testtest88/unoptimized/testtest88.gltf");
+            anAsset.DisplayInfo.Asset.Add("loaderType", "GLTF");
+            BasilType.AaBoundingBox aabb = null;
+            _connection.Client.IdentifyDisplayableObject(auth, anAsset, aabb)
+            .Then(resp => {
+                if (resp.Exception != null) {
+                }
+                BasilTest.log.InfoFormat("{0} created displayable object {1}", _logHeader, resp.ObjectId.Id);
+                BasilType.ObjectIdentifier displayableId = resp.ObjectId;
+                BasilType.InstancePositionInfo instancePositionInfo = new BasilType.InstancePositionInfo() {
+                    Pos = new BasilType.CoordPosition() {
+                        Pos = new BasilType.Vector3() {
+                            X = 100,
+                            Y = 101,
+                            Z = 102
+                        },
+                        PosRef = BasilType.CoordSystem.Wgs86,
+                        RotRef = BasilType.RotationSystem.Worldr
+                    }
+                };
+                _connection.Client.CreateObjectInstance(auth, displayableId, instancePositionInfo)
+                .Then(resp2 => {
+                    BasilTest.log.InfoFormat("{0} created object instance {1}", _logHeader, resp2.InstanceId.Id);
+                    BasilType.InstanceIdentifier instanceIdentifier = resp2.InstanceId;
+                    _connection.Client.RequestInstanceProperties(auth, instanceIdentifier, "")
+                    .Then(resp3 => {
+                        foreach (var key in resp3.Properties.Keys) {
+                            BasilTest.log.InfoFormat("{0}     {1} = {2}", _logHeader, key, resp3.Properties[key]);
+                        }
+                    });
+                });
+            });
         }
     }
 }

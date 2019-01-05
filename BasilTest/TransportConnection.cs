@@ -16,13 +16,14 @@ using System.Text;
 using Fleck;
 
 namespace org.herbal3d.BasilTest {
-    public class ClientConnection {
+    public class TransportConnection {
         private static readonly string _logHeader = "[ClientConnection]";
 
         private IWebSocketConnection _connection = null;
         private BasilConnection _basilConnection = null;
+        public readonly string Id;
 
-        public event Action<ClientConnection> OnDisconnect;
+        public event Action<TransportConnection> OnDisconnect;
         public enum ConnectionStates {
             INITIALIZING,
             OPEN,
@@ -38,8 +39,9 @@ namespace org.herbal3d.BasilTest {
         }
         public string ConnectionName = "UNKNOWN";
 
-        public ClientConnection(IWebSocketConnection pConnection) {
+        public TransportConnection(IWebSocketConnection pConnection) {
             _connection = pConnection;
+            Id = _connection.ConnectionInfo.Id.ToString();
             ConnectionName = _connection.ConnectionInfo.ClientIpAddress.ToString()
                             + ":"
                             + _connection.ConnectionInfo.ClientPort.ToString();
@@ -95,9 +97,9 @@ namespace org.herbal3d.BasilTest {
 
         // The WebSocket connection is disconnected. Tell the listeners.
         private void TriggerDisconnect() {
-            Action<ClientConnection> actions = OnDisconnect;
+            Action<TransportConnection> actions = OnDisconnect;
             if (actions != null) {
-                foreach (Action<ClientConnection> action in actions.GetInvocationList()) {
+                foreach (Action<TransportConnection> action in actions.GetInvocationList()) {
                     action(this);
                 }
             }

@@ -25,34 +25,32 @@ namespace org.herbal3d.BasilTest {
 
         private static readonly string _logHeader = "[MsgProcessor]";
 
-        private struct SentRPC<RESP> {
-            public UInt32 session;
-            public MsgProcessor context;
-            public UInt64 timeRPCCreated;
-            public Action<RESP> resolver;
-            public Action<Exception> rejector;
-            public string requestName;
-        };
         private Random _randomNumbers = new Random();
-        private Dictionary<UInt32, Object> _outstandingRPC = new Dictionary<UInt32, Object>();
         protected BasilConnection _basilConnection;
 
         public MsgProcessor(BasilConnection pConnection) {
             _basilConnection = pConnection;
         }
 
-        protected IPromise<RESP> SendAndPromiseResponse<REQ,RESP>(REQ req, string pReqName) {
+        protected IPromise<RESP> SendAndPromiseResponse<REQ,RESP>(REQ pReq, string pReqName) {
             UInt32 thisSession = (UInt32)_randomNumbers.Next();
-#pragma warning disable IDE0017 // Simplify object initialization
-            BasilSpaceStream.BasilStreamMessage msg = new BasilSpaceStream.BasilStreamMessage();
-#pragma warning restore IDE0017 // Simplify object initialization
-            msg.ResponseReq = new BasilType.BResponseRequest() {
+            BasilSpaceStream.BasilStreamMessage msg = new BasilSpaceStream.BasilStreamMessage() {
+                ResponseReq = new BasilType.BResponseRequest() {
                     ResponseSession = thisSession
+                }
             };
-            BasilSpaceStream.BasilStreamMessage.Descriptor.FindFieldByName(pReqName).Accessor.SetValue(msg, req);
+            var field = BasilSpaceStream.BasilStreamMessage.Descriptor.FindFieldByName(pReqName + "Msg");
+            if (field != null) {
+                field.Accessor.SetValue(msg, pReq);
+            }
+            else {
+                BasilTest.log.ErrorFormat("{0} SendAndPromiseResponse. Sending unknown response field: {1}",
+                            _logHeader, pReqName);
+            }
             return new Promise<RESP>((resolve, reject) => {
-                lock (_outstandingRPC) {
-                    _outstandingRPC.Add(thisSession, new SentRPC<RESP> {
+                BasilTest.log.DebugFormat("{0} SendAndPromiseResponse. Adding RPC session {1}", _logHeader, thisSession);
+                lock (_basilConnection.OutstandingRPC) {
+                    _basilConnection.OutstandingRPC.Add(thisSession, new BasilConnection.SentRPC<RESP> {
                         session = thisSession,
                         context = this,
                         timeRPCCreated = (ulong)DateTime.UtcNow.ToBinary(),
@@ -60,33 +58,42 @@ namespace org.herbal3d.BasilTest {
                         rejector = reject,
                         requestName = pReqName
                     });
-                }
+                };
                 _basilConnection.Send(msg.ToByteArray());
             });
         }
 
         // Received a response type message.
         // Find the matching RPC call info and call the process waiting for the response.
-        protected void HandleResponse<RESP>(RESP pResponseMsg, string pResponseMsgName,
+        protected void HandleResponse<RESP>(Object pResponseMsg, string pResponseMsgName,
                                 BasilSpaceStream.SpaceStreamMessage pEnclosing) {
             if (pEnclosing.ResponseReq != null) {
                 if (pEnclosing.ResponseReq.ResponseSession != 0) {
                     UInt32 sessionIndex = pEnclosing.ResponseReq.ResponseSession;
+                    BasilTest.log.DebugFormat("{0} HandleResponse. Received RPC session {1}", _logHeader, sessionIndex);
                     Object session = null;
-                    lock (_outstandingRPC) {
-                        if (_outstandingRPC.ContainsKey(sessionIndex)) {
-                            session = _outstandingRPC[sessionIndex];
-                            _outstandingRPC.Remove(sessionIndex);
+                    lock (_basilConnection.OutstandingRPC) {
+                        if (_basilConnection.OutstandingRPC.ContainsKey(sessionIndex)) {
+                            session = _basilConnection.OutstandingRPC[sessionIndex];
+                            _basilConnection.OutstandingRPC.Remove(sessionIndex);
+                        }
+                        else {
+                            BasilTest.log.ErrorFormat("{0} missing RCP response key: {1}", _logHeader, sessionIndex);
                         }
                     }
-                    try {
-                        // TODO: figure out how to make this 'await'
-                        session.GetType().GetMethod("resolver").Invoke(session,
-                                        new object[] { pResponseMsg, pResponseMsgName });
-                    }
-                    catch (Exception e) {
-                        BasilTest.log.ErrorFormat("{0} Exception processing message: {1}",
-                                        _logHeader, e);
+                    if (session != null) {
+                        try {
+                            // TODO: figure out how to make this 'await'
+                            session.GetType().GetMethod("resolver").Invoke(session,
+                                            new object[] { pResponseMsg });
+                            /*
+                            session.GetType().GetMember("resolver");
+                            */
+                        }
+                        catch (Exception e) {
+                            BasilTest.log.ErrorFormat("{0} Exception processing message: {1}",
+                                            _logHeader, e);
+                        }
                     }
                 }
                 else {

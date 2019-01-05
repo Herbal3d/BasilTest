@@ -13,29 +13,50 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
+using System.Threading.Tasks;
 
 using AliveCheck = org.herbal3d.basil.protocol.AliveCheck;
 using BasilSpaceStream = org.herbal3d.basil.protocol.BasilSpaceStream;
 
 namespace org.herbal3d.BasilTest {
+    // A connection to a SpaceServer from a Basil Viewer.
+    // Accept the OpenConnection from client then start the processing of messages.
     public class BasilConnection  {
         private static readonly string _logHeader = "[BasilConnection]";
 
-        private ClientConnection _clientConnection;
+        public readonly BasilClient Client;
+        public readonly TransportConnection Transport;
         private List<MsgProcessor> _MsgProcessors = new List<MsgProcessor>();
+
+        // Per Basil connection RPC information
+        public Dictionary<UInt32, Object> OutstandingRPC = new Dictionary<UInt32, Object>();
+        public struct SentRPC<RESP> {
+            public UInt32 session;
+            public MsgProcessor context;
+            public UInt64 timeRPCCreated;
+            public Action<RESP> resolver;
+            public Action<Exception> rejector;
+            public string requestName;
+        };
 
         // A socket connection has been made to a Basil Server.
         // Initialize message receivers and senders.
-        public BasilConnection(ClientConnection pConnection) {
-            _clientConnection = pConnection;
+        public BasilConnection(TransportConnection pConnection) {
+            Transport = pConnection;
+            // Processors for received messages
             _MsgProcessors.Add(new AliveCheckProcessor(this));
             _MsgProcessors.Add(new SpaceServerProcessor(this));
             _MsgProcessors.Add(new BasilClientProcessor(this));
+            // Routines for sending messages.
+            Client = new BasilClient(this);
         }
 
+        // This process shouldn't be receiving text message over the WebSocket
         public void Receive(string pMsg) {
+            BasilTest.log.ErrorFormat("{0} Receive: received a text message: {1}", _logHeader, pMsg);
         }
 
+        // Received a binary message. Find the processor and execute it.
         public void Receive(byte[] pMsg) {
             BasilSpaceStream.SpaceStreamMessage rcvdMsg = BasilSpaceStream.SpaceStreamMessage.Parser.ParseFrom(pMsg);
             foreach (MsgProcessor processor in _MsgProcessors) {
@@ -43,56 +64,15 @@ namespace org.herbal3d.BasilTest {
                     break;
                 }
             }
-
-            /*
-            switch (rcvdMsg.SpaceMessageCase) {
-                case BasilSpaceStream.SpaceStreamMessage.SpaceMessageOneofCase.AliveCheckReqMsg:
-                    
-                    break;
-                case BasilSpaceStream.SpaceStreamMessage.SpaceMessageOneofCase.AliveCheckRespMsg:
-                    break;
-                case BasilSpaceStream.SpaceStreamMessage.SpaceMessageOneofCase.CameraViewReqMsg:
-                    break;
-                case BasilSpaceStream.SpaceStreamMessage.SpaceMessageOneofCase.CloseSessionReqMsg:
-                    break;
-                case BasilSpaceStream.SpaceStreamMessage.SpaceMessageOneofCase.CloseSessionRespMsg:
-                    break;
-                case BasilSpaceStream.SpaceStreamMessage.SpaceMessageOneofCase.CreateObjectInstanceRespMsg:
-                    break;
-                case BasilSpaceStream.SpaceStreamMessage.SpaceMessageOneofCase.DeleteObjectInstanceRespMsg:
-                    break;
-                case BasilSpaceStream.SpaceStreamMessage.SpaceMessageOneofCase.ForgetDisplayableObjectRespMsg:
-                    break;
-                case BasilSpaceStream.SpaceStreamMessage.SpaceMessageOneofCase.IdentifyDisplayableObjectRespMsg:
-                    break;
-                case BasilSpaceStream.SpaceStreamMessage.SpaceMessageOneofCase.MakeConnectionRespMsg:
-                    break;
-                case BasilSpaceStream.SpaceStreamMessage.SpaceMessageOneofCase.OpenSessionReqMsg:
-                    break;
-                case BasilSpaceStream.SpaceStreamMessage.SpaceMessageOneofCase.RequestInstancePropertiesRespMsg:
-                    break;
-                case BasilSpaceStream.SpaceStreamMessage.SpaceMessageOneofCase.RequestObjectPropertiesRespMsg:
-                    break;
-                case BasilSpaceStream.SpaceStreamMessage.SpaceMessageOneofCase.UpdateInstancePositionRespMsg:
-                    break;
-                case BasilSpaceStream.SpaceStreamMessage.SpaceMessageOneofCase.UpdateInstancePropertyRespMsg:
-                    break;
-                case BasilSpaceStream.SpaceStreamMessage.SpaceMessageOneofCase.UpdateObjectPropertyRespMsg:
-                    break;
-                default:
-                    break;
-            }
-            */
         }
 
+        // Send the binary message!!
         public void Send(byte[] pMsg) {
-            _clientConnection.Send(pMsg);
+            Transport.Send(pMsg);
         }
 
+        // 
         public void AbortConnection() {
-        }
-
-        private void ProcAliveCheckReq(AliveCheck.AliveCheckReq pReq) {
         }
     }
 }
