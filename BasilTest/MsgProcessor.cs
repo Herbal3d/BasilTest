@@ -12,6 +12,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Reflection;
 
 using RSG;
 using Google.Protobuf;
@@ -65,30 +66,27 @@ namespace org.herbal3d.BasilTest {
 
         // Received a response type message.
         // Find the matching RPC call info and call the process waiting for the response.
-        protected void HandleResponse<RESP>(Object pResponseMsg, string pResponseMsgName,
+        protected void HandleResponse<RESP>(RESP pResponseMsg, string pResponseMsgName,
                                 BasilSpaceStream.SpaceStreamMessage pEnclosing) {
             if (pEnclosing.ResponseReq != null) {
                 if (pEnclosing.ResponseReq.ResponseSession != 0) {
                     UInt32 sessionIndex = pEnclosing.ResponseReq.ResponseSession;
-                    BasilTest.log.DebugFormat("{0} HandleResponse. Received RPC session {1}", _logHeader, sessionIndex);
-                    Object session = null;
+                    BasilConnection.SentRPC<RESP> session;
+                    Action<RESP> processor = null;
                     lock (_basilConnection.OutstandingRPC) {
                         if (_basilConnection.OutstandingRPC.ContainsKey(sessionIndex)) {
-                            session = _basilConnection.OutstandingRPC[sessionIndex];
+                            session = (BasilConnection.SentRPC<RESP>)_basilConnection.OutstandingRPC[sessionIndex];
                             _basilConnection.OutstandingRPC.Remove(sessionIndex);
+                            processor = (Action<RESP>)session.GetType().GetProperty("resolver").GetValue(session);
                         }
                         else {
                             BasilTest.log.ErrorFormat("{0} missing RCP response key: {1}", _logHeader, sessionIndex);
                         }
                     }
-                    if (session != null) {
+                    if (processor != null) {
                         try {
                             // TODO: figure out how to make this 'await'
-                            session.GetType().GetMethod("resolver").Invoke(session,
-                                            new object[] { pResponseMsg });
-                            /*
-                            session.GetType().GetMember("resolver");
-                            */
+                            processor(pResponseMsg);
                         }
                         catch (Exception e) {
                             BasilTest.log.ErrorFormat("{0} Exception processing message: {1}",

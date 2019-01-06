@@ -30,7 +30,7 @@ namespace org.herbal3d.BasilTest {
 
         // Per Basil connection RPC information
         public Dictionary<UInt32, Object> OutstandingRPC = new Dictionary<UInt32, Object>();
-        public struct SentRPC<RESP> {
+        public class SentRPC<RESP> {
             public UInt32 session;
             public MsgProcessor context;
             public UInt64 timeRPCCreated;
