@@ -52,7 +52,8 @@
   </ItemGroup>
 
   <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
-    <Exec Command="call UpdateProperties.bat &quot;$(ProjectDir)\Properties&quot;&#xD;&#xA;" />
+    <Exec Condition="'$(OS)' == 'Windows_NT'" Command="call UpdateProperties.bat &quot;$(ProjectDir)\Properties&quot;&#xD;&#xA;" />
+    <Exec Condition="'$(OS)' != 'Windows_NT'" Command="./UpdateProperties.sh &quot;$(ProjectDir)\Properties&quot;&#xD;&#xA;" />
   </Target>
 
 </Project>
