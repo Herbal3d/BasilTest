@@ -69,7 +69,9 @@ namespace org.herbal3d.BasilTest {
                 ObjectId = pId,
                 Pos = pInstancePositionInfo,
             };
-            req.PropertiesToSet.Add(pPropertyList);
+            if (pPropertyList != null) {
+                req.PropertiesToSet.Add(pPropertyList);
+            }
             return this.SendAndPromiseResponse<BasilServer.CreateObjectInstanceReq,
                                                BasilServer.CreateObjectInstanceResp>(req,
                                                "CreateObjectInstanceReq");

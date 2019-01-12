@@ -77,7 +77,7 @@ namespace org.herbal3d.BasilTest {
                         if (_basilConnection.OutstandingRPC.ContainsKey(sessionIndex)) {
                             session = (BasilConnection.SentRPC<RESP>)_basilConnection.OutstandingRPC[sessionIndex];
                             _basilConnection.OutstandingRPC.Remove(sessionIndex);
-                            processor = (Action<RESP>)session.GetType().GetProperty("resolver").GetValue(session);
+                            processor = (Action<RESP>)session.GetType().GetField("resolver").GetValue(session);
                         }
                         else {
                             BasilTest.log.ErrorFormat("{0} missing RCP response key: {1}", _logHeader, sessionIndex);
