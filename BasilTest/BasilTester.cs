@@ -15,6 +15,7 @@ using System.Text;
 using System.Linq;
 
 using RSG;
+using Google.Protobuf.Collections;
 
 using BasilType = org.herbal3d.basil.protocol.BasilType;
 
@@ -62,15 +63,25 @@ namespace org.herbal3d.BasilTest {
         }
         #endregion
 
-        public void DoTests() {
+        public void DoTests(MapField<string,string> pParams) {
             BasilType.AccessAuthorization auth = null;
             var anAsset = new BasilType.AssetInformation() {
                 DisplayInfo = new BasilType.DisplayableInfo() {
                     DisplayableType = "meshset",
                 }
             };
-            anAsset.DisplayInfo.Asset.Add("url", "http://files.misterblue.com/BasilTest/convoar/testtest88/unoptimized/testtest88.gltf");
-            anAsset.DisplayInfo.Asset.Add("loaderType", "GLTF");
+            // Checked for passed parameters specifying a test session and parameters for same
+            if (pParams.ContainsKey("TestConnection")
+                        && Boolean.Parse(pParams["TestConnection"])
+                        && pParams.ContainsKey("TestURL")) {
+                anAsset.DisplayInfo.Asset.Add("url", pParams["TestURL"]);
+                anAsset.DisplayInfo.Asset.Add("loaderType", 
+                        pParams.ContainsKey("TestLoaderType") ? pParams["TestLoaderType"] : "GLTF" );
+            }
+            else {
+                anAsset.DisplayInfo.Asset.Add("url", "http://files.misterblue.com/BasilTest/convoar/testtest88/unoptimized/testtest88.gltf");
+                anAsset.DisplayInfo.Asset.Add("loaderType", "GLTF");
+            }
             BasilType.AaBoundingBox aabb = null;
             _connection.Client.IdentifyDisplayableObject(auth, anAsset, aabb)
             .Then(resp => {

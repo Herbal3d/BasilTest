@@ -57,7 +57,7 @@ namespace org.herbal3d.BasilTest {
             BasilTest.log.DebugFormat("{0} OpenSessionReq", _logHeader);
             var tester = new BasilTester(_basilConnection);
             Task.Run(() => {
-                tester.DoTests();
+                tester.DoTests(pReq.Features);
             });
             return new SpaceServer.OpenSessionResp {
             };
