@@ -12,8 +12,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-
-using RSG;
+using System.Threading.Tasks;
 
 using AliveCheck = org.herbal3d.basil.protocol.AliveCheck;
 using BasilType = org.herbal3d.basil.protocol.BasilType;
@@ -33,14 +32,14 @@ namespace org.herbal3d.BasilTest {
             _basilConnection.AddMessageProcessors(processors);
         }
 
-        public IPromise<BasilMessage.BasilMessage> AliveCheck(
+        public async Task<BasilMessage.BasilMessage> AliveCheckAsync(
                         BasilType.AccessAuthorization pAuth) {
             BasilMessage.BasilMessage req = MakeAliveCheckReq(pAuth);
-            return this.SendAndPromiseResponse(req);
+            return await this.SendAndPromiseResponse(req);
         }
 
         // Send an AliveCheck request without expecting a response
-        public void AliveCheckNR(BasilType.AccessAuthorization pAuth) {
+        public void AliveCheck(BasilType.AccessAuthorization pAuth) {
             BasilMessage.BasilMessage req = MakeAliveCheckReq(pAuth);
             this.SendMessage(req, null);
         }

@@ -14,15 +14,15 @@ using System.Collections.Generic;
 using System.Text;
 using System.Linq;
 
-using RSG;
 using Google.Protobuf.Collections;
 
 using BasilType = org.herbal3d.basil.protocol.BasilType;
+using BasilMessage = org.herbal3d.basil.protocol.Message;
 
 namespace org.herbal3d.BasilTest {
     public class BasilTester : IDisposable {
 
-        private static readonly string _logHeader = "[BasilTest]";
+        private static readonly string _logHeader = "[BasilTester]";
 
         private readonly BasilConnection _connection;
 
@@ -63,14 +63,17 @@ namespace org.herbal3d.BasilTest {
         }
         #endregion
 
-        public void DoTests(MapField<string,string> pParams) {
+        // Do the tests.
+        // Parameters are passed from the 'properties' of the OpenSession request.
+        //    These parameters can specify the tests to do and parameters for same.
+        public async void DoTests(MapField<string,string> pParams) {
             BasilType.AccessAuthorization auth = null;
             var anAsset = new BasilType.AssetInformation() {
                 DisplayInfo = new BasilType.DisplayableInfo() {
                     DisplayableType = "meshset",
                 }
             };
-            // Checked for passed parameters specifying a test session and parameters for same
+            // Check for passed parameters specifying a test session and parameters for same
             if (pParams.ContainsKey("TestConnection")
                         && Boolean.Parse(pParams["TestConnection"])
                         && pParams.ContainsKey("TestURL")) {
@@ -79,15 +82,20 @@ namespace org.herbal3d.BasilTest {
                         pParams.ContainsKey("TestLoaderType") ? pParams["TestLoaderType"] : "GLTF" );
             }
             else {
+                // No parameters passed in so use known values.
                 anAsset.DisplayInfo.Asset.Add("url", "http://files.misterblue.com/BasilTest/convoar/testtest88/unoptimized/testtest88.gltf");
                 anAsset.DisplayInfo.Asset.Add("loaderType", "GLTF");
             }
-            BasilType.AaBoundingBox aabb = null;
-            _connection.Client.IdentifyDisplayableObject(auth, anAsset, aabb)
-            .Then(resp => {
+
+            try {
+                // Create an Object using the asset information.
+                BasilType.AaBoundingBox aabb = null;
+                BasilMessage.BasilMessage resp = await _connection.Client.IdentifyDisplayableObjectAsync(auth, anAsset, aabb);
                 if (resp.Exception != null) {
                 }
                 BasilTest.log.InfoFormat("{0} created displayable object {1}", _logHeader, resp.ObjectId.Id);
+
+                // Create an Instance of the Object in the viewer
                 BasilType.ObjectIdentifier displayableId = resp.ObjectId;
                 BasilType.InstancePositionInfo instancePositionInfo = new BasilType.InstancePositionInfo() {
                     Pos = new BasilType.CoordPosition() {
@@ -100,18 +108,19 @@ namespace org.herbal3d.BasilTest {
                         RotRef = BasilType.RotationSystem.Worldr
                     }
                 };
-                _connection.Client.CreateObjectInstance(auth, displayableId, instancePositionInfo)
-                .Then(resp2 => {
-                    BasilTest.log.InfoFormat("{0} created object instance {1}", _logHeader, resp2.InstanceId.Id);
-                    BasilType.InstanceIdentifier instanceIdentifier = resp2.InstanceId;
-                    _connection.Client.RequestInstanceProperties(auth, instanceIdentifier, "")
-                    .Then(resp3 => {
-                        foreach (var key in resp3.Properties.Keys) {
-                            BasilTest.log.InfoFormat("{0}     {1} = {2}", _logHeader, key, resp3.Properties[key]);
-                        }
-                    });
-                });
-            });
+                BasilMessage.BasilMessage resp2 = await _connection.Client.CreateObjectInstanceAsync(auth, displayableId, instancePositionInfo);
+                BasilTest.log.InfoFormat("{0} created object instance {1}", _logHeader, resp2.InstanceId.Id);
+
+                // Ask the instance for all its properties and print them out
+                BasilType.InstanceIdentifier instanceIdentifier = resp2.InstanceId;
+                BasilMessage.BasilMessage resp3 = await _connection.Client.RequestInstancePropertiesAsync(auth, instanceIdentifier, "");
+                foreach (var key in resp3.Properties.Keys) {
+                    BasilTest.log.InfoFormat("{0}     {1} = {2}", _logHeader, key, resp3.Properties[key]);
+                }
+            }
+            catch (Exception e) {
+                BasilTest.log.DebugFormat("{0} DoTests: exception: {1}", _logHeader, e);
+            }
         }
     }
 }

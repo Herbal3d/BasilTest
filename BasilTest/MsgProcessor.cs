@@ -13,8 +13,8 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Reflection;
+using System.Threading.Tasks;
 
-using RSG;
 using Google.Protobuf;
 
 using BasilType = org.herbal3d.basil.protocol.BasilType;
@@ -33,25 +33,24 @@ namespace org.herbal3d.BasilTest {
         }
 
         // Send a message and expect a RPC type response.
-        protected IPromise<BasilMessage.BasilMessage> SendAndPromiseResponse(BasilMessage.BasilMessage pReq) {
-            return new Promise<BasilMessage.BasilMessage>((resolve, reject) => {
-                UInt32 thisSession = (UInt32)_randomNumbers.Next();
-                pReq.Response = new BasilType.BResponseRequest() {
-                    ResponseSession = thisSession
-                };
-                BasilTest.log.DebugFormat("{0} SendAndPromiseResponse. Adding RPC session {1}", _logHeader, thisSession);
-                lock (_basilConnection.OutstandingRPC) {
-                    _basilConnection.OutstandingRPC.Add(thisSession, new BasilConnection.SentRPC() {
-                        session = thisSession,
-                        context = this,
-                        timeRPCCreated = (ulong)DateTime.UtcNow.ToBinary(),
-                        resolver = resolve,
-                        rejector = reject,
-                        requestName = _basilConnection.BasilMessageNameByOp[pReq.Op]
-                    });
-                };
-                _basilConnection.Send(pReq.ToByteArray());
-            });
+        protected async Task<BasilMessage.BasilMessage> SendAndPromiseResponse(BasilMessage.BasilMessage pReq) {
+            // Place structure in message that receiver will send back so we can match response.
+            UInt32 thisSession = (UInt32)_randomNumbers.Next();
+            pReq.Response = new BasilType.BResponseRequest() {
+                ResponseSession = thisSession
+            };
+            var tcs = new TaskCompletionSource<BasilMessage.BasilMessage>();
+            lock (_basilConnection.OutstandingRPC) {
+                _basilConnection.OutstandingRPC.Add(thisSession, new BasilConnection.SentRPC() {
+                    session = thisSession,
+                    context = this,
+                    taskCompletion = tcs,
+                    timeRPCCreated = (ulong)DateTime.UtcNow.ToBinary(),
+                    requestName = _basilConnection.BasilMessageNameByOp[pReq.Op]
+                });
+            }
+            _basilConnection.Send(pReq.ToByteArray());
+            return await tcs.Task;
         }
 
         // Construct enclosing stream message to send back to the Basil viewer.
@@ -83,23 +82,23 @@ namespace org.herbal3d.BasilTest {
         protected BasilMessage.BasilMessage HandleResponse(BasilMessage.BasilMessage pResponseMsg) {
             if (pResponseMsg.Response != null) {
                 if (pResponseMsg.Response.ResponseSession != 0) {
+                    // Look up the session this response corresponds to
                     UInt32 sessionIndex = pResponseMsg.Response.ResponseSession;
                     BasilConnection.SentRPC session;
-                    Action<BasilMessage.BasilMessage> processor = null;
+                    TaskCompletionSource<BasilMessage.BasilMessage> responseTask = null;
                     lock (_basilConnection.OutstandingRPC) {
                         if (_basilConnection.OutstandingRPC.ContainsKey(sessionIndex)) {
                             session = (BasilConnection.SentRPC)_basilConnection.OutstandingRPC[sessionIndex];
                             _basilConnection.OutstandingRPC.Remove(sessionIndex);
-                            processor = session.resolver;
+                            responseTask = session.taskCompletion;
                         }
                         else {
                             BasilTest.log.ErrorFormat("{0} missing RCP response key: {1}", _logHeader, sessionIndex);
                         }
                     }
-                    if (processor != null) {
+                    if (responseTask != null) {
                         try {
-                            // TODO: figure out how to make this 'await'
-                            processor(pResponseMsg);
+                            responseTask.SetResult(pResponseMsg);
                         }
                         catch (Exception e) {
                             BasilTest.log.ErrorFormat("{0} Exception processing message: {1}",

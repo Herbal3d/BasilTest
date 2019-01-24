@@ -54,8 +54,7 @@ namespace org.herbal3d.BasilTest {
             public UInt32 session;
             public MsgProcessor context;
             public UInt64 timeRPCCreated;
-            public Action<BasilMessage.BasilMessage> resolver;
-            public Action<Exception> rejector;
+            public TaskCompletionSource<BasilMessage.BasilMessage> taskCompletion;
             public string requestName;
         };
 
