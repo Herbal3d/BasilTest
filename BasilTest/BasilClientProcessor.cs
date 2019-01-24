@@ -13,67 +13,25 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-using BasilServer = org.herbal3d.basil.protocol.BasilServer;
-using BasilSpaceStream = org.herbal3d.basil.protocol.BasilSpaceStream;
+using BasilMessage = org.herbal3d.basil.protocol.Message;
 
 namespace org.herbal3d.BasilTest {
     public class BasilClientProcessor : MsgProcessor {
         public BasilClientProcessor(BasilConnection pConnection) : base(pConnection) {
-        }
-
-        public override bool Receive(BasilSpaceStream.SpaceStreamMessage pMsg, BasilConnection pConnection) {
-            bool ret = false;
-            if (pMsg.IdentifyDisplayableObjectRespMsg != null) {
-                ret = true;
-                HandleResponse<BasilServer.IdentifyDisplayableObjectResp>(
-                            pMsg.IdentifyDisplayableObjectRespMsg, "IdentifyDisplayableObjectResp", pMsg);
-            }
-            if (pMsg.ForgetDisplayableObjectRespMsg != null) {
-                ret = true;
-                HandleResponse<BasilServer.ForgetDisplayableObjectResp>(
-                            pMsg.ForgetDisplayableObjectRespMsg, "ForgetDisplayableObjectResp", pMsg);
-            }
-            if (pMsg.CreateObjectInstanceRespMsg != null) {
-                ret = true;
-                HandleResponse<BasilServer.CreateObjectInstanceResp>(
-                            pMsg.CreateObjectInstanceRespMsg, "CreateObjectInstanceResp", pMsg);
-            }
-            if (pMsg.DeleteObjectInstanceRespMsg != null) {
-                ret = true;
-                HandleResponse<BasilServer.DeleteObjectInstanceResp>(
-                            pMsg.DeleteObjectInstanceRespMsg, "DeleteObjectInstanceResp", pMsg);
-            }
-            if (pMsg.UpdateObjectPropertyRespMsg != null) {
-                ret = true;
-                HandleResponse<BasilServer.UpdateObjectPropertyResp>(
-                            pMsg.UpdateObjectPropertyRespMsg, "UpdateObjectPropertyResp", pMsg);
-            }
-            if (pMsg.UpdateInstancePropertyRespMsg != null) {
-                ret = true;
-                HandleResponse<BasilServer.UpdateInstancePropertyResp>(
-                            pMsg.UpdateInstancePropertyRespMsg, "UpdateInstancePropertyResp", pMsg);
-            }
-            if (pMsg.RequestObjectPropertiesRespMsg != null) {
-                ret = true;
-                HandleResponse<BasilServer.RequestObjectPropertiesResp>(
-                            pMsg.RequestObjectPropertiesRespMsg, "RequestObjectPropertiesResp", pMsg);
-            }
-            if (pMsg.RequestInstancePropertiesRespMsg != null) {
-                ret = true;
-                HandleResponse<BasilServer.RequestInstancePropertiesResp>(
-                            pMsg.RequestInstancePropertiesRespMsg, "RequestInstancePropertiesResp", pMsg);
-            }
-            if (pMsg.CloseSessionRespMsg != null) {
-                ret = true;
-                HandleResponse<BasilServer.CloseSessionResp>(
-                            pMsg.CloseSessionRespMsg, "CloseSessionResp", pMsg);
-            }
-            if (pMsg.MakeConnectionRespMsg != null) {
-                ret = true;
-                HandleResponse<BasilServer.MakeConnectionResp>(
-                            pMsg.MakeConnectionRespMsg, "MakeConnectionResp", pMsg);
-            }
-            return ret;
+            // Add processors for message ops
+            var processors = new BasilConnection.Processors {
+                { (Int32)BasilMessage.BasilMessageOps.IdentifyDisplayableObjectResp, this.HandleResponse },
+                { (Int32)BasilMessage.BasilMessageOps.ForgetDisplayableObjectResp, this.HandleResponse },
+                { (Int32)BasilMessage.BasilMessageOps.CreateObjectInstanceResp, this.HandleResponse },
+                { (Int32)BasilMessage.BasilMessageOps.DeleteObjectInstanceResp, this.HandleResponse },
+                { (Int32)BasilMessage.BasilMessageOps.UpdateObjectPropertyResp, this.HandleResponse },
+                { (Int32)BasilMessage.BasilMessageOps.UpdateInstancePropertyResp, this.HandleResponse },
+                { (Int32)BasilMessage.BasilMessageOps.RequestObjectPropertiesResp, this.HandleResponse },
+                { (Int32)BasilMessage.BasilMessageOps.RequestInstancePropertiesResp, this.HandleResponse },
+                { (Int32)BasilMessage.BasilMessageOps.CloseSessionResp, this.HandleResponse },
+                { (Int32)BasilMessage.BasilMessageOps.MakeConnectionResp, this.HandleResponse }
+            };
+            _basilConnection.AddMessageProcessors(processors);
         }
     }
 }

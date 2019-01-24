@@ -17,7 +17,7 @@ using RSG;
 
 using AliveCheck = org.herbal3d.basil.protocol.AliveCheck;
 using BasilType = org.herbal3d.basil.protocol.BasilType;
-using BasilSpaceStream = org.herbal3d.basil.protocol.BasilSpaceStream;
+using BasilMessage = org.herbal3d.basil.protocol.Message;
 
 namespace org.herbal3d.BasilTest {
     public class AliveCheckProcessor : MsgProcessor {
@@ -25,57 +25,46 @@ namespace org.herbal3d.BasilTest {
         private int _AliveSequenceNumber = 111;
 
         public AliveCheckProcessor(BasilConnection pConnection) : base(pConnection) {
+            // Add processors for message ops
+            BasilConnection.Processors processors = new BasilConnection.Processors {
+                { (Int32)BasilMessage.BasilMessageOps.AliveCheckReq, this.ProcAliveCheckReq },
+                { (Int32)BasilMessage.BasilMessageOps.AliveCheckResp, this.HandleResponse }
+            };
+            _basilConnection.AddMessageProcessors(processors);
         }
 
-        public override bool Receive(BasilSpaceStream.SpaceStreamMessage pMsg,
-                                        BasilConnection pConnection) {
-            bool ret = false;
-            if (pMsg.AliveCheckReqMsg != null) {
-                ret = true;
-                SendResponse<AliveCheck.AliveCheckResp>(
-                    ProcAliveCheckReq(pMsg.AliveCheckReqMsg), "AliveCheckResp", pMsg);
-            }
-            if (pMsg.AliveCheckRespMsg != null) {
-                ret = true;
-                HandleResponse<AliveCheck.AliveCheckResp>(
-                            pMsg.AliveCheckRespMsg, "AliveCheckResp", pMsg);
-            }
-            return ret;
-        }
-
-        public IPromise<AliveCheck.AliveCheckResp> AliveCheck(
+        public IPromise<BasilMessage.BasilMessage> AliveCheck(
                         BasilType.AccessAuthorization pAuth) {
-            var req = MakeAliveCheckReq(pAuth);
-            return this.SendAndPromiseResponse<AliveCheck.AliveCheckReq,
-                                               AliveCheck.AliveCheckResp>(req,
-                                               "AliveCheckReq");
+            BasilMessage.BasilMessage req = MakeAliveCheckReq(pAuth);
+            return this.SendAndPromiseResponse(req);
         }
 
         // Send an AliveCheck request without expecting a response
-        public void AliveCheckNR(
-                        BasilType.AccessAuthorization pAuth) {
-            var req = MakeAliveCheckReq(pAuth);
-            SendResponse<AliveCheck.AliveCheckReq>(req, "AliveCheckReq", null);
+        public void AliveCheckNR(BasilType.AccessAuthorization pAuth) {
+            BasilMessage.BasilMessage req = MakeAliveCheckReq(pAuth);
+            this.SendMessage(req, null);
         }
 
-        private AliveCheck.AliveCheckReq MakeAliveCheckReq(
+        private BasilMessage.BasilMessage MakeAliveCheckReq(
                         BasilType.AccessAuthorization pAuth) {
-            return new AliveCheck.AliveCheckReq {
-                Auth = pAuth,
-                Time = (ulong)DateTime.UtcNow.ToBinary(),
-                SequenceNum = _AliveSequenceNumber++
-                
+            BasilMessage.BasilMessage ret = new BasilMessage.BasilMessage() {
+                Auth = pAuth
             };
+            ret.OpParameters.Add("time", DateTime.UtcNow.ToString());
+            ret.OpParameters.Add("sequenceNum", (_AliveSequenceNumber++).ToString());
+            return ret;
         }
 
-        private AliveCheck.AliveCheckResp ProcAliveCheckReq(
-                        AliveCheck.AliveCheckReq pReq) {
-            return new AliveCheck.AliveCheckResp {
-                Time = (ulong)DateTime.UtcNow.ToBinary(),
-                SequenceNum = _AliveSequenceNumber++,
-                TimeReceived = pReq.Time,
-                SequenceNumReceived = pReq.SequenceNum
+        private BasilMessage.BasilMessage ProcAliveCheckReq(
+                        BasilMessage.BasilMessage pReq) {
+            BasilMessage.BasilMessage ret = new BasilMessage.BasilMessage() {
+                Op = _basilConnection.BasilMessageOpByName["AliveCheckResp"]
             };
+            ret.OpParameters.Add("time", DateTime.UtcNow.ToString());
+            ret.OpParameters.Add("sequenceNum", (_AliveSequenceNumber++).ToString());
+            ret.OpParameters.Add("timeReceived", pReq.OpParameters["time"]);
+            ret.OpParameters.Add("sequenceNumReceived", pReq.OpParameters["sequenceNum"]);
+            return ret;
         }
     }
 }

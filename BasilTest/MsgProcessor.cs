@@ -18,11 +18,10 @@ using RSG;
 using Google.Protobuf;
 
 using BasilType = org.herbal3d.basil.protocol.BasilType;
-using BasilServer = org.herbal3d.basil.protocol.BasilServer;
-using BasilSpaceStream = org.herbal3d.basil.protocol.BasilSpaceStream;
+using BasilMessage = org.herbal3d.basil.protocol.Message;
 
 namespace org.herbal3d.BasilTest {
-    public class MsgProcessor {
+    public abstract class MsgProcessor {
 
         private static readonly string _logHeader = "[MsgProcessor]";
 
@@ -33,51 +32,65 @@ namespace org.herbal3d.BasilTest {
             _basilConnection = pConnection;
         }
 
-        protected IPromise<RESP> SendAndPromiseResponse<REQ,RESP>(REQ pReq, string pReqName) {
-            UInt32 thisSession = (UInt32)_randomNumbers.Next();
-            BasilSpaceStream.BasilStreamMessage msg = new BasilSpaceStream.BasilStreamMessage() {
-                ResponseReq = new BasilType.BResponseRequest() {
+        // Send a message and expect a RPC type response.
+        protected IPromise<BasilMessage.BasilMessage> SendAndPromiseResponse(BasilMessage.BasilMessage pReq) {
+            return new Promise<BasilMessage.BasilMessage>((resolve, reject) => {
+                UInt32 thisSession = (UInt32)_randomNumbers.Next();
+                pReq.Response = new BasilType.BResponseRequest() {
                     ResponseSession = thisSession
-                }
-            };
-            var field = BasilSpaceStream.BasilStreamMessage.Descriptor.FindFieldByName(pReqName + "Msg");
-            if (field != null) {
-                field.Accessor.SetValue(msg, pReq);
-            }
-            else {
-                BasilTest.log.ErrorFormat("{0} SendAndPromiseResponse. Sending unknown response field: {1}",
-                            _logHeader, pReqName);
-            }
-            return new Promise<RESP>((resolve, reject) => {
+                };
                 BasilTest.log.DebugFormat("{0} SendAndPromiseResponse. Adding RPC session {1}", _logHeader, thisSession);
                 lock (_basilConnection.OutstandingRPC) {
-                    _basilConnection.OutstandingRPC.Add(thisSession, new BasilConnection.SentRPC<RESP> {
+                    _basilConnection.OutstandingRPC.Add(thisSession, new BasilConnection.SentRPC() {
                         session = thisSession,
                         context = this,
                         timeRPCCreated = (ulong)DateTime.UtcNow.ToBinary(),
                         resolver = resolve,
                         rejector = reject,
-                        requestName = pReqName
+                        requestName = _basilConnection.BasilMessageNameByOp[pReq.Op]
                     });
                 };
-                _basilConnection.Send(msg.ToByteArray());
+                _basilConnection.Send(pReq.ToByteArray());
             });
+        }
+
+        // Construct enclosing stream message to send back to the Basil viewer.
+        // Called with a constructed response message and the stream message with the request.
+        // Add the response information to the response message so other side can match
+        //     the response to the request.
+        protected void SendMessage(BasilMessage.BasilMessage pResponseMsg, BasilMessage.BasilMessage pReqMsg) {
+            string responseMsgName = _basilConnection.BasilMessageNameByOp[pResponseMsg.Op];
+            BasilTest.log.DebugFormat("{0} SendResponse: {1}", _logHeader, responseMsgName);
+
+            BasilMessage.BasilMessage msg = new BasilMessage.BasilMessage();
+            if (pReqMsg != null && pReqMsg.Response != null) {
+                msg.Response = pReqMsg.Response;
+            }
+            _basilConnection.Send(msg.ToByteArray());
+        }
+
+        // Given a request messsage and a partial response message, add the response tagging formation
+        //    to the response so the sender of the request can match the messages.
+        protected void MakeMessageAResponse(ref BasilMessage.BasilMessage pResponseMsg,
+                    BasilMessage.BasilMessage pRequestMsg) {
+            if (pRequestMsg.Response != null) {
+                pResponseMsg.Response = pRequestMsg.Response;
+            }
         }
 
         // Received a response type message.
         // Find the matching RPC call info and call the process waiting for the response.
-        protected void HandleResponse<RESP>(RESP pResponseMsg, string pResponseMsgName,
-                                BasilSpaceStream.SpaceStreamMessage pEnclosing) {
-            if (pEnclosing.ResponseReq != null) {
-                if (pEnclosing.ResponseReq.ResponseSession != 0) {
-                    UInt32 sessionIndex = pEnclosing.ResponseReq.ResponseSession;
-                    BasilConnection.SentRPC<RESP> session;
-                    Action<RESP> processor = null;
+        protected BasilMessage.BasilMessage HandleResponse(BasilMessage.BasilMessage pResponseMsg) {
+            if (pResponseMsg.Response != null) {
+                if (pResponseMsg.Response.ResponseSession != 0) {
+                    UInt32 sessionIndex = pResponseMsg.Response.ResponseSession;
+                    BasilConnection.SentRPC session;
+                    Action<BasilMessage.BasilMessage> processor = null;
                     lock (_basilConnection.OutstandingRPC) {
                         if (_basilConnection.OutstandingRPC.ContainsKey(sessionIndex)) {
-                            session = (BasilConnection.SentRPC<RESP>)_basilConnection.OutstandingRPC[sessionIndex];
+                            session = (BasilConnection.SentRPC)_basilConnection.OutstandingRPC[sessionIndex];
                             _basilConnection.OutstandingRPC.Remove(sessionIndex);
-                            processor = (Action<RESP>)session.GetType().GetField("resolver").GetValue(session);
+                            processor = session.resolver;
                         }
                         else {
                             BasilTest.log.ErrorFormat("{0} missing RCP response key: {1}", _logHeader, sessionIndex);
@@ -96,41 +109,14 @@ namespace org.herbal3d.BasilTest {
                 }
                 else {
                     BasilTest.log.ErrorFormat("{0} ResponseReq.ResponseSession missing. Type={1}",
-                                    _logHeader, pResponseMsgName);
+                                    _logHeader, _basilConnection.BasilMessageNameByOp[pResponseMsg.Op]);
                 }
             }
             else {
                 BasilTest.log.ErrorFormat("{0} Response without ResponseReq. Type={1}",
-                                _logHeader, pResponseMsgName);
+                                _logHeader, _basilConnection.BasilMessageNameByOp[pResponseMsg.Op]);
             }
+            return null;    // responses don't have a response
         }
-
-        // Construct enclosing stream message to send back to the Basil viewer.
-        // Called with a constructed response message and the stream message with the request.
-        // Add the response information to the response message so other side can match
-        //     the response to the request.
-        protected void SendResponse<RESP>(RESP pResponseMsg, string pResponseMsgName,
-                                BasilSpaceStream.SpaceStreamMessage pEnclosing) {
-            BasilTest.log.DebugFormat("{0} SendResponse: {1}", _logHeader, pResponseMsgName);
-            BasilSpaceStream.BasilStreamMessage msg = new BasilSpaceStream.BasilStreamMessage();
-            if (pEnclosing != null && pEnclosing.ResponseReq != null) {
-                msg.ResponseReq = pEnclosing.ResponseReq;
-            }
-            var field = BasilSpaceStream.BasilStreamMessage.Descriptor.FindFieldByName(pResponseMsgName + "Msg");
-            if (field != null) {
-                field.Accessor.SetValue(msg, pResponseMsg);
-            }
-            else {
-                BasilTest.log.ErrorFormat("{0} SendResponse. Sending unknown response field: {1}",
-                            _logHeader, pResponseMsgName);
-            }
-            _basilConnection.Send(msg.ToByteArray());
-        }
-
-        // Overwrite function for when data is received.
-        public virtual bool Receive(BasilSpaceStream.SpaceStreamMessage pMsg, BasilConnection pConnection) {
-            return false;
-        }
-
     }
 }

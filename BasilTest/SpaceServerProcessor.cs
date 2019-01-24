@@ -15,58 +15,52 @@ using System.Text;
 using System.Threading.Tasks;
 
 using BasilType = org.herbal3d.basil.protocol.BasilType;
-using SpaceServer = org.herbal3d.basil.protocol.SpaceServer;
-using BasilSpaceStream = org.herbal3d.basil.protocol.BasilSpaceStream;
+using BasilMessage = org.herbal3d.basil.protocol.Message;
 
 namespace org.herbal3d.BasilTest {
     public class SpaceServerProcessor : MsgProcessor {
         private static readonly string _logHeader = "[SpaceServerProcessor]";
 
         public SpaceServerProcessor(BasilConnection pConnection) : base(pConnection) {
+            // Add processors for message ops
+            BasilConnection.Processors processors = new BasilConnection.Processors {
+                { (Int32)BasilMessage.BasilMessageOps.OpenSessionReq, this.ProcOpenSessionReq },
+                { (Int32)BasilMessage.BasilMessageOps.CloseSessionReq, this.ProcCloseSessionReq },
+                { (Int32)BasilMessage.BasilMessageOps.CameraViewReq, this.ProcCameraViewReq }
+            };
+            _basilConnection.AddMessageProcessors(processors);
         }
 
-        public override bool Receive(BasilSpaceStream.SpaceStreamMessage pMsg, BasilConnection pConnection) {
-            bool ret = false;
-            if (pMsg.CameraViewReqMsg != null) {
-                ret = true;
-                SendResponse<SpaceServer.CameraViewResp>(
-                    ProcCameraViewReq(pMsg.CameraViewReqMsg), "CameraViewResp", pMsg);
-            }
-            if (pMsg.OpenSessionReqMsg != null) {
-                ret = true;
-                SendResponse<SpaceServer.OpenSessionResp>(
-                    ProcOpenSessionReq(pMsg.OpenSessionReqMsg), "OpenSessionResp", pMsg);
-            }
-            if (pMsg.CloseSessionReqMsg != null) {
-                ret = true;
-                SendResponse<SpaceServer.CloseSessionResp>(
-                    ProcCloseSessionReq(pMsg.CloseSessionReqMsg), "CloseSessionResp", pMsg);
-            }
-            return ret;
-        }
-
-        private SpaceServer.CameraViewResp ProcCameraViewReq(
-                        SpaceServer.CameraViewReq pReq) {
+        private  BasilMessage.BasilMessage ProcCameraViewReq(BasilMessage.BasilMessage pReq) {
             BasilTest.log.DebugFormat("{0} CameraViewReq", _logHeader);
-            return new SpaceServer.CameraViewResp {
+            BasilMessage.BasilMessage respMsg = new BasilMessage.BasilMessage {
+                Op = _basilConnection.BasilMessageOpByName["CameraViewResp"]
             };
-
+            MakeMessageAResponse(ref respMsg, pReq);
+            return respMsg;
         }
-        private SpaceServer.OpenSessionResp ProcOpenSessionReq(
-                        SpaceServer.OpenSessionReq pReq) {
+        private  BasilMessage.BasilMessage ProcOpenSessionReq(BasilMessage.BasilMessage pReq) {
             BasilTest.log.DebugFormat("{0} OpenSessionReq", _logHeader);
-            var tester = new BasilTester(_basilConnection);
+
+            // For the moment, just start the testing sequence when session is opened
+            BasilTester tester = new BasilTester(_basilConnection);
             Task.Run(() => {
-                tester.DoTests(pReq.Features);
+                tester.DoTests(pReq.Properties);
             });
-            return new SpaceServer.OpenSessionResp {
+
+            BasilMessage.BasilMessage respMsg = new BasilMessage.BasilMessage {
+                Op = _basilConnection.BasilMessageOpByName["OpenSessionResp"]
             };
+            MakeMessageAResponse(ref respMsg, pReq);
+            return respMsg;
         }
-        private SpaceServer.CloseSessionResp ProcCloseSessionReq(
-                        SpaceServer.CloseSessionReq pReq) {
+        private BasilMessage.BasilMessage ProcCloseSessionReq(BasilMessage.BasilMessage pReq) {
             BasilTest.log.DebugFormat("{0} CloseSessionReq", _logHeader);
-            return new SpaceServer.CloseSessionResp {
+            BasilMessage.BasilMessage respMsg = new BasilMessage.BasilMessage {
+                Op = _basilConnection.BasilMessageOpByName["CloseSessionResp"]
             };
+            MakeMessageAResponse(ref respMsg, pReq);
+            return respMsg;
         }
 
 

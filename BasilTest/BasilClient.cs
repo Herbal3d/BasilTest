@@ -17,7 +17,7 @@ using System.IO;
 using RSG;
 
 using BasilType = org.herbal3d.basil.protocol.BasilType;
-using BasilServer = org.herbal3d.basil.protocol.BasilServer;
+using BasilMessage = org.herbal3d.basil.protocol.Message;
 
 namespace org.herbal3d.BasilTest {
     public class BasilClient : MsgProcessor {
@@ -25,33 +25,31 @@ namespace org.herbal3d.BasilTest {
         public BasilClient(BasilConnection pBasilConnection) : base(pBasilConnection) {
         }
 
-        public IPromise<BasilServer.IdentifyDisplayableObjectResp> IdentifyDisplayableObject(
+        public IPromise<BasilMessage.BasilMessage> IdentifyDisplayableObject(
                         BasilType.AccessAuthorization pAuth,
                         BasilType.AssetInformation pAsset,
                         BasilType.AaBoundingBox pAabb) {
-            var req = new BasilServer.IdentifyDisplayableObjectReq {
+            var req = new BasilMessage.BasilMessage() {
+                Op = (Int32)BasilMessage.BasilMessageOps.IdentifyDisplayableObjectReq,
                 Auth = pAuth,
                 AssetInfo = pAsset,
                 Aabb = pAabb
             };
-            return this.SendAndPromiseResponse<BasilServer.IdentifyDisplayableObjectReq,
-                                               BasilServer.IdentifyDisplayableObjectResp>(req,
-                                               "IdentifyDisplayableObjectReq");
+            return this.SendAndPromiseResponse(req);
         }
 
-        public IPromise<BasilServer.ForgetDisplayableObjectResp> ForgetDisplayableObject(
+        public IPromise<BasilMessage.BasilMessage> ForgetDisplayableObject(
                         BasilType.AccessAuthorization pAuth,
                         BasilType.ObjectIdentifier pId) {
-            var req = new BasilServer.ForgetDisplayableObjectReq {
+            var req = new BasilMessage.BasilMessage() {
+                Op = (Int32)BasilMessage.BasilMessageOps.ForgetDisplayableObjectReq,
                 Auth = pAuth,
                 ObjectId = pId
             };
-            return this.SendAndPromiseResponse<BasilServer.ForgetDisplayableObjectReq,
-                                               BasilServer.ForgetDisplayableObjectResp>(req,
-                                               "ForgetDisplayableObjectReq");
+            return this.SendAndPromiseResponse(req);
         }
 
-        public IPromise<BasilServer.CreateObjectInstanceResp> CreateObjectInstance(
+        public IPromise<BasilMessage.BasilMessage> CreateObjectInstance(
                         BasilType.AccessAuthorization pAuth,
                         BasilType.ObjectIdentifier pId,
                         BasilType.InstancePositionInfo pInstancePositionInfo) {
@@ -59,144 +57,121 @@ namespace org.herbal3d.BasilTest {
             return CreateObjectInstance(pAuth, pId, pInstancePositionInfo, propertyList);
         }
 
-        public IPromise<BasilServer.CreateObjectInstanceResp> CreateObjectInstance(
+        public IPromise<BasilMessage.BasilMessage> CreateObjectInstance(
                         BasilType.AccessAuthorization pAuth,
                         BasilType.ObjectIdentifier pId,
                         BasilType.InstancePositionInfo pInstancePositionInfo,
                         Dictionary<string,string> pPropertyList) {
-            var req = new BasilServer.CreateObjectInstanceReq {
+            var req = new BasilMessage.BasilMessage {
+                Op = (Int32)BasilMessage.BasilMessageOps.CreateObjectInstanceReq,
                 Auth = pAuth,
                 ObjectId = pId,
                 Pos = pInstancePositionInfo,
             };
             if (pPropertyList != null) {
-                req.PropertiesToSet.Add(pPropertyList);
+                req.Properties.Add(pPropertyList);
             }
-            return this.SendAndPromiseResponse<BasilServer.CreateObjectInstanceReq,
-                                               BasilServer.CreateObjectInstanceResp>(req,
-                                               "CreateObjectInstanceReq");
+            return this.SendAndPromiseResponse(req);
         }
 
-        public IPromise<BasilServer.DeleteObjectInstanceResp> DeleteObjectInstance(
+        public IPromise<BasilMessage.BasilMessage> DeleteObjectInstance(
                         BasilType.AccessAuthorization pAuth,
                         BasilType.InstanceIdentifier pId) {
-            var req = new BasilServer.DeleteObjectInstanceReq {
+            var req = new BasilMessage.BasilMessage {
+                Op = (Int32)BasilMessage.BasilMessageOps.DeleteObjectInstanceReq,
                 Auth = pAuth,
                 InstanceId = pId
             };
-            return this.SendAndPromiseResponse<BasilServer.DeleteObjectInstanceReq,
-                                               BasilServer.DeleteObjectInstanceResp>(req,
-                                               "DeleteObjectInstanceReq");
+            return this.SendAndPromiseResponse(req);
         }
 
-        public IPromise<BasilServer.UpdateObjectPropertyResp> UpdateObjectProperty(
+        public IPromise<BasilMessage.BasilMessage> UpdateObjectProperty(
                         BasilType.AccessAuthorization pAuth,
                         BasilType.ObjectIdentifier pId,
                         Dictionary<string,string> pPropertyList) {
-            var req = new BasilServer.UpdateObjectPropertyReq {
+            var req = new BasilMessage.BasilMessage {
+                Op = (Int32)BasilMessage.BasilMessageOps.UpdateObjectPropertyReq,
                 Auth = pAuth,
                 ObjectId = pId
             };
-            req.Props.Add(pPropertyList);
-            return this.SendAndPromiseResponse<BasilServer.UpdateObjectPropertyReq,
-                                               BasilServer.UpdateObjectPropertyResp>(req,
-                                               "UpdateObjectPropertyReq");
+            req.Properties.Add(pPropertyList);
+            return this.SendAndPromiseResponse(req);
         }
 
-        public IPromise<BasilServer.UpdateInstancePropertyResp> UpdateInstanceProperty(
+        public IPromise<BasilMessage.BasilMessage> UpdateInstanceProperty(
                         BasilType.AccessAuthorization pAuth,
                         BasilType.InstanceIdentifier pId,
                         Dictionary<string,string> pPropertyList) {
-            var req = new BasilServer.UpdateInstancePropertyReq {
+            var req = new BasilMessage.BasilMessage {
+                Op = (Int32)BasilMessage.BasilMessageOps.UpdateInstancePropertyReq,
                 Auth = pAuth,
                 InstanceId = pId
             };
-            req.Props.Add(pPropertyList);
-            return this.SendAndPromiseResponse<BasilServer.UpdateInstancePropertyReq,
-                                               BasilServer.UpdateInstancePropertyResp>(req,
-                                               "UpdateInstancePropertyReq");
+            req.Properties.Add(pPropertyList);
+            return this.SendAndPromiseResponse(req);
         }
-        public IPromise<BasilServer.UpdateInstancePositionResp> UpdateInstancePosition(
+        public IPromise<BasilMessage.BasilMessage> UpdateInstancePosition(
                         BasilType.AccessAuthorization pAuth,
                         BasilType.InstanceIdentifier pId,
                         BasilType.InstancePositionInfo pInstancePositionInfo) {
-            var req = new BasilServer.UpdateInstancePositionReq {
+            var req = new BasilMessage.BasilMessage {
+                Op = (Int32)BasilMessage.BasilMessageOps.UpdateInstancePositionReq,
                 Auth = pAuth,
                 InstanceId = pId,
                 Pos = pInstancePositionInfo
             };
-            return this.SendAndPromiseResponse<BasilServer.UpdateInstancePositionReq,
-                                               BasilServer.UpdateInstancePositionResp>(req,
-                                               "UpdateInstancePositionReq");
+            return this.SendAndPromiseResponse(req);
         }
-        public IPromise<BasilServer.RequestObjectPropertiesResp> RequestObjectProperties(
+        public IPromise<BasilMessage.BasilMessage> RequestObjectProperties(
                         BasilType.AccessAuthorization pAuth,
                         BasilType.ObjectIdentifier pId,
                         string pPropertyMatch) {
-            var req = new BasilServer.RequestObjectPropertiesReq {
+            var req = new BasilMessage.BasilMessage {
+                Op = (Int32)BasilMessage.BasilMessageOps.RequestObjectPropertiesReq,
                 Auth = pAuth,
                 ObjectId = pId,
-                PropertyMatch = pPropertyMatch
+                Filter = pPropertyMatch
             };
-            return this.SendAndPromiseResponse<BasilServer.RequestObjectPropertiesReq,
-                                               BasilServer.RequestObjectPropertiesResp>(req,
-                                               "RequestObjectPropertiesReq");
+            return this.SendAndPromiseResponse(req);
         }
 
-        public IPromise<BasilServer.RequestInstancePropertiesResp> RequestInstanceProperties(
+        public IPromise<BasilMessage.BasilMessage> RequestInstanceProperties(
                         BasilType.AccessAuthorization pAuth,
                         BasilType.InstanceIdentifier pId,
                         string pPropertyMatch) {
-            var req = new BasilServer.RequestInstancePropertiesReq {
+            var req = new BasilMessage.BasilMessage {
+                Op = (Int32)BasilMessage.BasilMessageOps.RequestInstancePropertiesReq,
                 Auth = pAuth,
                 InstanceId = pId,
-                PropertyMatch = pPropertyMatch
+                Filter = pPropertyMatch
             };
-            return this.SendAndPromiseResponse<BasilServer.RequestInstancePropertiesReq,
-                                               BasilServer.RequestInstancePropertiesResp>(req,
-                                               "RequestInstancePropertiesReq");
+            return this.SendAndPromiseResponse(req);
         }
 
         // RESOURCE MANAGEMENT =========================================
 
         // CONNECTION MANAGEMENT =======================================
 
-        public IPromise<BasilServer.CloseSessionResp> CloseSession(
+        public IPromise<BasilMessage.BasilMessage> CloseSession(
                         BasilType.AccessAuthorization pAuth,
                         string pReason) {
-            var req = new BasilServer.CloseSessionReq {
-                Auth = pAuth,
-                Reason = pReason
+            var req = new BasilMessage.BasilMessage {
+                Op = (Int32)BasilMessage.BasilMessageOps.CloseSessionReq,
+                Auth = pAuth
             };
-            return this.SendAndPromiseResponse<BasilServer.CloseSessionReq,
-                                               BasilServer.CloseSessionResp>(req,
-                                               "CloseSessionReq");
+            req.OpParameters.Add("reason", pReason);
+            return this.SendAndPromiseResponse(req);
         }
 
-        public IPromise<BasilServer.MakeConnectionResp> MakeConnection(
+        public IPromise<BasilMessage.BasilMessage> MakeConnection(
                         BasilType.AccessAuthorization pAuth,
                         Dictionary<string,string> pConnectionParams) {
-            var req = new BasilServer.MakeConnectionReq {
+            var req = new BasilMessage.BasilMessage {
+                Op = (Int32)BasilMessage.BasilMessageOps.MakeConnectionReq,
                 Auth = pAuth,
             };
-            req.ConnectionParams.Add(pConnectionParams);
-            return this.SendAndPromiseResponse<BasilServer.MakeConnectionReq,
-                                               BasilServer.MakeConnectionResp>(req,
-                                               "MakeConnectionReq");
-        }
-
-        public IPromise<BasilServer.AliveCheckResp> AliveCheck(
-                        BasilType.AccessAuthorization pAuth,
-                        UInt64 pTime,
-                        Int32 pSequenceNum) {
-            var req = new BasilServer.AliveCheckReq {
-                Auth = pAuth,
-                Time = pTime,
-                SequenceNum = pSequenceNum
-            };
-            return this.SendAndPromiseResponse<BasilServer.AliveCheckReq,
-                                               BasilServer.AliveCheckResp>(req,
-                                               "AliveCheckReq");
+            req.Properties.Add(pConnectionParams);
+            return this.SendAndPromiseResponse(req);
         }
     }
 }
