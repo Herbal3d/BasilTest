@@ -16,8 +16,9 @@ using System.Text;
 using Fleck;
 
 namespace org.herbal3d.BasilTest {
+    // Wraps the socket connection and manages socket specific operations.
     public class TransportConnection {
-        private static readonly string _logHeader = "[ClientConnection]";
+        private static readonly string _logHeader = "[TransportConnection]";
 
         private IWebSocketConnection _connection = null;
         private BasilConnection _basilConnection = null;
@@ -52,6 +53,14 @@ namespace org.herbal3d.BasilTest {
             _connection.OnMessage = msg => { Connection_OnMessage(msg); };
             _connection.OnBinary = msg => { Connection_OnBinary(msg); };
             _connection.OnError = except => { Connection_OnError(except); };
+        }
+
+        public void Disconnect() {
+            if (IsConnected) {
+                ConnectionState = ConnectionStates.CLOSING;
+                this.TriggerDisconnect();
+                _connection.Close();
+            }
         }
 
         // A WebSocket connection has been made.
@@ -109,9 +118,6 @@ namespace org.herbal3d.BasilTest {
             if (IsConnected) {
                 _connection.Send(pMsg);
             }
-        }
-
-        private void AbortAppConnection() {
         }
     }
 }

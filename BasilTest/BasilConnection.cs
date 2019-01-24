@@ -26,24 +26,26 @@ namespace org.herbal3d.BasilTest {
         private static readonly string _logHeader = "[BasilConnection]";
 
         // Public connections to the outside world: transport connection and calls to server
-        public readonly TransportConnection Transport;
+        public TransportConnection Transport;
         public readonly BasilClient Client;
 
         // Mapping of BasilMessage op's to and from code to string operation name
         public Dictionary<Int32, String> BasilMessageNameByOp = new Dictionary<int, string>();
         public Dictionary<string, Int32> BasilMessageOpByName = new Dictionary<string, int>();
 
-        // The registered processors for received operation codes
+        // The registered processors for received operation codes.
+        // Register a ProcessMessage routine for each possible message 'op' received.
+        //    The ProcessMessage routine does the operation and then returns a response
+        //    message or null if no response.
         public delegate BasilMessage.BasilMessage ProcessMessage(BasilMessage.BasilMessage pMsg);
-        public class Processors : Dictionary<Int32, ProcessMessage> {
-        };
+        public class Processors : Dictionary<Int32, ProcessMessage> { };
         // The processors for received op codes. Added to by the *Processor classes.
         private Processors _MsgProcessors = new Processors();
 
         // Handles to the various message processors. Held on to for later disposal.
-        readonly AliveCheckProcessor _aliveCheckProcessor;
-        readonly SpaceServerProcessor _spaceServerProcessor;
-        readonly BasilClientProcessor _basilClientProcessor;
+        AliveCheckProcessor _aliveCheckProcessor;
+        SpaceServerProcessor _spaceServerProcessor;
+        BasilClientProcessor _basilClientProcessor;
 
         // Per Basil connection RPC information.
         // One is kept for each outstanding RPC request. A later response will find this and call 'resolver'.
@@ -61,6 +63,7 @@ namespace org.herbal3d.BasilTest {
         // Initialize message receivers and senders.
         public BasilConnection(TransportConnection pConnection) {
             Transport = pConnection;
+
             // Build the tables of ops to names based on enum in Protobuf definitions
             this.BuildBasilMessageOps();
 
@@ -74,6 +77,15 @@ namespace org.herbal3d.BasilTest {
         }
 
         public void Dispose() {
+            if (Transport != null) {
+                Transport.Disconnect();
+                Transport = null;
+                _MsgProcessors.Clear();
+                OutstandingRPC.Clear();
+                _aliveCheckProcessor = null;
+                _spaceServerProcessor = null;
+                _basilClientProcessor = null;
+            }
             throw new NotImplementedException();
         }
 
