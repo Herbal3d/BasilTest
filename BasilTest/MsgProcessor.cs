@@ -59,7 +59,7 @@ namespace org.herbal3d.BasilTest {
         //     the response to the request.
         protected void SendMessage(BasilMessage.BasilMessage pResponseMsg, BasilMessage.BasilMessage pReqMsg) {
             string responseMsgName = _basilConnection.BasilMessageNameByOp[pResponseMsg.Op];
-            BasilTest.log.DebugFormat("{0} SendResponse: {1}", _logHeader, responseMsgName);
+            // BasilTest.log.DebugFormat("{0} SendResponse: {1}", _logHeader, responseMsgName);
 
             BasilMessage.BasilMessage msg = new BasilMessage.BasilMessage();
             if (pReqMsg != null && pReqMsg.Response != null) {

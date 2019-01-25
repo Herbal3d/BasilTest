@@ -94,7 +94,7 @@ namespace org.herbal3d.BasilTest {
 
             BasilTest.KeepRunning = true;
 
-            FleckLog.Level = LogLevel.Debug;
+            FleckLog.Level = LogLevel.Warn;
             List<TransportConnection> allClientConnections = new List<TransportConnection>();
             WebSocketServer server = null;
             if (BasilTest.parms.P<bool>("IsSecure")) {
@@ -107,6 +107,9 @@ namespace org.herbal3d.BasilTest {
             else {
                 BasilTest.log.DebugFormat("{0} Creating insecure server", _logHeader);
                 server = new WebSocketServer(BasilTest.parms.P<string>("ConnectionURL"));
+            }
+            if (BasilTest.parms.P<bool>("DisableNaglesAlgorithm")) {
+                server.ListenerSocket.NoDelay = true;
             }
             using (server) {
                 server.Start(socket => {
