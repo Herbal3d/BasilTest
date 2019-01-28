@@ -50,7 +50,11 @@ namespace org.herbal3d.BasilTest {
                 });
             }
             _basilConnection.Send(pReq.ToByteArray());
-            return await tcs.Task;
+            BasilMessage.BasilMessage resp = await tcs.Task;
+            if (resp.Exception != null) {
+                throw new BasilException(resp.Exception.Reason, new Dictionary<string,string>(resp.Exception.Hints));
+            }
+            return resp;
         }
 
         // Construct enclosing stream message to send back to the Basil viewer.
