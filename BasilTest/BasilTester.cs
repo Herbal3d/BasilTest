@@ -14,6 +14,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Threading;
 
 using Google.Protobuf.Collections;
 
@@ -97,11 +98,11 @@ namespace org.herbal3d.BasilTest {
                 CreateObjectsInDifferentFormatsAsync
             };
 
-            foreach (DoATest test in tests) {
-                await test();
-            }
+            // foreach (DoATest test in tests) {
+            //     await test();
+            // }
 
-            // Task.WaitAll(tests.Select(t => { return Task.Run(t); }).ToArray());
+            await Task.WhenAll(tests.Select(async t => { await t(); }).ToArray());
 
             /*
             BasilType.AccessAuthorization auth = null;
@@ -156,23 +157,23 @@ namespace org.herbal3d.BasilTest {
                 BasilMessage.BasilMessage resp;
                 testPhase = "Creating displayable";
                 resp = await _connection.Client.IdentifyDisplayableObjectAsync(auth, testAsset, aabb);
-                BasilTest.log.DebugFormat("{0} {1}: created displayable {2}", _logHeader, testName, resp.ObjectId.Id);
+                // BasilTest.log.DebugFormat("{0} {1}: created displayable {2}", _logHeader, testName, resp.ObjectId.Id);
 
                 // Make sure displayable is there by fetching its parameters.
                 var createdDisplayableId = resp.ObjectId;
                 createdDisplayables.Add(createdDisplayableId);
-                BasilTest.log.DebugFormat("{0} {1}: fetching displayable properties", _logHeader, testName);
+                // BasilTest.log.DebugFormat("{0} {1}: fetching displayable properties", _logHeader, testName);
                 testPhase = "Fetching displayable parameters to verify displayable's creation";
                 resp = await _connection.Client.RequestObjectPropertiesAsync(auth, createdDisplayableId, "");
 
                 // Forget the displayable.
-                BasilTest.log.DebugFormat("{0} {1}: forgetting displayable", _logHeader, testName);
+                // BasilTest.log.DebugFormat("{0} {1}: forgetting displayable", _logHeader, testName);
                 testPhase = "Forgetting created displayable";
                 resp = await _connection.Client.ForgetDisplayableObjectAsync(auth, createdDisplayableId);
-                BasilTest.log.DebugFormat("{0} {1}: deleted displayable {2}", _logHeader, testName, createdDisplayableId);
+                // BasilTest.log.DebugFormat("{0} {1}: deleted displayable {2}", _logHeader, testName, createdDisplayableId);
 
                 // Make sure we cannot get its parameters any more.
-                BasilTest.log.DebugFormat("{0} {1}: fetch properties of forgotten displayable", _logHeader, testName);
+                // BasilTest.log.DebugFormat("{0} {1}: fetch properties of forgotten displayable", _logHeader, testName);
                 try {
                     testPhase = "Verifying cannot get fetch parameters of forgotton displayable";
                     resp = await _connection.Client.RequestObjectPropertiesAsync(auth, createdDisplayableId, "");
@@ -216,7 +217,6 @@ namespace org.herbal3d.BasilTest {
                 resp = await _connection.Client.IdentifyDisplayableObjectAsync(auth, testAsset, aabb);
                 var createdDisplayableId = resp.ObjectId;
                 createdDisplayables.Add(createdDisplayableId);
-                BasilTest.log.DebugFormat("{0} {1}: created displayable {2}", _logHeader, testName, createdDisplayableId.Id);
 
                 // Create an instance of that displayable.
                 BasilType.InstancePositionInfo instancePositionInfo = new BasilType.InstancePositionInfo() {
@@ -234,7 +234,6 @@ namespace org.herbal3d.BasilTest {
                 resp = await _connection.Client.CreateObjectInstanceAsync(auth, createdDisplayableId, instancePositionInfo);
                 var createdInstanceId = resp.InstanceId;
                 createdInstances.Add(createdInstanceId);
-                BasilTest.log.DebugFormat("{0} {1}: created instance {2}", _logHeader, testName, createdInstanceId.Id);
 
                 // Verify the instance exists by fetching it's parameters.
                 testPhase = "Verifiying instance by fetching parameters";
@@ -246,14 +245,15 @@ namespace org.herbal3d.BasilTest {
 
                 // Verify the instance is gone by trying to fetch its parameters.
                 testPhase = "Verifying cannot get fetch parameters of deleted instance";
+                bool success = false;
                 try {
                     resp = await _connection.Client.RequestInstancePropertiesAsync(auth, createdInstanceId, "");
                 }
                 catch (BasilException be) {
-                    resp = null;
-                    var temp = be;
+                    success = true;
+                    var temp = be;  // suppress non-use warning
                 }
-                if (resp != null) {
+                if (!success) {
                     throw new BasilException("Fetched forgotton instance parameters");
                 }
                 BasilTest.log.InfoFormat("{0}: {1}: TEST SUCCESS", _logHeader, testName);
@@ -344,8 +344,31 @@ namespace org.herbal3d.BasilTest {
             List<BasilType.ObjectIdentifier> createdDisplayables = new List<BasilType.ObjectIdentifier>();
             List<BasilType.InstanceIdentifier> createdInstances = new List<BasilType.InstanceIdentifier>();
 
+            // Task to create and instance at some location
+            Task<BasilMessage.BasilMessage> CreateInstanceAt(BasilType.AccessAuthorization auth,
+                                BasilType.ObjectIdentifier dispId, float xx, float yy, float zz) {
+                BasilType.InstancePositionInfo instancePositionInfo = new BasilType.InstancePositionInfo() {
+                    Pos = new BasilType.CoordPosition() {
+                        Pos = new BasilType.Vector3() {
+                            X = 100.0 + (10.0 * xx),
+                            Y = 100.0 + (10.0 * yy),
+                            Z = 100.0 + (10.0 * zz)
+                        },
+                        Rot = new BasilType.Quaternion() {
+                            X = 0.0,
+                            Y = 0.0,
+                            Z = 0.0,
+                            W = 1.0
+                        },
+                        PosRef = BasilType.CoordSystem.Wgs86,
+                        RotRef = BasilType.RotationSystem.Worldr
+                    }
+                };
+                testPhase = "Creating instance of displayable";
+                return _connection.Client.CreateObjectInstanceAsync(auth, dispId, instancePositionInfo);
+            }
+
             try {
-                BasilTest.log.DebugFormat("{0} Create125InstancesDeleteOne: creating object", _logHeader);
                 BasilType.AccessAuthorization auth = null;
                 BasilType.AaBoundingBox aabb = null;
                 var testAsset = BuildAsset(null);
@@ -355,25 +378,30 @@ namespace org.herbal3d.BasilTest {
                 var createdDisplayableId = resp.ObjectId;
                 createdDisplayables.Add(createdDisplayableId);
 
-                // Create the 125 instances
-                List<int> range = new List<int>() { 0, 1, 2, 3, 5 };
+                int rangeMax = 5;
+                List<Task<BasilMessage.BasilMessage>> fetchTasks = new List<Task<BasilMessage.BasilMessage>>();
+                IEnumerable<int> range = Enumerable.Range(0, rangeMax);
                 foreach (int xx in range) {
                     foreach (int yy in range) {
                         foreach (int zz in range) {
-                            BasilType.InstancePositionInfo instancePositionInfo = new BasilType.InstancePositionInfo() {
-                                Pos = new BasilType.CoordPosition() {
-                                    Pos = new BasilType.Vector3() {
-                                        X = 100 + 10 * xx,
-                                        Y = 100 + 10 * yy,
-                                        Z = 100 + 10 * zz
-                                    },
-                                    PosRef = BasilType.CoordSystem.Wgs86,
-                                    RotRef = BasilType.RotationSystem.Worldr
-                                }
-                            };
+                            fetchTasks.Add(CreateInstanceAt(auth, createdDisplayableId, (float)xx, (float)yy, (float)zz));
+                        }
+                    }
+                }
+                while (fetchTasks.Count > 0) {
+                    Task<BasilMessage.BasilMessage> finished = await Task.WhenAny(fetchTasks);
+                    fetchTasks.Remove(finished);
+                    resp = await finished;
+                    createdInstances.Add(resp.InstanceId);
+                }
+
+                /*
+                // Create the 125 instances
+                foreach (int xx in range) {
+                    foreach (int yy in range) {
+                        foreach (int zz in range) {
                             testPhase = "Creating instance of displayable";
-                            resp = await _connection.Client.CreateObjectInstanceAsync(auth,
-                                                createdDisplayableId, instancePositionInfo);
+                            resp = await CreateInstanceAt(auth, createdDisplayableId, (float)xx, (float)yy, (float)zz);
                             var createdInstanceId = resp.InstanceId;
                             createdInstances.Add(createdInstanceId);
                             // BasilTest.log.DebugFormat("{0} {1}: created instance {2}",
@@ -381,6 +409,7 @@ namespace org.herbal3d.BasilTest {
                         }
                     }
                 }
+                */
 
                 // Verify all the instances are there by getting their parameters
                 foreach (var inst in createdInstances) {
@@ -394,6 +423,9 @@ namespace org.herbal3d.BasilTest {
                 // Delete the one selected instance
                 testPhase = "Deleting instance";
                 resp = await _connection.Client.DeleteObjectInstanceAsync(auth, deletedInstanceId);
+
+                // Let them be in the world for a second.
+                Thread.Sleep(1000);
 
                 // Verify all the instances are still there except for the one deleted one
                 testPhase = "Verifying instances except for deleted instance";
@@ -437,7 +469,6 @@ namespace org.herbal3d.BasilTest {
 
             try {
 
-                BasilTest.log.DebugFormat("{0} UpdateInstancePosition: creating object", _logHeader);
                 BasilType.AccessAuthorization auth = null;
                 BasilType.AaBoundingBox aabb = null;
                 var testAsset = BuildAsset(null);
@@ -484,13 +515,12 @@ namespace org.herbal3d.BasilTest {
                 BasilType.AccessAuthorization auth = null;
                 BasilMessage.BasilMessage resp;
                 foreach (var url in urls) {
-                    BasilTest.log.DebugFormat("{0} {1}: creating object", _logHeader, testName);
                     BasilType.AaBoundingBox aabb = null;
                     var testAsset = BuildAsset(url);
                     testPhase = "Creating formated displayable " + url;
                     resp = await _connection.Client.IdentifyDisplayableObjectAsync(auth, testAsset, aabb);
-                    BasilTest.log.DebugFormat("{0} {1}: created {2} from {3}",
-                                    _logHeader, testName, resp.ObjectId.Id, url);
+                    // BasilTest.log.DebugFormat("{0} {1}: created {2} from {3}",
+                    //                _logHeader, testName, resp.ObjectId.Id, url);
                     createdDisplayables.Add(resp.ObjectId);
                 }
 
@@ -524,6 +554,7 @@ namespace org.herbal3d.BasilTest {
                 }
             };
             if (String.IsNullOrEmpty(url)) {
+                
                 testAsset.DisplayInfo.Asset.Add("url", "http://files.misterblue.com/BasilTest/gltf/Duck/glTF/Duck.gltf");
             }
             else {
@@ -538,6 +569,7 @@ namespace org.herbal3d.BasilTest {
         private async void CleanUpTest(List<BasilType.ObjectIdentifier> pDisplayables, List<BasilType.InstanceIdentifier> pInstances) {
             BasilMessage.BasilMessage resp;
             BasilType.AccessAuthorization auth = null;
+            BasilTest.log.DebugFormat("{0}: CleanupTest: Deleting {1} displayables", _logHeader, pDisplayables.Count);
             foreach (var objId in pDisplayables) {
                 // BasilTest.log.DebugFormat("{0}: CleanupTest: Forgetting displayable {1}", _logHeader, objId.Id);
                 try {
@@ -551,10 +583,27 @@ namespace org.herbal3d.BasilTest {
                     BasilTest.log.ErrorFormat("{0}: CleanUpTest: exception deleting displayables: {1}", _logHeader, e);
                 }
             }
+            BasilTest.log.DebugFormat("{0}: CleanupTest: Completed deleting displayables", _logHeader);
+
+            BasilTest.log.DebugFormat("{0}: CleanupTest: Deleting {1} instances", _logHeader, pInstances.Count);
+            /*
+            List<Task<BasilMessage.BasilMessage>> deleteTasks = new List<Task<BasilMessage.BasilMessage>>();
+            try {
+                foreach (var instId in pInstances) {
+                    deleteTasks.Add(_connection.Client.DeleteObjectInstanceAsync(auth, instId));
+                }
+                Task.WaitAll(deleteTasks.ToArray());
+            }
+            catch (Exception e) {
+                //  error exceptions are expected
+                var temp = e;
+            }
+            */
             foreach (var instId in pInstances) {
                 // BasilTest.log.DebugFormat("{0}: CleanupTest: Deleting instance {1}", _logHeader, instId.Id);
                 try {
-                    resp = await _connection.Client.DeleteObjectInstanceAsync(auth, instId);
+                    Task<BasilMessage.BasilMessage> deleter = _connection.Client.DeleteObjectInstanceAsync(auth, instId);
+                    resp = await deleter;
                 }
                 catch (BasilException be) {
                     // Forgetting errors are expected
@@ -564,6 +613,7 @@ namespace org.herbal3d.BasilTest {
                     BasilTest.log.ErrorFormat("{0}: CleanUpTest: exception deleting instances: {1}", _logHeader, e);
                 }
             }
+            BasilTest.log.DebugFormat("{0}: CleanupTest: Completed deleting instances", _logHeader);
         }
 
     }
