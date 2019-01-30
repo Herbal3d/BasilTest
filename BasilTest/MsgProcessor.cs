@@ -102,6 +102,7 @@ namespace org.herbal3d.BasilTest {
                     }
                     if (responseTask != null) {
                         try {
+                            // Setting the result will start up the process waiting on the task
                             responseTask.SetResult(pResponseMsg);
                         }
                         catch (Exception e) {

@@ -344,7 +344,12 @@ namespace org.herbal3d.BasilTest {
             List<BasilType.ObjectIdentifier> createdDisplayables = new List<BasilType.ObjectIdentifier>();
             List<BasilType.InstanceIdentifier> createdInstances = new List<BasilType.InstanceIdentifier>();
 
-            // Task to create and instance at some location
+            // Collect and output timing information
+            BTimeSpan.Enable = true;
+            // The dimension of the cube
+            int rangeMax = 5;
+
+            // Task to create an instance at some location
             Task<BasilMessage.BasilMessage> CreateInstanceAt(BasilType.AccessAuthorization auth,
                                 BasilType.ObjectIdentifier dispId, float xx, float yy, float zz) {
                 BasilType.InstancePositionInfo instancePositionInfo = new BasilType.InstancePositionInfo() {
@@ -354,12 +359,14 @@ namespace org.herbal3d.BasilTest {
                             Y = 100.0 + (10.0 * yy),
                             Z = 100.0 + (10.0 * zz)
                         },
+                        /*
                         Rot = new BasilType.Quaternion() {
                             X = 0.0,
                             Y = 0.0,
                             Z = 0.0,
                             W = 1.0
                         },
+                        */
                         PosRef = BasilType.CoordSystem.Wgs86,
                         RotRef = BasilType.RotationSystem.Worldr
                     }
@@ -378,9 +385,10 @@ namespace org.herbal3d.BasilTest {
                 var createdDisplayableId = resp.ObjectId;
                 createdDisplayables.Add(createdDisplayableId);
 
-                int rangeMax = 5;
-                List<Task<BasilMessage.BasilMessage>> fetchTasks = new List<Task<BasilMessage.BasilMessage>>();
+                // Start up all the creation of all the instances
                 IEnumerable<int> range = Enumerable.Range(0, rangeMax);
+                /*
+                List<Task<BasilMessage.BasilMessage>> fetchTasks = new List<Task<BasilMessage.BasilMessage>>();
                 foreach (int xx in range) {
                     foreach (int yy in range) {
                         foreach (int zz in range) {
@@ -388,32 +396,43 @@ namespace org.herbal3d.BasilTest {
                         }
                     }
                 }
+                // Wait for each instance response and remember the created Id
                 while (fetchTasks.Count > 0) {
                     Task<BasilMessage.BasilMessage> finished = await Task.WhenAny(fetchTasks);
                     fetchTasks.Remove(finished);
                     resp = await finished;
                     createdInstances.Add(resp.InstanceId);
                 }
+                */
 
-                /*
                 // Create the 125 instances
-                foreach (int xx in range) {
-                    foreach (int yy in range) {
-                        foreach (int zz in range) {
-                            testPhase = "Creating instance of displayable";
-                            resp = await CreateInstanceAt(auth, createdDisplayableId, (float)xx, (float)yy, (float)zz);
-                            var createdInstanceId = resp.InstanceId;
-                            createdInstances.Add(createdInstanceId);
-                            // BasilTest.log.DebugFormat("{0} {1}: created instance {2}",
-                            //                     _logHeader, testName, createdInstanceId.Id);
+                BasilTest.log.DebugFormat("{0} {1}: creating instances", _logHeader, testName);
+                using (new BTimeSpan(span => {
+                    var msPerOp = (float)(span.TotalMilliseconds / createdInstances.Count);
+                    BasilTest.log.DebugFormat("{0} {1}ms/req to create instances", _logHeader, msPerOp);
+                })) {
+                    foreach (int xx in range) {
+                        foreach (int yy in range) {
+                            foreach (int zz in range) {
+                                testPhase = "Creating instance of displayable";
+                                resp = await CreateInstanceAt(auth, createdDisplayableId, (float)xx, (float)yy, (float)zz);
+                                var createdInstanceId = resp.InstanceId;
+                                createdInstances.Add(createdInstanceId);
+                            }
                         }
                     }
                 }
-                */
 
                 // Verify all the instances are there by getting their parameters
-                foreach (var inst in createdInstances) {
-                    resp = await _connection.Client.RequestInstancePropertiesAsync(auth, inst, "");
+                BasilTest.log.DebugFormat("{0} {1}: verifying instances created", _logHeader, testName);
+                testPhase = "Verifying all instances were created";
+                using (new BTimeSpan(span => {
+                    var msPerOp = (float)(span.TotalMilliseconds / createdInstances.Count);
+                    BasilTest.log.DebugFormat("{0} {1}ms/req to verify instance", _logHeader, msPerOp);
+                })) {
+                    foreach (var inst in createdInstances) {
+                        resp = await _connection.Client.RequestInstancePropertiesAsync(auth, inst, "");
+                    }
                 }
 
                 // Choose one of the instances to delete
@@ -421,6 +440,7 @@ namespace org.herbal3d.BasilTest {
                 var deletedInstanceId = createdInstances[rand.Next(createdInstances.Count)];
 
                 // Delete the one selected instance
+                BasilTest.log.DebugFormat("{0} {1}: deleting one instance", _logHeader, testName);
                 testPhase = "Deleting instance";
                 resp = await _connection.Client.DeleteObjectInstanceAsync(auth, deletedInstanceId);
 
@@ -428,20 +448,26 @@ namespace org.herbal3d.BasilTest {
                 Thread.Sleep(1000);
 
                 // Verify all the instances are still there except for the one deleted one
+                BasilTest.log.DebugFormat("{0} {1}: verifying non-deleted instances exist", _logHeader, testName);
                 testPhase = "Verifying instances except for deleted instance";
-                foreach (var inst in createdInstances) {
-                    bool success = true;
-                    try {
-                        resp = await _connection.Client.RequestInstancePropertiesAsync(auth, inst, "");
-                    }
-                    catch (BasilException be) {
-                        var temp = be;
-                        if (inst.Id != deletedInstanceId.Id) {
-                            success = false;
+                using (new BTimeSpan(span => {
+                    var msPerOp = (float)(span.TotalMilliseconds / createdInstances.Count);
+                    BasilTest.log.DebugFormat("{0} {1}ms/req to verify non-deleted instances", _logHeader, msPerOp);
+                })) {
+                    foreach (var inst in createdInstances) {
+                        bool success = true;
+                        try {
+                            resp = await _connection.Client.RequestInstancePropertiesAsync(auth, inst, "");
                         }
-                    }
-                    if (!success) {
-                        throw new BasilException("Other instance missing: " + inst.Id);
+                        catch (BasilException be) {
+                            var temp = be;
+                            if (inst.Id != deletedInstanceId.Id) {
+                                success = false;
+                            }
+                        }
+                        if (!success) {
+                            throw new BasilException("Other instance missing: " + inst.Id);
+                        }
                     }
                 }
 
@@ -569,51 +595,64 @@ namespace org.herbal3d.BasilTest {
         private async void CleanUpTest(List<BasilType.ObjectIdentifier> pDisplayables, List<BasilType.InstanceIdentifier> pInstances) {
             BasilMessage.BasilMessage resp;
             BasilType.AccessAuthorization auth = null;
-            BasilTest.log.DebugFormat("{0}: CleanupTest: Deleting {1} displayables", _logHeader, pDisplayables.Count);
-            foreach (var objId in pDisplayables) {
-                // BasilTest.log.DebugFormat("{0}: CleanupTest: Forgetting displayable {1}", _logHeader, objId.Id);
-                try {
-                    resp = await _connection.Client.ForgetDisplayableObjectAsync(auth, objId);
-                }
-                catch (BasilException be) {
-                    // Forgetting errors are expected
-                    var temp = be;
-                }
-                catch (Exception e) {
-                    BasilTest.log.ErrorFormat("{0}: CleanUpTest: exception deleting displayables: {1}", _logHeader, e);
-                }
-            }
-            BasilTest.log.DebugFormat("{0}: CleanupTest: Completed deleting displayables", _logHeader);
 
             BasilTest.log.DebugFormat("{0}: CleanupTest: Deleting {1} instances", _logHeader, pInstances.Count);
-            /*
-            List<Task<BasilMessage.BasilMessage>> deleteTasks = new List<Task<BasilMessage.BasilMessage>>();
-            try {
-                foreach (var instId in pInstances) {
-                    deleteTasks.Add(_connection.Client.DeleteObjectInstanceAsync(auth, instId));
-                }
-                Task.WaitAll(deleteTasks.ToArray());
-            }
-            catch (Exception e) {
-                //  error exceptions are expected
-                var temp = e;
-            }
-            */
-            foreach (var instId in pInstances) {
-                // BasilTest.log.DebugFormat("{0}: CleanupTest: Deleting instance {1}", _logHeader, instId.Id);
+            using (new BTimeSpan(span => {
+                var msPerOp = (float)(span.TotalMilliseconds / pDisplayables.Count);
+                BasilTest.log.DebugFormat("{0} CleanupTest: {1}ms/req to delete instances", _logHeader, msPerOp);
+            })) {
+                /*
+                List<Task<BasilMessage.BasilMessage>> deleteTasks = new List<Task<BasilMessage.BasilMessage>>();
                 try {
-                    Task<BasilMessage.BasilMessage> deleter = _connection.Client.DeleteObjectInstanceAsync(auth, instId);
-                    resp = await deleter;
+                    foreach (var instId in pInstances) {
+                        deleteTasks.Add(_connection.Client.DeleteObjectInstanceAsync(auth, instId));
+                    }
+                    Task.WaitAll(deleteTasks.ToArray());
                 }
-                catch (BasilException be) {
-                    // Forgetting errors are expected
-                    var temp = be;
+                catch (AggregateException ae) {
+                    var temp = ae;
                 }
                 catch (Exception e) {
-                    BasilTest.log.ErrorFormat("{0}: CleanUpTest: exception deleting instances: {1}", _logHeader, e);
+                    //  error exceptions are expected
+                    var temp = e;
+                }
+                */
+                foreach (var instId in pInstances) {
+                    // BasilTest.log.DebugFormat("{0}: CleanupTest: Deleting instance {1}", _logHeader, instId.Id);
+                    try {
+                        resp = await _connection.Client.DeleteObjectInstanceAsync(auth, instId);
+                    }
+                    catch (BasilException be) {
+                        // Forgetting errors are expected
+                        var temp = be;
+                    }
+                    catch (Exception e) {
+                        BasilTest.log.ErrorFormat("{0}: CleanUpTest: exception deleting instances: {1}", _logHeader, e);
+                    }
                 }
             }
             BasilTest.log.DebugFormat("{0}: CleanupTest: Completed deleting instances", _logHeader);
+
+            BasilTest.log.DebugFormat("{0}: CleanupTest: Deleting {1} displayables", _logHeader, pDisplayables.Count);
+            using (new BTimeSpan(span => {
+                var msPerOp = (float)(span.TotalMilliseconds / pDisplayables.Count);
+                BasilTest.log.DebugFormat("{0} CleanupTest: {1}ms/req to delete displayables", _logHeader, msPerOp);
+            })) {
+                foreach (var objId in pDisplayables) {
+                    // BasilTest.log.DebugFormat("{0}: CleanupTest: Forgetting displayable {1}", _logHeader, objId.Id);
+                    try {
+                        resp = await _connection.Client.ForgetDisplayableObjectAsync(auth, objId);
+                    }
+                    catch (BasilException be) {
+                        // Forgetting errors are expected
+                        var temp = be;
+                    }
+                    catch (Exception e) {
+                        BasilTest.log.ErrorFormat("{0}: CleanUpTest: exception deleting displayables: {1}", _logHeader, e);
+                    }
+                }
+            }
+            BasilTest.log.DebugFormat("{0}: CleanupTest: Completed deleting displayables", _logHeader);
         }
 
     }
