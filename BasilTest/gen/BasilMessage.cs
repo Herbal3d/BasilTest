@@ -25,8 +25,9 @@ namespace org.herbal3d.basil.protocol.Message {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
             "ChJCYXNpbE1lc3NhZ2UucHJvdG8SDEJhc2lsTWVzc2FnZRoQQmFzaWxUeXBl",
-            "cy5wcm90byKJBQoMQmFzaWxNZXNzYWdlEgoKAm9wGAEgASgFEiwKBGF1dGgY",
-            "AiABKAsyHi5CYXNpbFR5cGUuQWNjZXNzQXV0aG9yaXphdGlvbhItCghvYmpl",
+            "cy5wcm90byK2BQoMQmFzaWxNZXNzYWdlEgoKAm9wGAEgASgFEiwKBGF1dGgY",
+            "AiABKAsyHi5CYXNpbFR5cGUuQWNjZXNzQXV0aG9yaXphdGlvbhIrCgVjbGFz",
+            "cxgOIAEoDjIcLkJhc2lsTWVzc2FnZS5UcmFuc3BvcnRDbGFzcxItCghvYmpl",
             "Y3RJZBgDIAEoCzIbLkJhc2lsVHlwZS5PYmplY3RJZGVudGlmaWVyEjEKCmlu",
             "c3RhbmNlSWQYBCABKAsyHS5CYXNpbFR5cGUuSW5zdGFuY2VJZGVudGlmaWVy",
             "EiwKA3BvcxgFIAEoCzIfLkJhc2lsVHlwZS5JbnN0YW5jZVBvc2l0aW9uSW5m",
@@ -39,37 +40,59 @@ namespace org.herbal3d.basil.protocol.Message {
             "YXNpbEV4Y2VwdGlvbhItCghyZXNwb25zZRgNIAEoCzIbLkJhc2lsVHlwZS5C",
             "UmVzcG9uc2VSZXF1ZXN0GjEKD1Byb3BlcnRpZXNFbnRyeRILCgNrZXkYASAB",
             "KAkSDQoFdmFsdWUYAiABKAk6AjgBGjMKEU9wUGFyYW1ldGVyc0VudHJ5EgsK",
-            "A2tleRgBIAEoCRINCgV2YWx1ZRgCIAEoCToCOAEqyQYKD0Jhc2lsTWVzc2Fn",
-            "ZU9wcxIOCgpVbmtub3duUmVxEAASIQocSWRlbnRpZnlEaXNwbGF5YWJsZU9i",
-            "amVjdFJlcRCBIBIiCh1JZGVudGlmeURpc3BsYXlhYmxlT2JqZWN0UmVzcBCC",
-            "IBIfChpGb3JnZXREaXNwbGF5YWJsZU9iamVjdFJlcRCDIBIgChtGb3JnZXRE",
-            "aXNwbGF5YWJsZU9iamVjdFJlc3AQhCASHAoXQ3JlYXRlT2JqZWN0SW5zdGFu",
-            "Y2VSZXEQhSASHQoYQ3JlYXRlT2JqZWN0SW5zdGFuY2VSZXNwEIYgEhwKF0Rl",
-            "bGV0ZU9iamVjdEluc3RhbmNlUmVxEIcgEh0KGERlbGV0ZU9iamVjdEluc3Rh",
-            "bmNlUmVzcBCIIBIcChdVcGRhdGVPYmplY3RQcm9wZXJ0eVJlcRCJIBIdChhV",
-            "cGRhdGVPYmplY3RQcm9wZXJ0eVJlc3AQiiASHgoZVXBkYXRlSW5zdGFuY2VQ",
-            "cm9wZXJ0eVJlcRCLIBIfChpVcGRhdGVJbnN0YW5jZVByb3BlcnR5UmVzcBCM",
-            "IBIeChlVcGRhdGVJbnN0YW5jZVBvc2l0aW9uUmVxEI0gEh8KGlVwZGF0ZUlu",
-            "c3RhbmNlUG9zaXRpb25SZXNwEI4gEh8KGlJlcXVlc3RPYmplY3RQcm9wZXJ0",
-            "aWVzUmVxEI8gEiAKG1JlcXVlc3RPYmplY3RQcm9wZXJ0aWVzUmVzcBCQIBIh",
-            "ChxSZXF1ZXN0SW5zdGFuY2VQcm9wZXJ0aWVzUmVxEJEgEiIKHVJlcXVlc3RJ",
-            "bnN0YW5jZVByb3BlcnRpZXNSZXNwEJIgEhQKD0Nsb3NlU2Vzc2lvblJlcRCT",
-            "IBIVChBDbG9zZVNlc3Npb25SZXNwEJQgEhYKEU1ha2VDb25uZWN0aW9uUmVx",
-            "EJUgEhcKEk1ha2VDb25uZWN0aW9uUmVzcBCWIBISCg1BbGl2ZUNoZWNrUmVx",
-            "EIFAEhMKDkFsaXZlQ2hlY2tSZXNwEIJAEhMKDk9wZW5TZXNzaW9uUmVxEIFg",
-            "EhQKD09wZW5TZXNzaW9uUmVzcBCCYBISCg1DYW1lcmFWaWV3UmVxEINgEhMK",
-            "DkNhbWVyYVZpZXdSZXNwEIRgQiaqAiNvcmcuaGVyYmFsM2QuYmFzaWwucHJv",
-            "dG9jb2wuTWVzc2FnZWIGcHJvdG8z"));
+            "A2tleRgBIAEoCRINCgV2YWx1ZRgCIAEoCToCOAEqXwoOVHJhbnNwb3J0Q2xh",
+            "c3MSCwoHRGVmYXVsdBAAEhAKDEhpZ2hQcmlvcml0eRAKEg8KC01lZFByaW9y",
+            "aXR5EBQSDwoLTG93UHJpb3JpdHkQHhIMCghCZXN0Q2FzZRAoKskGCg9CYXNp",
+            "bE1lc3NhZ2VPcHMSDgoKVW5rbm93blJlcRAAEiEKHElkZW50aWZ5RGlzcGxh",
+            "eWFibGVPYmplY3RSZXEQgSASIgodSWRlbnRpZnlEaXNwbGF5YWJsZU9iamVj",
+            "dFJlc3AQgiASHwoaRm9yZ2V0RGlzcGxheWFibGVPYmplY3RSZXEQgyASIAob",
+            "Rm9yZ2V0RGlzcGxheWFibGVPYmplY3RSZXNwEIQgEhwKF0NyZWF0ZU9iamVj",
+            "dEluc3RhbmNlUmVxEIUgEh0KGENyZWF0ZU9iamVjdEluc3RhbmNlUmVzcBCG",
+            "IBIcChdEZWxldGVPYmplY3RJbnN0YW5jZVJlcRCHIBIdChhEZWxldGVPYmpl",
+            "Y3RJbnN0YW5jZVJlc3AQiCASHAoXVXBkYXRlT2JqZWN0UHJvcGVydHlSZXEQ",
+            "iSASHQoYVXBkYXRlT2JqZWN0UHJvcGVydHlSZXNwEIogEh4KGVVwZGF0ZUlu",
+            "c3RhbmNlUHJvcGVydHlSZXEQiyASHwoaVXBkYXRlSW5zdGFuY2VQcm9wZXJ0",
+            "eVJlc3AQjCASHgoZVXBkYXRlSW5zdGFuY2VQb3NpdGlvblJlcRCNIBIfChpV",
+            "cGRhdGVJbnN0YW5jZVBvc2l0aW9uUmVzcBCOIBIfChpSZXF1ZXN0T2JqZWN0",
+            "UHJvcGVydGllc1JlcRCPIBIgChtSZXF1ZXN0T2JqZWN0UHJvcGVydGllc1Jl",
+            "c3AQkCASIQocUmVxdWVzdEluc3RhbmNlUHJvcGVydGllc1JlcRCRIBIiCh1S",
+            "ZXF1ZXN0SW5zdGFuY2VQcm9wZXJ0aWVzUmVzcBCSIBIUCg9DbG9zZVNlc3Np",
+            "b25SZXEQkyASFQoQQ2xvc2VTZXNzaW9uUmVzcBCUIBIWChFNYWtlQ29ubmVj",
+            "dGlvblJlcRCVIBIXChJNYWtlQ29ubmVjdGlvblJlc3AQliASEgoNQWxpdmVD",
+            "aGVja1JlcRCBQBITCg5BbGl2ZUNoZWNrUmVzcBCCQBITCg5PcGVuU2Vzc2lv",
+            "blJlcRCBYBIUCg9PcGVuU2Vzc2lvblJlc3AQgmASEgoNQ2FtZXJhVmlld1Jl",
+            "cRCDYBITCg5DYW1lcmFWaWV3UmVzcBCEYEImqgIjb3JnLmhlcmJhbDNkLmJh",
+            "c2lsLnByb3RvY29sLk1lc3NhZ2ViBnByb3RvMw=="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { global::org.herbal3d.basil.protocol.BasilType.BasilTypesReflection.Descriptor, },
-          new pbr::GeneratedClrTypeInfo(new[] {typeof(global::org.herbal3d.basil.protocol.Message.BasilMessageOps), }, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::org.herbal3d.basil.protocol.Message.BasilMessage), global::org.herbal3d.basil.protocol.Message.BasilMessage.Parser, new[]{ "Op", "Auth", "ObjectId", "InstanceId", "Pos", "AssetInfo", "Aabb", "Filter", "Properties", "OpParameters", "Exception", "Response" }, null, null, new pbr::GeneratedClrTypeInfo[] { null, null, })
+          new pbr::GeneratedClrTypeInfo(new[] {typeof(global::org.herbal3d.basil.protocol.Message.TransportClass), typeof(global::org.herbal3d.basil.protocol.Message.BasilMessageOps), }, new pbr::GeneratedClrTypeInfo[] {
+            new pbr::GeneratedClrTypeInfo(typeof(global::org.herbal3d.basil.protocol.Message.BasilMessage), global::org.herbal3d.basil.protocol.Message.BasilMessage.Parser, new[]{ "Op", "Auth", "Class", "ObjectId", "InstanceId", "Pos", "AssetInfo", "Aabb", "Filter", "Properties", "OpParameters", "Exception", "Response" }, null, null, new pbr::GeneratedClrTypeInfo[] { null, null, })
           }));
     }
     #endregion
 
   }
   #region Enums
+  public enum TransportClass {
+    [pbr::OriginalName("Default")] Default = 0,
+    /// <summary>
+    /// movement or announcements
+    /// </summary>
+    [pbr::OriginalName("HighPriority")] HighPriority = 10,
+    /// <summary>
+    /// significant scenery
+    /// </summary>
+    [pbr::OriginalName("MedPriority")] MedPriority = 20,
+    /// <summary>
+    /// scenery
+    /// </summary>
+    [pbr::OriginalName("LowPriority")] LowPriority = 30,
+    /// <summary>
+    /// distant scenery
+    /// </summary>
+    [pbr::OriginalName("BestCase")] BestCase = 40,
+  }
+
   /// <summary>
   /// The operation codes that go into BasilMessage.op
   /// </summary>
@@ -141,6 +164,7 @@ namespace org.herbal3d.basil.protocol.Message {
     public BasilMessage(BasilMessage other) : this() {
       op_ = other.op_;
       Auth = other.auth_ != null ? other.Auth.Clone() : null;
+      class_ = other.class_;
       ObjectId = other.objectId_ != null ? other.ObjectId.Clone() : null;
       InstanceId = other.instanceId_ != null ? other.InstanceId.Clone() : null;
       Pos = other.pos_ != null ? other.Pos.Clone() : null;
@@ -184,6 +208,20 @@ namespace org.herbal3d.basil.protocol.Message {
       get { return auth_; }
       set {
         auth_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "class" field.</summary>
+    public const int ClassFieldNumber = 14;
+    private global::org.herbal3d.basil.protocol.Message.TransportClass class_ = 0;
+    /// <summary>
+    /// priority class of messsage
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public global::org.herbal3d.basil.protocol.Message.TransportClass Class {
+      get { return class_; }
+      set {
+        class_ = value;
       }
     }
 
@@ -334,6 +372,7 @@ namespace org.herbal3d.basil.protocol.Message {
       }
       if (Op != other.Op) return false;
       if (!object.Equals(Auth, other.Auth)) return false;
+      if (Class != other.Class) return false;
       if (!object.Equals(ObjectId, other.ObjectId)) return false;
       if (!object.Equals(InstanceId, other.InstanceId)) return false;
       if (!object.Equals(Pos, other.Pos)) return false;
@@ -352,6 +391,7 @@ namespace org.herbal3d.basil.protocol.Message {
       int hash = 1;
       if (Op != 0) hash ^= Op.GetHashCode();
       if (auth_ != null) hash ^= Auth.GetHashCode();
+      if (Class != 0) hash ^= Class.GetHashCode();
       if (objectId_ != null) hash ^= ObjectId.GetHashCode();
       if (instanceId_ != null) hash ^= InstanceId.GetHashCode();
       if (pos_ != null) hash ^= Pos.GetHashCode();
@@ -417,6 +457,10 @@ namespace org.herbal3d.basil.protocol.Message {
         output.WriteRawTag(106);
         output.WriteMessage(Response);
       }
+      if (Class != 0) {
+        output.WriteRawTag(112);
+        output.WriteEnum((int) Class);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -430,6 +474,9 @@ namespace org.herbal3d.basil.protocol.Message {
       }
       if (auth_ != null) {
         size += 1 + pb::CodedOutputStream.ComputeMessageSize(Auth);
+      }
+      if (Class != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Class);
       }
       if (objectId_ != null) {
         size += 1 + pb::CodedOutputStream.ComputeMessageSize(ObjectId);
@@ -476,6 +523,9 @@ namespace org.herbal3d.basil.protocol.Message {
           auth_ = new global::org.herbal3d.basil.protocol.BasilType.AccessAuthorization();
         }
         Auth.MergeFrom(other.Auth);
+      }
+      if (other.Class != 0) {
+        Class = other.Class;
       }
       if (other.objectId_ != null) {
         if (objectId_ == null) {
@@ -605,6 +655,10 @@ namespace org.herbal3d.basil.protocol.Message {
               response_ = new global::org.herbal3d.basil.protocol.BasilType.BResponseRequest();
             }
             input.ReadMessage(response_);
+            break;
+          }
+          case 112: {
+            class_ = (global::org.herbal3d.basil.protocol.Message.TransportClass) input.ReadEnum();
             break;
           }
         }
