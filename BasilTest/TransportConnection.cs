@@ -11,7 +11,9 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.Concurrent;
 using System.Text;
+using System.Threading.Tasks;
 
 using Fleck;
 
@@ -23,6 +25,9 @@ namespace org.herbal3d.BasilTest {
         private IWebSocketConnection _connection = null;
         private BasilConnection _basilConnection = null;
         public readonly string Id;
+
+        private BlockingCollection<byte[]> _receiveQueue;
+        private BlockingCollection<byte[]> _sendQueue;
 
         public event Action<TransportConnection> OnDisconnect;
         public enum ConnectionStates {
@@ -47,6 +52,23 @@ namespace org.herbal3d.BasilTest {
                             + ":"
                             + _connection.ConnectionInfo.ClientPort.ToString();
             ConnectionState = ConnectionStates.INITIALIZING;
+
+            _receiveQueue = new BlockingCollection<byte[]>(new ConcurrentQueue<byte[]>());
+            _sendQueue = new BlockingCollection<byte[]>(new ConcurrentQueue<byte[]>());
+
+            // Tasks to push and pull from the input and output queues
+            Task.Run(() => {
+                while (BasilTest.KeepRunning) {
+                    byte[] msg = _receiveQueue.Take();
+                    _basilConnection.Receive(msg);
+                }
+            });
+            Task.Run(() => {
+                while (BasilTest.KeepRunning) {
+                    byte[] msg = _sendQueue.Take();
+                    _connection.Send(msg);
+                }
+            });
 
             _connection.OnOpen = () => { Connection_OnOpen(); };
             _connection.OnClose = () => { Connection_OnClose(); };
@@ -95,7 +117,7 @@ namespace org.herbal3d.BasilTest {
 
         private void Connection_OnBinary(byte [] pMsg) {
             if (IsConnected) {
-                _basilConnection.Receive(pMsg);
+                _receiveQueue.Add(pMsg);
             }
         }
 
@@ -116,7 +138,7 @@ namespace org.herbal3d.BasilTest {
 
         public void Send(byte[] pMsg) {
             if (IsConnected) {
-                _connection.Send(pMsg);
+                _sendQueue.Add(pMsg);
             }
         }
     }
