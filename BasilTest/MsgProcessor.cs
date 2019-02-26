@@ -33,7 +33,7 @@ namespace org.herbal3d.BasilTest {
         }
 
         // Send a message and expect a RPC type response.
-        protected async Task<BasilMessage.BasilMessage> SendAndPromiseResponse(BasilMessage.BasilMessage pReq) {
+        protected async Task<BasilMessage.BasilMessage> SendAndAwaitResponse(BasilMessage.BasilMessage pReq) {
             // Place structure in message that receiver will send back so we can match response.
             UInt32 thisSession = (UInt32)_randomNumbers.Next();
             pReq.Response = new BasilType.BResponseRequest() {
@@ -46,10 +46,9 @@ namespace org.herbal3d.BasilTest {
                     context = this,
                     taskCompletion = tcs,
                     timeRPCCreated = (ulong)DateTime.UtcNow.ToBinary(),
-                    requestName = _basilConnection.BasilMessageNameByOp[pReq.Op]
                 });
             }
-            _basilConnection.Send(pReq.ToByteArray());
+            _basilConnection.Send(pReq);
             BasilMessage.BasilMessage resp = await tcs.Task;
             if (resp.Exception != null) {
                 throw new BasilException(resp.Exception.Reason, new Dictionary<string,string>(resp.Exception.Hints));
@@ -62,21 +61,21 @@ namespace org.herbal3d.BasilTest {
         // Add the response information to the response message so other side can match
         //     the response to the request.
         protected void SendMessage(BasilMessage.BasilMessage pResponseMsg, BasilMessage.BasilMessage pReqMsg) {
-            string responseMsgName = _basilConnection.BasilMessageNameByOp[pResponseMsg.Op];
+            // string responseMsgName = _basilConnection.BasilMessageNameByOp[pResponseMsg.Op];
             // BasilTest.log.DebugFormat("{0} SendResponse: {1}", _logHeader, responseMsgName);
 
             BasilMessage.BasilMessage msg = new BasilMessage.BasilMessage();
             if (pReqMsg != null && pReqMsg.Response != null) {
                 msg.Response = pReqMsg.Response;
             }
-            _basilConnection.Send(msg.ToByteArray());
+            _basilConnection.Send(msg);
         }
 
         // Given a request messsage and a partial response message, add the response tagging formation
         //    to the response so the sender of the request can match the messages.
         protected void MakeMessageAResponse(ref BasilMessage.BasilMessage pResponseMsg,
                     BasilMessage.BasilMessage pRequestMsg) {
-            if (pRequestMsg.Response != null) {
+            if (pRequestMsg != null && pRequestMsg.Response != null) {
                 pResponseMsg.Response = pRequestMsg.Response;
             }
         }

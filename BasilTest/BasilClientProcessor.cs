@@ -16,9 +16,12 @@ using System.Text;
 using BasilMessage = org.herbal3d.basil.protocol.Message;
 
 namespace org.herbal3d.BasilTest {
+    // Messages we might receive from Basil.
+    // Only responses from our requests to the server.
     public class BasilClientProcessor : MsgProcessor {
         public BasilClientProcessor(BasilConnection pConnection) : base(pConnection) {
-            // Add processors for message ops
+            // Add processors for message ops.
+            // Since this is a client talking to a Basil server, everything is a response to our request.
             var processors = new BasilConnection.Processors {
                 { (Int32)BasilMessage.BasilMessageOps.IdentifyDisplayableObjectResp, this.HandleResponse },
                 { (Int32)BasilMessage.BasilMessageOps.ForgetDisplayableObjectResp, this.HandleResponse },

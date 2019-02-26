@@ -48,14 +48,15 @@ namespace org.herbal3d.BasilTest {
         BasilClientProcessor _basilClientProcessor;
 
         // Per Basil connection RPC information.
-        // One is kept for each outstanding RPC request. A later response will find this and call 'resolver'.
+        // One is kept for each outstanding RPC request. A later response will find
+        //     this and add result message to 'taskCompletion'.
         public Dictionary<UInt32, SentRPC> OutstandingRPC = new Dictionary<UInt32, SentRPC>();
         public class SentRPC {
-            public UInt32 session;
-            public MsgProcessor context;
-            public UInt64 timeRPCCreated;
+            public UInt32 session;          // unique number used to link response
+            public MsgProcessor context;    // for debugging, the active message processor
+            public UInt64 timeRPCCreated;   // when the RPC was initially sent
+            // Task completion object that is holding the context for the reply.
             public TaskCompletionSource<BasilMessage.BasilMessage> taskCompletion;
-            public string requestName;
         };
 
         // A socket connection has been made to a Basil Server.
@@ -106,8 +107,9 @@ namespace org.herbal3d.BasilTest {
             if (_MsgProcessors.ContainsKey(rcvdMsg.Op)) {
                 try {
                     BasilMessage.BasilMessage reply = _MsgProcessors[rcvdMsg.Op](rcvdMsg);
+                    // If processing the message generated a reply message, send it.
                     if (reply != null) {
-                        this.Send(reply.ToByteArray());
+                        this.Send(reply);
                     }
                 }
                 catch (Exception e) {
@@ -120,9 +122,9 @@ namespace org.herbal3d.BasilTest {
             }
         }
 
-        // Send the binary message!!
-        public void Send(byte[] pMsg) {
-            Transport.Send(pMsg);
+        // Send the message!!
+        public void Send(BasilMessage.BasilMessage pMsg) {
+            Transport.Send(pMsg.ToByteArray());
         }
 
         // 

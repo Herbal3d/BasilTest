@@ -14,11 +14,11 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-using AliveCheck = org.herbal3d.basil.protocol.AliveCheck;
 using BasilType = org.herbal3d.basil.protocol.BasilType;
 using BasilMessage = org.herbal3d.basil.protocol.Message;
 
 namespace org.herbal3d.BasilTest {
+    // Message processor for the keep alive handshake.
     public class AliveCheckProcessor : MsgProcessor {
 
         private int _AliveSequenceNumber = 111;
@@ -35,7 +35,7 @@ namespace org.herbal3d.BasilTest {
         public async Task<BasilMessage.BasilMessage> AliveCheckAsync(
                         BasilType.AccessAuthorization pAuth) {
             BasilMessage.BasilMessage req = MakeAliveCheckReq(pAuth);
-            return await this.SendAndPromiseResponse(req);
+            return await this.SendAndAwaitResponse(req);
         }
 
         // Send an AliveCheck request without expecting a response
@@ -61,8 +61,20 @@ namespace org.herbal3d.BasilTest {
             };
             ret.OpParameters.Add("time", DateTime.UtcNow.ToString());
             ret.OpParameters.Add("sequenceNum", (_AliveSequenceNumber++).ToString());
-            ret.OpParameters.Add("timeReceived", pReq.OpParameters["time"]);
-            ret.OpParameters.Add("sequenceNumReceived", pReq.OpParameters["sequenceNum"]);
+            if (pReq.OpParameters != null) {
+                if (pReq.OpParameters.ContainsKey("time")) {
+                    ret.OpParameters.Add("timeReceived", (string)pReq.OpParameters["time"]);
+                }
+                else {
+                    ret.OpParameters.Add("timeReceived", "0");
+                }
+                if (pReq.OpParameters.ContainsKey("sequenceNum")) {
+                    ret.OpParameters.Add("sequenceNumReceived", (string)pReq.OpParameters["sequenceNum"]);
+                }
+                else {
+                    ret.OpParameters.Add("sequenceNumReceived", "0");
+                }
+            }
             return ret;
         }
     }

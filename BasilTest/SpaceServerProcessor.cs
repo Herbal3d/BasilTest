@@ -18,6 +18,7 @@ using BasilType = org.herbal3d.basil.protocol.BasilType;
 using BasilMessage = org.herbal3d.basil.protocol.Message;
 
 namespace org.herbal3d.BasilTest {
+    // Message Basil might send to us as a SpaceServer.
     public class SpaceServerProcessor : MsgProcessor {
         private static readonly string _logHeader = "[SpaceServerProcessor]";
 
@@ -31,6 +32,7 @@ namespace org.herbal3d.BasilTest {
             _basilConnection.AddMessageProcessors(processors);
         }
 
+        // Update saying camera has moved.
         private  BasilMessage.BasilMessage ProcCameraViewReq(BasilMessage.BasilMessage pReq) {
             BasilTest.log.DebugFormat("{0} CameraViewReq", _logHeader);
             BasilMessage.BasilMessage respMsg = new BasilMessage.BasilMessage {
@@ -39,6 +41,8 @@ namespace org.herbal3d.BasilTest {
             MakeMessageAResponse(ref respMsg, pReq);
             return respMsg;
         }
+
+        // Request to open a session with this space server
         private  BasilMessage.BasilMessage ProcOpenSessionReq(BasilMessage.BasilMessage pReq) {
             BasilTest.log.DebugFormat("{0} OpenSessionReq", _logHeader);
 
@@ -54,6 +58,8 @@ namespace org.herbal3d.BasilTest {
             MakeMessageAResponse(ref respMsg, pReq);
             return respMsg;
         }
+
+        // Request to close the session.
         private BasilMessage.BasilMessage ProcCloseSessionReq(BasilMessage.BasilMessage pReq) {
             BasilTest.log.DebugFormat("{0} CloseSessionReq", _logHeader);
             BasilMessage.BasilMessage respMsg = new BasilMessage.BasilMessage {

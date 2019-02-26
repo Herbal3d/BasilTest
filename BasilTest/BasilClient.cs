@@ -34,7 +34,7 @@ namespace org.herbal3d.BasilTest {
                 AssetInfo = pAsset,
                 Aabb = pAabb
             };
-            return await this.SendAndPromiseResponse(req);
+            return await this.SendAndAwaitResponse(req);
         }
 
         public async Task<BasilMessage.BasilMessage> ForgetDisplayableObjectAsync(
@@ -45,7 +45,7 @@ namespace org.herbal3d.BasilTest {
                 Auth = pAuth,
                 ObjectId = pId
             };
-            return await this.SendAndPromiseResponse(req);
+            return await this.SendAndAwaitResponse(req);
         }
 
         public async Task<BasilMessage.BasilMessage> CreateObjectInstanceAsync(
@@ -58,7 +58,7 @@ namespace org.herbal3d.BasilTest {
                 ObjectId = pId,
                 Pos = pInstancePositionInfo,
             };
-            return await this.SendAndPromiseResponse(req);
+            return await this.SendAndAwaitResponse(req);
         }
 
         public async Task<BasilMessage.BasilMessage> CreateObjectInstanceAsync(
@@ -75,7 +75,7 @@ namespace org.herbal3d.BasilTest {
             if (pPropertyList != null) {
                 req.Properties.Add(pPropertyList);
             }
-            return await this.SendAndPromiseResponse(req);
+            return await this.SendAndAwaitResponse(req);
         }
 
         public async Task<BasilMessage.BasilMessage> DeleteObjectInstanceAsync(
@@ -86,7 +86,7 @@ namespace org.herbal3d.BasilTest {
                 Auth = pAuth,
                 InstanceId = pId
             };
-            return await this.SendAndPromiseResponse(req);
+            return await this.SendAndAwaitResponse(req);
         }
 
         public async Task<BasilMessage.BasilMessage> UpdateObjectPropertyAsync(
@@ -99,7 +99,7 @@ namespace org.herbal3d.BasilTest {
                 ObjectId = pId
             };
             req.Properties.Add(pPropertyList);
-            return await this.SendAndPromiseResponse(req);
+            return await this.SendAndAwaitResponse(req);
         }
 
         public async Task<BasilMessage.BasilMessage> UpdateInstancePropertyAsync(
@@ -112,7 +112,7 @@ namespace org.herbal3d.BasilTest {
                 InstanceId = pId
             };
             req.Properties.Add(pPropertyList);
-            return await this.SendAndPromiseResponse(req);
+            return await this.SendAndAwaitResponse(req);
         }
         public async Task<BasilMessage.BasilMessage> UpdateInstancePositionAsync(
                         BasilType.AccessAuthorization pAuth,
@@ -124,7 +124,7 @@ namespace org.herbal3d.BasilTest {
                 InstanceId = pId,
                 Pos = pInstancePositionInfo
             };
-            return await this.SendAndPromiseResponse(req);
+            return await this.SendAndAwaitResponse(req);
         }
         public async Task<BasilMessage.BasilMessage> RequestObjectPropertiesAsync(
                         BasilType.AccessAuthorization pAuth,
@@ -136,7 +136,7 @@ namespace org.herbal3d.BasilTest {
                 ObjectId = pId,
                 Filter = pPropertyMatch
             };
-            return await this.SendAndPromiseResponse(req);
+            return await this.SendAndAwaitResponse(req);
         }
 
         public async Task<BasilMessage.BasilMessage> RequestInstancePropertiesAsync(
@@ -149,7 +149,7 @@ namespace org.herbal3d.BasilTest {
                 InstanceId = pId,
                 Filter = pPropertyMatch
             };
-            return await this.SendAndPromiseResponse(req);
+            return await this.SendAndAwaitResponse(req);
         }
 
         // RESOURCE MANAGEMENT =========================================
@@ -164,7 +164,7 @@ namespace org.herbal3d.BasilTest {
                 Auth = pAuth
             };
             req.OpParameters.Add("reason", pReason);
-            return await this.SendAndPromiseResponse(req);
+            return await this.SendAndAwaitResponse(req);
         }
 
         public async Task<BasilMessage.BasilMessage> MakeConnectionAsync(
@@ -175,7 +175,7 @@ namespace org.herbal3d.BasilTest {
                 Auth = pAuth,
             };
             req.Properties.Add(pConnectionParams);
-            return await this.SendAndPromiseResponse(req);
+            return await this.SendAndAwaitResponse(req);
         }
     }
 }

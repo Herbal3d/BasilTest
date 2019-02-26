@@ -96,6 +96,8 @@ namespace org.herbal3d.BasilTest {
 
             FleckLog.Level = LogLevel.Warn;
             List<TransportConnection> allClientConnections = new List<TransportConnection>();
+
+            // For debugging, it is possible to set up a non-encrypted connection
             WebSocketServer server = null;
             if (BasilTest.parms.P<bool>("IsSecure")) {
                 BasilTest.log.DebugFormat("{0} Creating secure server", _logHeader);
@@ -108,9 +110,13 @@ namespace org.herbal3d.BasilTest {
                 BasilTest.log.DebugFormat("{0} Creating insecure server", _logHeader);
                 server = new WebSocketServer(BasilTest.parms.P<string>("ConnectionURL"));
             }
+
+            // Disable the ACK delay for better responsiveness
             if (BasilTest.parms.P<bool>("DisableNaglesAlgorithm")) {
                 server.ListenerSocket.NoDelay = true;
             }
+
+            // Loop around waiting for connections
             using (server) {
                 server.Start(socket => {
                     BasilTest.log.DebugFormat("{0} Received WebSocket connection", _logHeader);

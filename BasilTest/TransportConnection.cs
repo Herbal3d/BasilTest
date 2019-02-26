@@ -56,7 +56,9 @@ namespace org.herbal3d.BasilTest {
             _receiveQueue = new BlockingCollection<byte[]>(new ConcurrentQueue<byte[]>());
             _sendQueue = new BlockingCollection<byte[]>(new ConcurrentQueue<byte[]>());
 
-            // Tasks to push and pull from the input and output queues
+            // Tasks to push and pull from the input and output queues.
+            // These tasks are here so the context will be this object instance rather than
+            //     creating the tasks in the OnOpen event context.
             Task.Run(() => {
                 while (BasilTest.KeepRunning) {
                     byte[] msg = _receiveQueue.Take();
