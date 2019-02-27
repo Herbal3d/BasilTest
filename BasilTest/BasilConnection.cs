@@ -28,6 +28,7 @@ namespace org.herbal3d.BasilTest {
         // Public connections to the outside world: transport connection and calls to server
         public TransportConnection Transport;
         public readonly BasilClient Client;
+        public readonly SpaceServer Server;
 
         // Mapping of BasilMessage op's to and from code to string operation name
         public Dictionary<Int32, String> BasilMessageNameByOp = new Dictionary<int, string>();
@@ -73,6 +74,7 @@ namespace org.herbal3d.BasilTest {
             _basilClientProcessor = new BasilClientProcessor(this);
 
             // Routines for sending messages.
+            Server = _spaceServerProcessor.Server;
             Client = new BasilClient(this);
         }
 

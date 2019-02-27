@@ -20,55 +20,18 @@ using BasilMessage = org.herbal3d.basil.protocol.Message;
 namespace org.herbal3d.BasilTest {
     // Message Basil might send to us as a SpaceServer.
     public class SpaceServerProcessor : MsgProcessor {
-        private static readonly string _logHeader = "[SpaceServerProcessor]";
+        // private static readonly string _logHeader = "[SpaceServerProcessor]";
+        public readonly SpaceServer Server;
 
         public SpaceServerProcessor(BasilConnection pConnection) : base(pConnection) {
             // Add processors for message ops
+            Server = new SpaceServer(pConnection);
             BasilConnection.Processors processors = new BasilConnection.Processors {
-                { (Int32)BasilMessage.BasilMessageOps.OpenSessionReq, this.ProcOpenSessionReq },
-                { (Int32)BasilMessage.BasilMessageOps.CloseSessionReq, this.ProcCloseSessionReq },
-                { (Int32)BasilMessage.BasilMessageOps.CameraViewReq, this.ProcCameraViewReq }
+                { (Int32)BasilMessage.BasilMessageOps.OpenSessionReq, Server.OpenSession },
+                { (Int32)BasilMessage.BasilMessageOps.CloseSessionReq, Server.CloseSession },
+                { (Int32)BasilMessage.BasilMessageOps.CameraViewReq, Server.CameraView }
             };
             _basilConnection.AddMessageProcessors(processors);
         }
-
-        // Update saying camera has moved.
-        private  BasilMessage.BasilMessage ProcCameraViewReq(BasilMessage.BasilMessage pReq) {
-            BasilTest.log.DebugFormat("{0} CameraViewReq", _logHeader);
-            BasilMessage.BasilMessage respMsg = new BasilMessage.BasilMessage {
-                Op = _basilConnection.BasilMessageOpByName["CameraViewResp"]
-            };
-            MakeMessageAResponse(ref respMsg, pReq);
-            return respMsg;
-        }
-
-        // Request to open a session with this space server
-        private  BasilMessage.BasilMessage ProcOpenSessionReq(BasilMessage.BasilMessage pReq) {
-            BasilTest.log.DebugFormat("{0} OpenSessionReq", _logHeader);
-
-            // For the moment, just start the testing sequence when session is opened
-            BasilTester tester = new BasilTester(_basilConnection);
-            Task.Run(() => {
-                tester.DoTests(pReq.Properties);
-            });
-
-            BasilMessage.BasilMessage respMsg = new BasilMessage.BasilMessage {
-                Op = _basilConnection.BasilMessageOpByName["OpenSessionResp"]
-            };
-            MakeMessageAResponse(ref respMsg, pReq);
-            return respMsg;
-        }
-
-        // Request to close the session.
-        private BasilMessage.BasilMessage ProcCloseSessionReq(BasilMessage.BasilMessage pReq) {
-            BasilTest.log.DebugFormat("{0} CloseSessionReq", _logHeader);
-            BasilMessage.BasilMessage respMsg = new BasilMessage.BasilMessage {
-                Op = _basilConnection.BasilMessageOpByName["CloseSessionResp"]
-            };
-            MakeMessageAResponse(ref respMsg, pReq);
-            return respMsg;
-        }
-
-
     }
 }
