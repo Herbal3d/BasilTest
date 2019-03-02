@@ -35,6 +35,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\HerbalCommonEntitiesCS\CommonEntitiesUtil\CommonEntitiesUtil.csproj" />
+    <ProjectReference Include="..\..\HerbalTransportCS\HerbalTransportCS\HerbalTransportCS.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Update="Properties\Resources.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>

@@ -18,6 +18,11 @@ using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 
+using org.herbal3d.transport;
+using org.herbal3d.cs.CommonEntitiesUtil;
+
+using BasilMessage = org.herbal3d.basil.protocol.Message;
+
 using Fleck;
 
 using System.Security.Cryptography.X509Certificates;
@@ -26,7 +31,7 @@ namespace org.herbal3d.BasilTest {
     public class BasilTest {
         // Globals for some things that just are global
         static public Params parms;
-        static public Logger log;
+        static public BLogger log;
         static public Statistics stats;
         // Global flag used to let everyone know when to stop processing
         static public bool KeepRunning = false;
@@ -40,8 +45,6 @@ namespace org.herbal3d.BasilTest {
         static public string gitCommit = Properties.Resources.GitCommit.Trim();
 
         private static readonly string _logHeader = "[BasilTest]";
-
-        private List<TransportConnection> _transports = new List<TransportConnection>();
 
         private string Invocation() {
             StringBuilder buff = new StringBuilder();
@@ -92,51 +95,66 @@ namespace org.herbal3d.BasilTest {
                             );
             }
 
-            BasilTest.KeepRunning = true;
-
-            FleckLog.Level = LogLevel.Warn;
-            List<TransportConnection> allClientConnections = new List<TransportConnection>();
-
-            // For debugging, it is possible to set up a non-encrypted connection
-            WebSocketServer server = null;
-            if (BasilTest.parms.P<bool>("IsSecure")) {
-                BasilTest.log.DebugFormat("{0} Creating secure server", _logHeader);
-                server = new WebSocketServer(BasilTest.parms.P<string>("SecureConnectionURL")) {
-                    Certificate = new X509Certificate2(BasilTest.parms.P<string>("Certificate")),
-                    EnabledSslProtocols = System.Security.Authentication.SslProtocols.Tls12
-                };
+            HerbalTransport transport = new HerbalTransport(HaveNewClient, ReturnSpaceServer, BasilTest.parms, BasilTest.log);
+            var canceller = new CancellationTokenSource();
+            transport.Start(canceller);
+            while (!canceller.IsCancellationRequested) {
+                Thread.Sleep(100);
             }
-            else {
-                BasilTest.log.DebugFormat("{0} Creating insecure server", _logHeader);
-                server = new WebSocketServer(BasilTest.parms.P<string>("ConnectionURL"));
+        }
+
+        private void HaveNewClient(BasilClient pClient) {
+            BasilTest.log.InfoFormat("{0} Have a client connection: {1}", _logHeader, pClient.Connection.Transport.Id);
+        }
+
+        private ISpaceServer ReturnSpaceServer(BasilConnection pConnection) {
+            return new SpaceServerTester(pConnection);
+        }
+    }
+
+    public class SpaceServerTester : ISpaceServer {
+
+        private static readonly string _logHeader = "[SpaceServerTester]";
+        private BasilConnection _basilConnection;
+
+        public SpaceServerTester(BasilConnection pConnection) {
+            BasilTest.log.InfoFormat("{0} Creation", _logHeader);
+            _basilConnection = pConnection;
+        }
+
+        public BasilMessage.BasilMessage OpenSession(BasilMessage.BasilMessage pReq) {
+
+            // Start the tester.
+            Dictionary<string,string> parms = pReq.Properties.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+            BasilTest.log.DebugFormat("{0} Received OpenSession. Starting Tester", _logHeader);
+            foreach (var kvp in parms) {
+                BasilTest.log.DebugFormat("{0}       {1}: {2}", _logHeader, kvp.Key, kvp.Value);
             }
+            BasilTester tester = new BasilTester(_basilConnection.Client);
+            Task.Run(async () => {
+                await tester.DoTests(parms);
+            });
+            BasilMessage.BasilMessage respMsg = new BasilMessage.BasilMessage {
+                Op = _basilConnection.BasilMessageOpByName["OpenSessionResp"]
+            };
+            MsgProcessor.MakeMessageAResponse(ref respMsg, pReq);
+            return respMsg;
+        }
 
-            // Disable the ACK delay for better responsiveness
-            if (BasilTest.parms.P<bool>("DisableNaglesAlgorithm")) {
-                server.ListenerSocket.NoDelay = true;
-            }
+        public BasilMessage.BasilMessage CloseSession(BasilMessage.BasilMessage pReq) {
+            BasilMessage.BasilMessage respMsg = new BasilMessage.BasilMessage {
+                Op = _basilConnection.BasilMessageOpByName["CloseSessionResp"]
+            };
+            MsgProcessor.MakeMessageAResponse(ref respMsg, pReq);
+            return respMsg;
+        }
 
-            // Loop around waiting for connections
-            using (server) {
-                server.Start(socket => {
-                    BasilTest.log.DebugFormat("{0} Received WebSocket connection", _logHeader);
-                    lock (_transports) {
-                        TransportConnection transportConnection = new TransportConnection(socket);
-                        transportConnection.OnDisconnect += client => {
-                            lock (_transports) {
-                                BasilTest.log.InfoFormat("{0} client disconnected", _logHeader);
-                                _transports.Remove(client);
-                            }
-                        };
-                        _transports.Add(transportConnection);
-                    };
-
-                });
-                while (KeepRunning) {
-                    Thread.Sleep(250);
-                }
-            }
-
+        public BasilMessage.BasilMessage CameraView(BasilMessage.BasilMessage pReq) {
+            BasilMessage.BasilMessage respMsg = new BasilMessage.BasilMessage {
+                Op = _basilConnection.BasilMessageOpByName["CameraViewResp"]
+            };
+            MsgProcessor.MakeMessageAResponse(ref respMsg, pReq);
+            return respMsg;
         }
     }
 }

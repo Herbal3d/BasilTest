@@ -14,8 +14,10 @@
 using System;
 using System.Text;
 
+using org.herbal3d.cs.CommonEntitiesUtil;
+
 namespace org.herbal3d.BasilTest {
-    public class Params {
+    public class Params : IParameters {
         private static readonly string _logHeader = "[PARAMS]";
 
         public Params() {
