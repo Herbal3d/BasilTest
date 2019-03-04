@@ -68,6 +68,9 @@ namespace org.herbal3d.BasilTest {
             new ParameterDefn<string>("SubRegion", "Bounds of subregion to export. upper-right to lower-left as (X,Y,Z,X,Y,Z). Whole region if empty or null",
                 null ),
 
+            new ParameterDefn<int>("125BlockSize", "Dimension of cube built by Create125InstancesDeleteOne",
+                5 ) // 5^3 = 125
+
         };
 
         // =====================================================================================

@@ -26,6 +26,7 @@ using BasilMessage = org.herbal3d.basil.protocol.Message;
 using Fleck;
 
 using System.Security.Cryptography.X509Certificates;
+using org.herbal3d.basil.protocol.SpaceServer;
 
 namespace org.herbal3d.BasilTest {
     public class BasilTest {
@@ -89,72 +90,67 @@ namespace org.herbal3d.BasilTest {
             }
 
             if (!BasilTest.parms.P<bool>("Quiet")) {
-                System.Console.WriteLine("Convoar v" + BasilTest.version
+                System.Console.WriteLine("BasilTest v" + BasilTest.version
                             + " built " + BasilTest.buildDate
                             + " commit " + BasilTest.gitCommit
                             );
             }
 
-            HerbalTransport transport = new HerbalTransport(HaveNewClient, ReturnSpaceServer, BasilTest.parms, BasilTest.log);
+            var spaceServerTester  = new SpaceServerTester();
+            HerbalTransport transport = new HerbalTransport(spaceServerTester, BasilTest.parms, BasilTest.log);
+
             var canceller = new CancellationTokenSource();
             transport.Start(canceller);
+
             while (!canceller.IsCancellationRequested) {
                 Thread.Sleep(100);
             }
-        }
-
-        private void HaveNewClient(BasilClient pClient) {
-            BasilTest.log.InfoFormat("{0} Have a client connection: {1}", _logHeader, pClient.Connection.Transport.Id);
-        }
-
-        private ISpaceServer ReturnSpaceServer(BasilConnection pConnection) {
-            return new SpaceServerTester(pConnection);
         }
     }
 
     public class SpaceServerTester : ISpaceServer {
 
         private static readonly string _logHeader = "[SpaceServerTester]";
-        private BasilConnection _basilConnection;
 
-        public SpaceServerTester(BasilConnection pConnection) {
-            BasilTest.log.InfoFormat("{0} Creation", _logHeader);
-            _basilConnection = pConnection;
+        public SpaceServerTester() {
         }
 
-        public BasilMessage.BasilMessage OpenSession(BasilMessage.BasilMessage pReq) {
+        private BasilClient _client;
 
-            // Start the tester.
-            Dictionary<string,string> parms = pReq.Properties.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
-            BasilTest.log.DebugFormat("{0} Received OpenSession. Starting Tester", _logHeader);
-            foreach (var kvp in parms) {
-                BasilTest.log.DebugFormat("{0}       {1}: {2}", _logHeader, kvp.Key, kvp.Value);
+        void ISpaceServer.SetClientConnection(BasilClient pClient) {
+            _client = pClient;
+        }
+
+        OpenSessionResp ISpaceServer.OpenSession(OpenSessionReq pReq) {
+            var resp = new OpenSessionResp();
+            BasilTest.log.DebugFormat("{0} OpenSession", _logHeader);
+
+            if (_client != null) {
+                // Start the tester.
+                Dictionary<string, string> parms = pReq.Features.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+                BasilTest.log.DebugFormat("{0} Received OpenSession. Starting Tester", _logHeader);
+                foreach (var kvp in parms) {
+                    BasilTest.log.DebugFormat("{0}       {1}: {2}", _logHeader, kvp.Key, kvp.Value);
+                }
+                BasilTester tester = new BasilTester(_client);
+                Task.Run(async () => {
+                    await tester.DoTests(parms);
+                });
             }
-            BasilTester tester = new BasilTester(_basilConnection.Client);
-            Task.Run(async () => {
-                await tester.DoTests(parms);
-            });
-            BasilMessage.BasilMessage respMsg = new BasilMessage.BasilMessage {
-                Op = _basilConnection.BasilMessageOpByName["OpenSessionResp"]
-            };
-            MsgProcessor.MakeMessageAResponse(ref respMsg, pReq);
-            return respMsg;
+            else {
+                resp.Exception = new basil.protocol.BasilType.BasilException() {
+                    Reason = "Connection not initialized"
+                };
+            }
+            return resp;
         }
 
-        public BasilMessage.BasilMessage CloseSession(BasilMessage.BasilMessage pReq) {
-            BasilMessage.BasilMessage respMsg = new BasilMessage.BasilMessage {
-                Op = _basilConnection.BasilMessageOpByName["CloseSessionResp"]
-            };
-            MsgProcessor.MakeMessageAResponse(ref respMsg, pReq);
-            return respMsg;
+        CloseSessionResp ISpaceServer.CloseSession(CloseSessionReq pReq) {
+            return new CloseSessionResp();
         }
 
-        public BasilMessage.BasilMessage CameraView(BasilMessage.BasilMessage pReq) {
-            BasilMessage.BasilMessage respMsg = new BasilMessage.BasilMessage {
-                Op = _basilConnection.BasilMessageOpByName["CameraViewResp"]
-            };
-            MsgProcessor.MakeMessageAResponse(ref respMsg, pReq);
-            return respMsg;
+        CameraViewResp ISpaceServer.CameraView(CameraViewReq pReq) {
+            return new CameraViewResp();
         }
     }
 }

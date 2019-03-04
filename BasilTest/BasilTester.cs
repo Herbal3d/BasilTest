@@ -347,7 +347,7 @@ namespace org.herbal3d.BasilTest {
             // Collect and output timing information
             BTimeSpan.Enable = true;
             // The dimension of the cube
-            int rangeMax = 5;
+            int rangeMax = BasilTest.parms.P<int>("125BlockSize");  // default is 5
 
             // Task to create an instance at some location
             Task<BasilMessage.BasilMessage> CreateInstanceAt(BasilType.AccessAuthorization auth,
