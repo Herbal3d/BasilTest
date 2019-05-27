@@ -96,8 +96,7 @@ namespace org.herbal3d.BasilTest {
                             );
             }
 
-            var spaceServerTester  = new SpaceServerTester();
-            HerbalTransport transport = new HerbalTransport(spaceServerTester, BasilTest.parms, BasilTest.log);
+            HerbalTransport transport = new HerbalTransport(BasilTest.parms, BasilTest.log);
 
             var canceller = new CancellationTokenSource();
             transport.Start(canceller);
