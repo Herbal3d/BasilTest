@@ -28,15 +28,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Fleck" Version="1.1.0" />
-    <PackageReference Include="Google.Protobuf" Version="3.7.0" />
-    <PackageReference Include="log4net" Version="2.0.8" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\..\HerbalCommonEntitiesCS\CommonEntitiesUtil\Herbal3d.CommonEntitiesUtil.csproj" />
-    <ProjectReference Include="..\..\HerbalCommonEntitiesCS\CommonEntities\Herbal3d.CommonEntities.csproj" />
-    <ProjectReference Include="..\..\HerbalTransportCS\HerbalTransportCS\Herbal3d.TransportCS.csproj" />
+    <ProjectReference Include="..\..\HerbalTransportCS\HerbalTransportCS\Herbal3d.HerbalTransportCS.csproj" />
   </ItemGroup>
 
   <ItemGroup>
