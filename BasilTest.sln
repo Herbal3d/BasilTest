@@ -4,13 +4,12 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 15.0.28307.136
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BasilTest", "BasilTest\BasilTest.csproj", "{C053EB9E-6A39-40BD-9904-5D7F3510A0CB}"
-	ProjectSection(ProjectDependencies) = postProject
-		{5535E373-657B-47D6-B534-BB64C9710F6B} = {5535E373-657B-47D6-B534-BB64C9710F6B}
-	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HerbalTransportCS", "..\HerbalTransportCS\HerbalTransportCS\HerbalTransportCS.csproj", "{5535E373-657B-47D6-B534-BB64C9710F6B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Herbal3d.TransportCS", "..\HerbalTransportCS\HerbalTransportCS\Herbal3d.TransportCS.csproj", "{F7290ED2-0000-0000-0000-000000000000}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommonEntitiesUtil", "..\HerbalCommonEntitiesCS\CommonEntitiesUtil\CommonEntitiesUtil.csproj", "{A9D65554-0000-0000-0000-000000000000}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Herbal3d.CommonEntities", "..\HerbalCommonEntitiesCS\CommonEntities\Herbal3d.CommonEntities.csproj", "{CD57AD69-0000-0000-0000-000000000000}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Herbal3d.CommonEntitiesUtil", "..\HerbalCommonEntitiesCS\CommonEntitiesUtil\Herbal3d.CommonEntitiesUtil.csproj", "{59F9BD1D-0000-0000-0000-000000000000}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -22,14 +21,18 @@ Global
 		{C053EB9E-6A39-40BD-9904-5D7F3510A0CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C053EB9E-6A39-40BD-9904-5D7F3510A0CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C053EB9E-6A39-40BD-9904-5D7F3510A0CB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5535E373-657B-47D6-B534-BB64C9710F6B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5535E373-657B-47D6-B534-BB64C9710F6B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5535E373-657B-47D6-B534-BB64C9710F6B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5535E373-657B-47D6-B534-BB64C9710F6B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A9D65554-0000-0000-0000-000000000000}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A9D65554-0000-0000-0000-000000000000}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A9D65554-0000-0000-0000-000000000000}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A9D65554-0000-0000-0000-000000000000}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F7290ED2-0000-0000-0000-000000000000}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F7290ED2-0000-0000-0000-000000000000}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F7290ED2-0000-0000-0000-000000000000}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F7290ED2-0000-0000-0000-000000000000}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CD57AD69-0000-0000-0000-000000000000}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CD57AD69-0000-0000-0000-000000000000}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CD57AD69-0000-0000-0000-000000000000}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CD57AD69-0000-0000-0000-000000000000}.Release|Any CPU.Build.0 = Release|Any CPU
+		{59F9BD1D-0000-0000-0000-000000000000}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{59F9BD1D-0000-0000-0000-000000000000}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{59F9BD1D-0000-0000-0000-000000000000}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{59F9BD1D-0000-0000-0000-000000000000}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
