@@ -44,6 +44,8 @@ namespace org.herbal3d.BasilTest {
         //    v = value (appropriate type)
         public ParameterDefnBase[] ParameterDefinitions =
         {
+            new ParameterDefn<string>("ExternalAccessHostname", "Hostname to see up by", ""),
+
             new ParameterDefn<string>("==========", "General Input and Output Parameters", null),
             new ParameterDefn<bool>("IsSecure", "Boolean saying whether input connection must be secure",
                 false),
@@ -92,6 +94,7 @@ namespace org.herbal3d.BasilTest {
             public abstract void AssignDefault();
             // Get the value as a string
             public abstract string GetValue();
+            public abstract object GetObjectValue();
             // Set the value to this string value
             public abstract void SetValue(string valAsString);
         }
@@ -119,6 +122,9 @@ namespace org.herbal3d.BasilTest {
                     ret = value.ToString();
                 }
                 return ret;
+            }
+            public override object GetObjectValue() {
+                return value;
             }
             public override void SetValue(String valAsString) {
                 // Find the 'Parse' method on that type
@@ -257,6 +263,18 @@ namespace org.herbal3d.BasilTest {
                 }
             }
             return ret;
+        }
+
+        public object GetObjectValue(string pParamName) {
+            object ret = null;
+            if (TryGetParameter(pParamName, out ParameterDefnBase pbase)) {
+                ret = pbase.GetObjectValue();
+            }
+            return ret;
+        }
+
+        public bool HasParam(string pParamName) {
+            throw new NotImplementedException();
         }
 
         // Find the named parameter and set its value.

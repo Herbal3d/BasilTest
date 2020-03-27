@@ -14,6 +14,8 @@ using System.Linq;
 using System.Text;
 using System.Collections.Generic;
 using System.Net;
+using System.Net.NetworkInformation;
+using System.Net.Sockets;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
@@ -26,14 +28,13 @@ using BasilMessage = org.herbal3d.basil.protocol.Message;
 using Fleck;
 
 using System.Security.Cryptography.X509Certificates;
-using org.herbal3d.basil.protocol.SpaceServer;
 
 namespace org.herbal3d.BasilTest {
+
     public class BasilTest {
         // Globals for some things that just are global
         static public Params parms;
         static public BLogger log;
-        static public Statistics stats;
         // Global flag used to let everyone know when to stop processing
         static public bool KeepRunning = false;
 
@@ -44,6 +45,8 @@ namespace org.herbal3d.BasilTest {
         // A command is added to the pre-build events that generates last commit resource:
         //        git rev-parse HEAD > "$(ProjectDir)\Resources\GitCommit.txt"
         static public string gitCommit = Properties.Resources.GitCommit.Trim();
+
+        public string HostnameForExternalAccess;
 
         private static readonly string _logHeader = "[BasilTest]";
 
@@ -59,13 +62,11 @@ namespace org.herbal3d.BasilTest {
         static void Main(string[] args) {
             BasilTest.parms = new Params();
             BasilTest.log = new LoggerConsole();
-            BasilTest.stats = new Statistics();
 
             BasilTest basilTest = new BasilTest();
             basilTest.Start(args);
             return;
         }
-
         public void Start(string[] args) {
             // A single parameter of '--help' outputs the invocation parameters
             if (args.Length > 0 && args[0] == "--help") {
@@ -96,17 +97,56 @@ namespace org.herbal3d.BasilTest {
                             );
             }
 
-            HerbalTransport transport = new HerbalTransport(BasilTest.parms, BasilTest.log);
-
+            // Create the parameter block for this type of layer
+            ParamBlock ccParams = new ParamBlock(new Dictionary<string, object>() {
+                    {  "ConnectionURL", "ws://0.0.0.0:14400" },
+                    {  "IsSecure", "false" },
+                    {  "SecureConnectionURL", "wss://0.0.0.0:14400" },
+                    {  "Certificate", "" },
+                    {  "DisableNaglesAlgorithm", "true" },
+                    {  "ExternalAccessHostname", HostnameForExternalAccess }
+            });
             var canceller = new CancellationTokenSource();
-            transport.Start(canceller);
+            var TesterSpaceServer = new SpaceServerListener(ccParams, canceller, BasilTest.log,
+                            (pCanceller, pConnection) => {
+                                return new SpaceServerTester(pCanceller, pConnection);
+                            }
+            );
 
             while (!canceller.IsCancellationRequested) {
                 Thread.Sleep(100);
             }
         }
+
+        // There are several network interfaces on any computer.
+        // First check if specified in the Regions.ini file or the configuration file, if not,
+        //     find the non-virtual ethernet interface.
+        // Find the first interface that is actually talking to the network and not
+        //     one of the Docker interfaces.
+        private void InitializeHostnameForExternalAccess() {
+            HostnameForExternalAccess = parms.P<string>("ExternalAccessHostname");
+            if (String.IsNullOrEmpty(HostnameForExternalAccess)) {
+                // The hostname was not specified in the config file so figure it out.
+                // Look for the first IP address that is Ethernet, up, and not virtual or loopback.
+                // Cribbed from https://stackoverflow.com/questions/6803073/get-local-ip-address
+                HostnameForExternalAccess = NetworkInterface.GetAllNetworkInterfaces()
+                    .Where(x => x.NetworkInterfaceType == NetworkInterfaceType.Ethernet
+                            && x.OperationalStatus == OperationalStatus.Up
+                            && !x.Description.ToLower().Contains("virtual")
+                            && !x.Description.ToLower().Contains("pseudo")
+                    )
+                    .SelectMany(x => x.GetIPProperties().UnicastAddresses)
+                    .Where(x => x.Address.AddressFamily == AddressFamily.InterNetwork
+                            && !IPAddress.IsLoopback(x.Address)
+                    )
+                    .Select(x => x.Address.ToString())
+                    .First();
+            }
+            log.DebugFormat("{0} HostnameForExternalAccess = {1}", _logHeader, HostnameForExternalAccess);
+        }
     }
 
+    /*
     public class SpaceServerTester : ISpaceServer {
 
         private static readonly string _logHeader = "[SpaceServerTester]";
@@ -152,6 +192,7 @@ namespace org.herbal3d.BasilTest {
             return new CameraViewResp();
         }
     }
+    */
 }
 
 

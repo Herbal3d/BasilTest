@@ -30,6 +30,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\HerbalCommonEntitiesCS\CommonEntitiesUtil\Herbal3d.CommonEntitiesUtil.csproj" />
     <ProjectReference Include="..\..\HerbalTransportCS\HerbalTransportCS\Herbal3d.HerbalTransportCS.csproj" />
+    <ProjectReference Include="..\..\OSAuthModule\OSAuth\Herbal3d.OSAuth.csproj" />
   </ItemGroup>
 
   <ItemGroup>
