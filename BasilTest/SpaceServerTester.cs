@@ -41,6 +41,13 @@ namespace org.herbal3d.BasilTest {
             return;
         }
 
+        /// <summary>
+        ///  The client does an OpenSession with 'login' information. Authorize the
+        ///  logged in user.
+        /// </summary>
+        /// <param name="pUserToken">UserAuth token sent from the client making the OpenSession
+        ///     which authenticates the access.</param>
+        /// <returns>"true" if the user is authorized</returns>
         protected override bool VerifyClientAuthentication(OSAuthToken pUserToken) {
             throw new NotImplementedException();
         }
