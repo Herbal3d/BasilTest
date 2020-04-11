@@ -99,11 +99,11 @@ namespace org.herbal3d.BasilTest {
 
             // Create the parameter block for this type of layer
             ParamBlock ccParams = new ParamBlock(new Dictionary<string, object>() {
-                    {  "ConnectionURL", "ws://0.0.0.0:14400" },
-                    {  "IsSecure", "false" },
-                    {  "SecureConnectionURL", "wss://0.0.0.0:14400" },
-                    {  "Certificate", "" },
-                    {  "DisableNaglesAlgorithm", "true" },
+                    {  "ConnectionURL",          BasilTest.parms.P<string>("ConnectionURL") },
+                    {  "IsSecure",               BasilTest.parms.P<bool>("IsSecure").ToString() },
+                    {  "SecureConnectionURL",    BasilTest.parms.P<string>("SecureConnectionURL") },
+                    {  "Certificate",            BasilTest.parms.P<string>("Certificate") },
+                    {  "DisableNaglesAlgorithm", BasilTest.parms.P<bool>("DisableNablesAlgorithm").ToString() },
                     {  "ExternalAccessHostname", HostnameForExternalAccess }
             });
             var canceller = new CancellationTokenSource();
