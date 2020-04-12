@@ -27,17 +27,18 @@ using HT = org.herbal3d.transport;
 
 namespace org.herbal3d.BasilTest {
     public class SpaceServerTester  : HT.SpaceServerBase {
+        private static readonly string _logHeader = "[SpaceServerTester]";
+
         // Creation of an instance for a specific client.
         // Note: this canceller is for the individual session.
-
         public SpaceServerTester(CancellationTokenSource pCanceller,
                             HT.BasilConnection pBasilConnection) 
                     : base(pCanceller, pBasilConnection) {
-
         }
 
         // I don't have anything special do do for Shutdown
         protected override void DoShutdownWork() {
+            ClientConnection.Context.Log.DebugFormat("{0} DoShutdownWork: ", _logHeader);
             return;
         }
 
@@ -49,10 +50,13 @@ namespace org.herbal3d.BasilTest {
         ///     which authenticates the access.</param>
         /// <returns>"true" if the user is authorized</returns>
         protected override bool VerifyClientAuthentication(OSAuthToken pUserToken) {
-            throw new NotImplementedException();
+            ClientConnection.Context.Log.DebugFormat("{0} VerifyClientAuthentication: accepting token '{1}'",
+                        _logHeader, pUserToken);
+            return true;
         }
 
         protected override void DoOpenSessionWork(HT.BasilConnection pConnection, HT.BasilComm pClient, Dictionary<string,string> pParms) {
+            ClientConnection.Context.Log.DebugFormat("{0} DoOpenSessionWork: starting tester", _logHeader);
             BasilTester tester = new BasilTester(Client, ClientConnection);
             Task.Run(async () => {
                 await tester.DoTests(pParms);
@@ -61,6 +65,7 @@ namespace org.herbal3d.BasilTest {
 
         // I don't have anything to do for a CloseSession
         protected override void DoCloseSessionWork() {
+            ClientConnection.Context.Log.DebugFormat("{0} DoCloseSessionWork: ", _logHeader);
             return;
         }
 

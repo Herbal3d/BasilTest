@@ -97,6 +97,8 @@ namespace org.herbal3d.BasilTest {
                             );
             }
 
+            InitializeHostnameForExternalAccess();
+
             // Create the parameter block for this type of layer
             ParamBlock ccParams = new ParamBlock(new Dictionary<string, object>() {
                     {  "ConnectionURL",          BasilTest.parms.P<string>("ConnectionURL") },

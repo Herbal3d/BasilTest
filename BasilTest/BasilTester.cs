@@ -81,10 +81,10 @@ namespace org.herbal3d.BasilTest {
                 CreateObjectsInDifferentFormatsAsync
             };
 
-            // foreach (DoATest test in tests) {
-            //     await test();
-            // }
-            await Task.WhenAll(tests.Select(async t => { await t(); }).ToArray());
+            foreach (DoATest test in tests) {
+                await test();
+            }
+            // await Task.WhenAll(tests.Select(async t => { await t(); }).ToArray());
         }
 
         private async Task CreateAndDeleteDisplayableAsync() {
@@ -101,7 +101,7 @@ namespace org.herbal3d.BasilTest {
                 // Verify the item has been created with a displayable by asking for it's parameters
                 testPhase = "verifying created item has been created";
                 BT.Props resp = await Client.RequestPropertiesAsync(createdItemId, null);
-                if (!resp.ContainsKey("Displayable.Type")) {
+                if (!resp.ContainsKey("DisplayableType")) {
                     throw new BasilException("Created item did not have Displayable properties");
                 };
 
@@ -152,16 +152,18 @@ namespace org.herbal3d.BasilTest {
                 // Verify the item has been created with a displayable by asking for it's parameters
                 testPhase = "verifying created item has been created";
                 BT.Props resp = await Client.RequestPropertiesAsync(createdItemId, null);
-                if (!resp.ContainsKey("Displayable.Type")) {
+                if (!resp.ContainsKey("DisplayableType")) {
                     throw new BasilException("Created item did not have Displayable properties");
                 };
 
                 // Add AbilityInstance to the item to put it in the world
                 testPhase = "Adding AbilityInstance to displayable item";
-                BT.AbilityList abilities = new BT.AbilityList();
-                abilities.Add(new BT.AbilityInstance() {
-                    Pos = new double[] { 100, 101, 102 }
-                });
+                BT.AbilityList abilities = new BT.AbilityList {
+                    new BT.AbilityInstance() {
+                        DisplayableItemId = createdItemId,
+                        Pos = new double[] { 100, 101, 102 }
+                    }
+                };
                 resp = await Client.AddAbilityAsync(createdItemId, abilities);
 
                 // Verify the instance exists by fetching it's parameters.
@@ -266,11 +268,12 @@ namespace org.herbal3d.BasilTest {
         // Utility routine to place an instance at location in the world
         private Task<BT.Props> CreateInstanceAt(BT.ItemId dispId, double xx, double yy, double zz) {
             BT.Props props = new BT.Props();
-            BT.AbilityList abilities = new BT.AbilityList();
-            abilities.Add(new BT.AbilityInstance() {
-                DisplayableId = dispId,
-                Pos = new double[] { xx , yy, zz }
-            });
+            BT.AbilityList abilities = new BT.AbilityList {
+                new BT.AbilityInstance() {
+                    DisplayableItemId = dispId,
+                    Pos = new double[] { xx, yy, zz }
+                }
+            };
             return Client.CreateItemAsync(props, abilities);
         }
 
@@ -310,7 +313,7 @@ namespace org.herbal3d.BasilTest {
                                                                         100.0 + (10.0 * xx),
                                                                         100.0 + (10.0 * yy),
                                                                         100.0 + (10.0 * zz) );
-                                BT.ItemId createdInstanceId = new BT.ItemId(resp2["Id"]);
+                                BT.ItemId createdInstanceId = new BT.ItemId(resp2["ItemId"]);
                                 createdItems.Add(createdInstanceId);
                             }
                         }
@@ -400,17 +403,21 @@ namespace org.herbal3d.BasilTest {
                 // Place it in the world somewhere
                 testPhase = "Placing instance in the world";
                 BT.Props resp = await CreateInstanceAt(displayableId, baseX, baseY, baseZ);
-                BT.ItemId instanceId = new BT.ItemId(resp["Id"]);
+                BT.ItemId instanceId = new BT.ItemId(resp["ItemId"]);
                 createdItems.Add(instanceId);
 
                 // Move the object slowly so the viewer can see it
                 testPhase = "Moving instance in the world";
                 for (int ii = 10; ii < 100; ii += 10) {
                     Thread.Sleep(500);
-                    BT.Props props = new BT.Props();
-                    props.Add("Pos", BT.AbilityBase.VectorToString(new double[] {
+                    BT.Props props = new BT.Props {
+                        {
+                            "Pos",
+                            BT.AbilityBase.VectorToString(new double[] {
                                     baseX + ii, baseY + ii, baseZ + ii }
-                    ));
+                    )
+                        }
+                    };
                     BT.Props resp2 = await Client.UpdatePropertiesAsync(instanceId, props);
                 }
 
@@ -437,11 +444,11 @@ namespace org.herbal3d.BasilTest {
             List<BT.ItemId> createdDisplayables = new List<BT.ItemId>();
 
             List<string> urls = new List<string>() {
-                "http://files.misterblue.com/BasilTest/gltf/Duck/glTF/Duck.gltf",
+                "https://files.misterblue.com/BasilTest/gltf/Duck/glTF/Duck.gltf",
                 // "http://files.misterblue.com/BasilTest/gltf/Duck/glTF-Binary/Duck.gltf",
                 // "http://files.misterblue.com/BasilTest/gltf/Duck/glTF-Draco/Duck.gltf",
-                "http://files.misterblue.com/BasilTest/gltf/Duck/glTF-Embedded/Duck.gltf",
-                "http://files.misterblue.com/BasilTest/gltf/Duck/glTF-pbrSpecularGlossiness/Duck.gltf"
+                "https://files.misterblue.com/BasilTest/gltf/Duck/glTF-Embedded/Duck.gltf",
+                "https://files.misterblue.com/BasilTest/gltf/Duck/glTF-pbrSpecularGlossiness/Duck.gltf"
             };
 
             double baseX = 100.0;
@@ -462,7 +469,7 @@ namespace org.herbal3d.BasilTest {
                 double displace = 0.0;
                 foreach (BT.ItemId item in createdDisplayables) {
                     BT.Props resp2 = await CreateInstanceAt(item, baseX + displace, baseY, baseZ);
-                    createdItems.Add(new BT.ItemId(resp2["Id"]) );
+                    createdItems.Add(new BT.ItemId(resp2["ItemId"]) );
                     displace += 10.0;
                 }
 
@@ -491,20 +498,19 @@ namespace org.herbal3d.BasilTest {
         // Create an Item that is a displayable of the test subject.
         // If not Url is passed for the displayable, a default test Url is used.
         private async Task<BT.ItemId> CreateTestDisplayable() {
-            return await CreateTestDisplayable("http://files.misterblue.com/BasilTest/gltf/Duck/glTF/Duck.gltf");
+            return await CreateTestDisplayable("https://files.misterblue.com/BasilTest/gltf/Duck/glTF/Duck.gltf");
         }
         private async Task<BT.ItemId> CreateTestDisplayable(string pUrl) {
             BT.Props props = new BT.Props();
-            BT.AbilityList abilities = new BT.AbilityList();
-            abilities.Add(
+            BT.AbilityList abilities = new BT.AbilityList {
                 new BT.AbilityDisplayable() {
-                    Url = pUrl,
-                    DisplayType = "meshset",
+                    DisplayableUrl = pUrl,
+                    DisplayableType = "meshset",
                     LoaderType = "GLTF"
                 }
-            );
+            };
             BT.Props resp = await Client.CreateItemAsync(props, abilities);
-            return new BT.ItemId(resp["Id"]);
+            return new BT.ItemId(resp["ItemId"]);
         }
 
         // Try to remove the things created by a test.
