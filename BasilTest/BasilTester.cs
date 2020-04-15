@@ -78,7 +78,8 @@ namespace org.herbal3d.BasilTest {
                 CreateAndDeleteInstanceAsync,
                 CreateTenDisplayablesAndDeleteOne,
                 Create125InstancesDeleteOneAsync,
-                CreateObjectsInDifferentFormatsAsync
+                UpdateInstancePositionAsync,
+                // CreateObjectsInDifferentFormatsAsync
             };
 
             foreach (DoATest test in tests) {
@@ -87,6 +88,7 @@ namespace org.herbal3d.BasilTest {
             // await Task.WhenAll(tests.Select(async t => { await t(); }).ToArray());
         }
 
+        // TEST: Create one Displayable, verify created, delete it, verify deleted
         private async Task CreateAndDeleteDisplayableAsync() {
             string testName = "CreateAndDeleteDisplayable";
             string testPhase = "unknown";
@@ -138,6 +140,8 @@ namespace org.herbal3d.BasilTest {
             return;
         }
 
+        // TEST: Create displayable, verify created, create instance of displayable,
+        //     verify created, delete instance, verify deleted
         private async Task<bool> CreateAndDeleteInstanceAsync() {
             string testName = "CreateAndDeleteInstance";
             string testPhase = "unknown";
@@ -146,42 +150,39 @@ namespace org.herbal3d.BasilTest {
             try {
                 // Create an item that has a displayable
                 testPhase = "Creating displayable";
-                BT.ItemId createdItemId = await CreateTestDisplayable();
-                createdItems.Add(createdItemId);
+                BT.ItemId createdDisplayableId = await CreateTestDisplayable();
+                createdItems.Add(createdDisplayableId);
 
                 // Verify the item has been created with a displayable by asking for it's parameters
                 testPhase = "verifying created item has been created";
-                BT.Props resp = await Client.RequestPropertiesAsync(createdItemId, null);
+                BT.Props resp = await Client.RequestPropertiesAsync(createdDisplayableId, null);
                 if (!resp.ContainsKey("DisplayableType")) {
                     throw new BasilException("Created item did not have Displayable properties");
                 };
 
                 // Add AbilityInstance to the item to put it in the world
                 testPhase = "Adding AbilityInstance to displayable item";
-                BT.AbilityList abilities = new BT.AbilityList {
-                    new BT.AbilityInstance() {
-                        DisplayableItemId = createdItemId,
-                        Pos = new double[] { 100, 101, 102 }
-                    }
-                };
-                resp = await Client.AddAbilityAsync(createdItemId, abilities);
+                resp = await CreateInstanceAt(createdDisplayableId, 10, 11, 12);
+                BT.ItemId createdInstanceId = new BT.ItemId(resp["ItemId"]);
+                createdItems.Add(createdInstanceId);
 
                 // Verify the instance exists by fetching it's parameters.
                 testPhase = "Verifiying instance by fetching parameters";
-                resp = await Client.RequestPropertiesAsync(createdItemId, null);
+                resp = await Client.RequestPropertiesAsync(createdInstanceId, null);
                 if (!resp.ContainsKey("Pos")) {
                     throw new BasilException("After adding AbilityInstance, property 'Pos' not present");
                 }
 
                 // Delete the instance.
                 testPhase = "Deleting instance";
-                resp = await Client.DeleteItemAsync(createdItemId);
+                resp = await Client.DeleteItemAsync(createdInstanceId);
+                createdItems.Remove(createdInstanceId);
 
                 // Make sure the item is deleted
                 testPhase = "Verifying cannot get fetch parameters of deleted instance";
                 bool success = false;
                 try {
-                    resp = await Client.RequestPropertiesAsync(createdItemId, null);
+                    resp = await Client.RequestPropertiesAsync(createdInstanceId, null);
                 }
                 catch (BasilException be) {
                     success = true;
@@ -205,6 +206,8 @@ namespace org.herbal3d.BasilTest {
             return false;
         }
 
+        // TEST: create 10 displayables, verify they exist, delete one random displayable,
+        //    verify all displayables are there except for the one deleted
         private async Task<bool> CreateTenDisplayablesAndDeleteOne() {
             string testName = "CreateTenDisplayablesAndDeleteOne";
             string testPhase = "unknown";
@@ -213,7 +216,7 @@ namespace org.herbal3d.BasilTest {
             int numToCreate = 10;
 
             try {
-                // Create 10 displayables
+                // Create displayables
                 testPhase = "Creating displayables";
                 for (int ii = 0; ii < numToCreate; ii++) {
                     BT.ItemId createdItemId = await CreateTestDisplayable();
@@ -226,7 +229,7 @@ namespace org.herbal3d.BasilTest {
                     BT.Props resp2 = await Client.RequestPropertiesAsync(item, null);
                 }
 
-                // Choose one of the displayables to delete
+                // Choose one of the instances to delete
                 var rand = new Random();
                 BT.ItemId deletedDisplayableId = createdItems[rand.Next(createdItems.Count)];
 
@@ -247,7 +250,7 @@ namespace org.herbal3d.BasilTest {
                         }
                     }
                     if (!success) {
-                        throw new BasilException("Other displayable missing: " + item.Id);
+                        throw new BasilException("Other instance missing: " + item.Id);
                     }
                 }
                 BasilTest.log.InfoFormat("{0}: {1}: TEST SUCCESS", _logHeader, testName);
@@ -265,18 +268,9 @@ namespace org.herbal3d.BasilTest {
             return false;
         }
 
-        // Utility routine to place an instance at location in the world
-        private Task<BT.Props> CreateInstanceAt(BT.ItemId dispId, double xx, double yy, double zz) {
-            BT.Props props = new BT.Props();
-            BT.AbilityList abilities = new BT.AbilityList {
-                new BT.AbilityInstance() {
-                    DisplayableItemId = dispId,
-                    Pos = new double[] { xx, yy, zz }
-                }
-            };
-            return Client.CreateItemAsync(props, abilities);
-        }
-
+        // TEST: create displayable, verify created, create 125 (5**3) instances
+        //    of displayable, verify all created, delete one random instance,
+        //    verify all instances still there except for one deleted.
         private async Task<bool> Create125InstancesDeleteOneAsync() {
             string testName = "Create125InstancesDeleteOne";
             string testPhase = "unknown";
@@ -286,7 +280,6 @@ namespace org.herbal3d.BasilTest {
             BTimeSpan.Enable = true;
             // The dimension of the cube
             int rangeMax = BasilTest.parms.P<int>("125BlockSize");  // default is 5
-
 
             try {
                 // Create the item of a displayable
@@ -299,7 +292,6 @@ namespace org.herbal3d.BasilTest {
 
                 // Create the instances
                 testPhase = "Creating instances";
-                BasilTest.log.DebugFormat("{0} {1}: creating instances", _logHeader, testName);
                 using (new BTimeSpan(span => {
                     var msPerOp = (float)(span.TotalMilliseconds / createdItems.Count);
                     BasilTest.log.DebugFormat("{0} {1}: {2}s {3}ms/req to create {4} instances",
@@ -387,13 +379,13 @@ namespace org.herbal3d.BasilTest {
         }
 
         private async Task<bool> UpdateInstancePositionAsync() {
-            string testName = "CreateDisplayablesAndDeleteOne";
+            string testName = "UpdateInstancePosition";
             string testPhase = "unknown";
             List<BT.ItemId> createdItems = new List<BT.ItemId>();
 
-            double baseX = 100.0;
-            double baseY = 100.0;
-            double baseZ = 100.0;
+            double baseX = 10.0;
+            double baseY = 10.0;
+            double baseZ = 10.0;
 
             try {
                 testPhase = "Creating displayable";
@@ -408,7 +400,7 @@ namespace org.herbal3d.BasilTest {
 
                 // Move the object slowly so the viewer can see it
                 testPhase = "Moving instance in the world";
-                for (int ii = 10; ii < 100; ii += 10) {
+                for (int ii = 0; ii < 100; ii += 10) {
                     Thread.Sleep(500);
                     BT.Props props = new BT.Props {
                         {
@@ -451,9 +443,9 @@ namespace org.herbal3d.BasilTest {
                 "https://files.misterblue.com/BasilTest/gltf/Duck/glTF-pbrSpecularGlossiness/Duck.gltf"
             };
 
-            double baseX = 100.0;
-            double baseY = 100.0;
-            double baseZ = 100.0;
+            double baseX = 10.0;
+            double baseY = 10.0;
+            double baseZ = 10.0;
 
             try {
                 // Create displayables for each of the display types
@@ -511,6 +503,19 @@ namespace org.herbal3d.BasilTest {
             };
             BT.Props resp = await Client.CreateItemAsync(props, abilities);
             return new BT.ItemId(resp["ItemId"]);
+        }
+
+        // Utility routine to place an instance at location in the world.
+        // Returns an awaitable thingy that returns the properties from the response.
+        private Task<BT.Props> CreateInstanceAt(BT.ItemId dispId, double xx, double yy, double zz) {
+            BT.Props props = new BT.Props();
+            BT.AbilityList abilities = new BT.AbilityList {
+                new BT.AbilityInstance() {
+                    DisplayableItemId = dispId,
+                    Pos = new double[] { xx, yy, zz }
+                }
+            };
+            return Client.CreateItemAsync(props, abilities);
         }
 
         // Try to remove the things created by a test.

@@ -5,12 +5,12 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <StartupObject>org.herbal3d.BasilTest.BasilTest</StartupObject>
     <Authors>Robert Adams</Authors>
-    <Company>obert Adams</Company>
+    <Company>Robert Adams</Company>
     <Description>Test server for Basil viewer</Description>
-    <Copyright>Copyright 2018 Robert Adams</Copyright>
-    <PackageLicenseUrl>http://mozilla.org/MPL/2.0/</PackageLicenseUrl>
+    <Copyright>Copyright 2020 Robert Adams</Copyright>
     <PackageProjectUrl>https://github.com/Misterblue/BasilTest</PackageProjectUrl>
     <RootNamespace>org.herbal3d.BasilTest</RootNamespace>
+    <Version>2.0.1</Version>
   </PropertyGroup>
 
   <ItemGroup>
