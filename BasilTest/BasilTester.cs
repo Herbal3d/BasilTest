@@ -22,6 +22,7 @@ using BasilMessage = org.herbal3d.basil.protocol.Message;
 using org.herbal3d.cs.CommonEntitiesUtil;
 
 using org.herbal3d.transport;
+using System.Linq.Expressions;
 
 namespace org.herbal3d.BasilTest {
     public class BasilTester : IDisposable {
@@ -82,10 +83,26 @@ namespace org.herbal3d.BasilTest {
                 // CreateObjectsInDifferentFormatsAsync
             };
 
+            /*
             foreach (DoATest test in tests) {
                 await test();
             }
-            // await Task.WhenAll(tests.Select(async t => { await t(); }).ToArray());
+            */
+            try {
+                Task.WaitAll(tests.Select(t => { return t(); }).ToArray());
+            }
+            catch (AggregateException ae) {
+                foreach (var ee in ae.InnerExceptions) {
+                    BasilTest.log.ErrorFormat("{0} DoTests: AggregateException: {1}", _logHeader, ee);
+                };
+            }
+            catch (BasilException be) {
+                // exceptions are expected for non-existant items
+                BasilTest.log.ErrorFormat("{0} DoTests: BasilException: {1}", _logHeader, be);
+            }
+            catch (Exception e) {
+                BasilTest.log.ErrorFormat("{0} DoTests: Exception: {1}", _logHeader, e);
+            };
         }
 
         // TEST: Create one Displayable, verify created, delete it, verify deleted
@@ -527,6 +544,7 @@ namespace org.herbal3d.BasilTest {
                     BasilTest.log.DebugFormat("{0} CleanupTest: {1}s {2}ms/req to delete {3} instances",
                                             _logHeader, span.TotalSeconds, msPerOp, pItems.Count);
                 })) {
+                    /*
                     foreach (var item in pItems) {
                         try {
                             BT.Props resp = await Client.DeleteItemAsync(item);
@@ -535,6 +553,22 @@ namespace org.herbal3d.BasilTest {
                             // exceptions are expected for non-existant items
                         }
                     }
+                    */
+                    try {
+                        await Task.WhenAll(pItems.Select(id => { return Client.DeleteItemAsync(id); }).ToArray());
+                    }
+                    catch (AggregateException ae) {
+                        foreach (var ee in ae.InnerExceptions) {
+                            BasilTest.log.ErrorFormat("{0} CleanUpTest: AggregateException: {1}", _logHeader, ee);
+                        };
+                    }
+                    catch (BasilException be) {
+                        // exceptions are expected for non-existant items
+                        BasilTest.log.ErrorFormat("{0} CleanUpTest: BasilException: {1}", _logHeader, be);
+                    }
+                    catch (Exception e) {
+                        BasilTest.log.ErrorFormat("{0} CleanUpTest: Exception: {1}", _logHeader, e);
+                    };
                 }
             }
         }

@@ -11,6 +11,7 @@
     <PackageProjectUrl>https://github.com/Misterblue/BasilTest</PackageProjectUrl>
     <RootNamespace>org.herbal3d.BasilTest</RootNamespace>
     <Version>2.0.1</Version>
+    <AssemblyVersion>2.0.1.0</AssemblyVersion>
   </PropertyGroup>
 
   <ItemGroup>
