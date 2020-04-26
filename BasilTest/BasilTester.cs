@@ -559,12 +559,18 @@ namespace org.herbal3d.BasilTest {
                     }
                     catch (AggregateException ae) {
                         foreach (var ee in ae.InnerExceptions) {
-                            BasilTest.log.ErrorFormat("{0} CleanUpTest: AggregateException: {1}", _logHeader, ee);
+                            if (ee is BasilException bee) {
+                                // exceptions are expected for non-existant items
+                                // BasilTest.log.ErrorFormat("{0} CleanUpTest: BasilException: {1}", _logHeader, bee);
+                            }
+                            else {
+                                BasilTest.log.ErrorFormat("{0} CleanUpTest: AggregateException: {1}", _logHeader, ee);
+                            };
                         };
                     }
                     catch (BasilException be) {
                         // exceptions are expected for non-existant items
-                        BasilTest.log.ErrorFormat("{0} CleanUpTest: BasilException: {1}", _logHeader, be);
+                        // BasilTest.log.ErrorFormat("{0} CleanUpTest: BasilException: {1}", _logHeader, be);
                     }
                     catch (Exception e) {
                         BasilTest.log.ErrorFormat("{0} CleanUpTest: Exception: {1}", _logHeader, e);

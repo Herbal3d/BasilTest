@@ -110,7 +110,7 @@ namespace org.herbal3d.BasilTest {
             });
             var canceller = new CancellationTokenSource();
             var TesterSpaceServer = new SpaceServerListener(ccParams, canceller, BasilTest.log,
-                            (pCanceller, pConnection) => {
+                            (pCanceller, pConnection, pParams) => {
                                 return new SpaceServerTester(pCanceller, pConnection);
                             }
             );

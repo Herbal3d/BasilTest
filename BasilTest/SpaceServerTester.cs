@@ -33,7 +33,7 @@ namespace org.herbal3d.BasilTest {
         // Note: this canceller is for the individual session.
         public SpaceServerTester(CancellationTokenSource pCanceller,
                             HT.BasilConnection pBasilConnection) 
-                    : base(pCanceller, pBasilConnection) {
+                    : base(pCanceller, pBasilConnection, "SpaceServerTester") {
         }
 
         // I don't have anything special do do for Shutdown
@@ -55,7 +55,7 @@ namespace org.herbal3d.BasilTest {
             return true;
         }
 
-        protected override void DoOpenSessionWork(HT.BasilConnection pConnection, HT.BasilComm pClient, Dictionary<string,string> pParms) {
+        protected override void DoOpenSessionWork(HT.BasilConnection pConnection, HT.BasilComm pClient, BT.Props pParms) {
             ClientConnection.Context.Log.DebugFormat("{0} DoOpenSessionWork: starting tester", _logHeader);
             BasilTester tester = new BasilTester(Client, ClientConnection);
             Task.Run(async () => {

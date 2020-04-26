@@ -128,7 +128,7 @@ namespace org.herbal3d.BasilTest {
             }
             public override void SetValue(String valAsString) {
                 // Find the 'Parse' method on that type
-                System.Reflection.MethodInfo parser = null;
+                System.Reflection.MethodInfo parser;
                 try {
                     parser = GetValueType().GetMethod("Parse", new Type[] { typeof(String) } );
                 }
@@ -253,7 +253,7 @@ namespace org.herbal3d.BasilTest {
         // Note that it outputs a console message if not found. Not found means that the caller
         //     used the wrong string name.
         public T P<T>(string paramName) {
-            T ret = default(T);
+            T ret = default;
             if (TryGetParameter(paramName, out ParameterDefnBase pbase)) {
                 if (pbase is ParameterDefn<T> pdef) {
                     ret = pdef.Value();
@@ -427,6 +427,10 @@ namespace org.herbal3d.BasilTest {
                 throw new ArgumentException("Unknown parameter " + parm);
             }
             return ret;
+        }
+
+        public void Remove(string pParamName) {
+            throw new NotImplementedException();
         }
     }
 }

@@ -10,8 +10,9 @@
     <Copyright>Copyright 2020 Robert Adams</Copyright>
     <PackageProjectUrl>https://github.com/Misterblue/BasilTest</PackageProjectUrl>
     <RootNamespace>org.herbal3d.BasilTest</RootNamespace>
-    <Version>2.0.1</Version>
-    <AssemblyVersion>2.0.1.0</AssemblyVersion>
+    <Version>2.1.1</Version>
+    <AssemblyVersion>2.1.1.0</AssemblyVersion>
+    <FileVersion>2.1.1.0</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>
