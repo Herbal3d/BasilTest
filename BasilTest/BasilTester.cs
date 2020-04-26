@@ -83,13 +83,17 @@ namespace org.herbal3d.BasilTest {
                 // CreateObjectsInDifferentFormatsAsync
             };
 
-            /*
             foreach (DoATest test in tests) {
                 await test();
             }
-            */
+            /*
             try {
-                Task.WaitAll(tests.Select(t => { return t(); }).ToArray());
+                using (new BTimeSpan(span => {
+                    BasilTest.log.DebugFormat("{0}: {1}s to run all tests",
+                                    _logHeader, span.TotalSeconds);
+                })) {
+                    Task.WaitAll(tests.Select(t => { return t(); }).ToArray());
+                };
             }
             catch (AggregateException ae) {
                 foreach (var ee in ae.InnerExceptions) {
@@ -103,6 +107,7 @@ namespace org.herbal3d.BasilTest {
             catch (Exception e) {
                 BasilTest.log.ErrorFormat("{0} DoTests: Exception: {1}", _logHeader, e);
             };
+            */
         }
 
         // TEST: Create one Displayable, verify created, delete it, verify deleted
@@ -112,37 +117,62 @@ namespace org.herbal3d.BasilTest {
             List<BT.ItemId> createdItems = new List<BT.ItemId>();
 
             try {
-                // Create an item that has a displayable
-                testPhase = "Creating displayable";
-                BT.ItemId createdItemId = await CreateTestDisplayable();
-                createdItems.Add(createdItemId);
+                using (new BTimeSpan(span => {
+                    var msPerOp = (float)(span.TotalMilliseconds / createdItems.Count);
+                    BasilTest.log.DebugFormat("{0} {1}: {2}s to complete test",
+                                    _logHeader, testName, span.TotalSeconds);
+                })) {
+                    // Create an item that has a displayable
+                    testPhase = "Creating displayable";
+                    BT.ItemId createdItemId;
+                    using (new BTimeSpan(span => {
+                        var msPerOp = (float)(span.TotalMilliseconds / createdItems.Count);
+                        BasilTest.log.DebugFormat("{0} {1}: {2}s to create one displayable",
+                                        _logHeader, testName, span.TotalSeconds);
+                    })) {
+                        createdItemId = await CreateTestDisplayable();
+                    };
+                    createdItems.Add(createdItemId);
 
-                // Verify the item has been created with a displayable by asking for it's parameters
-                testPhase = "verifying created item has been created";
-                BT.Props resp = await Client.RequestPropertiesAsync(createdItemId, null);
-                if (!resp.ContainsKey("DisplayableType")) {
-                    throw new BasilException("Created item did not have Displayable properties");
-                };
+                    // Verify the item has been created with a displayable by asking for it's parameters
+                    testPhase = "verifying created item has been created";
+                    using (new BTimeSpan(span => {
+                        var msPerOp = (float)(span.TotalMilliseconds / createdItems.Count);
+                        BasilTest.log.DebugFormat("{0} {1}: {2}s to verify item created",
+                                        _logHeader, testName, span.TotalSeconds);
+                    })) {
+                        BT.Props resp = await Client.RequestPropertiesAsync(createdItemId, null);
+                        if (!resp.ContainsKey("DisplayableType")) {
+                            throw new BasilException("Created item did not have Displayable properties");
+                        };
+                    };
 
-                // Delete the item
-                testPhase = "Deleting the created item";
-                resp = await Client.DeleteItemAsync(createdItemId);
+                    // Delete the item
+                    testPhase = "Deleting the created item";
+                    using (new BTimeSpan(span => {
+                        var msPerOp = (float)(span.TotalMilliseconds / createdItems.Count);
+                        BasilTest.log.DebugFormat("{0} {1}: {2}s to delete the one item",
+                                        _logHeader, testName, span.TotalSeconds);
+                    })) {
+                        BT.Props resp = await Client.DeleteItemAsync(createdItemId);
+                    };
 
-                // Make sure we cannot get its parameters any more.
-                bool success = false;
-                try {
-                    testPhase = "Verifying cannot get fetch parameters of forgotton displayable";
-                    resp = await Client.RequestPropertiesAsync(createdItemId, null);
-                    // This should throw an exception as the item is not there
-                    success = false;
+                    // Make sure we cannot get its parameters any more.
+                    bool success = false;
+                    try {
+                        testPhase = "Verifying cannot get fetch parameters of forgotton displayable";
+                        BT.Props resp = await Client.RequestPropertiesAsync(createdItemId, null);
+                        // This should throw an exception as the item is not there
+                        success = false;
+                    }
+                    catch (BasilException) {
+                        success = true;
+                    }
+                    if (!success) {
+                        throw new BasilException("Fetched deleted instance parameters");
+                    }
+                    BasilTest.log.InfoFormat("{0}: {1}: TEST SUCCESS", _logHeader, testName);
                 }
-                catch (BasilException) {
-                    success = true;
-                }
-                if (!success) {
-                    throw new BasilException("Fetched deleted instance parameters");
-                }
-                BasilTest.log.InfoFormat("{0}: {1}: TEST SUCCESS", _logHeader, testName);
             }
             catch (BasilException be) {
                 BasilTest.log.InfoFormat("{0}: {1}: TEST FAILED: {2}: {3}", _logHeader, testName, testPhase, be);
@@ -165,50 +195,56 @@ namespace org.herbal3d.BasilTest {
             List<BT.ItemId> createdItems = new List<BT.ItemId>();
 
             try {
-                // Create an item that has a displayable
-                testPhase = "Creating displayable";
-                BT.ItemId createdDisplayableId = await CreateTestDisplayable();
-                createdItems.Add(createdDisplayableId);
+                using (new BTimeSpan(span => {
+                    var msPerOp = (float)(span.TotalMilliseconds / createdItems.Count);
+                    BasilTest.log.DebugFormat("{0} {1}: {2}s to complete test",
+                                    _logHeader, testName, span.TotalSeconds);
+                })) {
+                    // Create an item that has a displayable
+                    testPhase = "Creating displayable";
+                    BT.ItemId createdDisplayableId = await CreateTestDisplayable();
+                    createdItems.Add(createdDisplayableId);
 
-                // Verify the item has been created with a displayable by asking for it's parameters
-                testPhase = "verifying created item has been created";
-                BT.Props resp = await Client.RequestPropertiesAsync(createdDisplayableId, null);
-                if (!resp.ContainsKey("DisplayableType")) {
-                    throw new BasilException("Created item did not have Displayable properties");
-                };
+                    // Verify the item has been created with a displayable by asking for it's parameters
+                    testPhase = "verifying created item has been created";
+                    BT.Props resp = await Client.RequestPropertiesAsync(createdDisplayableId, null);
+                    if (!resp.ContainsKey("DisplayableType")) {
+                        throw new BasilException("Created item did not have Displayable properties");
+                    };
 
-                // Add AbilityInstance to the item to put it in the world
-                testPhase = "Adding AbilityInstance to displayable item";
-                resp = await CreateInstanceAt(createdDisplayableId, 10, 11, 12);
-                BT.ItemId createdInstanceId = new BT.ItemId(resp["ItemId"]);
-                createdItems.Add(createdInstanceId);
+                    // Add AbilityInstance to the item to put it in the world
+                    testPhase = "Adding AbilityInstance to displayable item";
+                    resp = await CreateInstanceAt(createdDisplayableId, 10, 11, 12);
+                    BT.ItemId createdInstanceId = new BT.ItemId(resp["ItemId"]);
+                    createdItems.Add(createdInstanceId);
 
-                // Verify the instance exists by fetching it's parameters.
-                testPhase = "Verifiying instance by fetching parameters";
-                resp = await Client.RequestPropertiesAsync(createdInstanceId, null);
-                if (!resp.ContainsKey("Pos")) {
-                    throw new BasilException("After adding AbilityInstance, property 'Pos' not present");
-                }
-
-                // Delete the instance.
-                testPhase = "Deleting instance";
-                resp = await Client.DeleteItemAsync(createdInstanceId);
-                createdItems.Remove(createdInstanceId);
-
-                // Make sure the item is deleted
-                testPhase = "Verifying cannot get fetch parameters of deleted instance";
-                bool success = false;
-                try {
+                    // Verify the instance exists by fetching it's parameters.
+                    testPhase = "Verifiying instance by fetching parameters";
                     resp = await Client.RequestPropertiesAsync(createdInstanceId, null);
+                    if (!resp.ContainsKey("Pos")) {
+                        throw new BasilException("After adding AbilityInstance, property 'Pos' not present");
+                    }
+
+                    // Delete the instance.
+                    testPhase = "Deleting instance";
+                    resp = await Client.DeleteItemAsync(createdInstanceId);
+                    createdItems.Remove(createdInstanceId);
+
+                    // Make sure the item is deleted
+                    testPhase = "Verifying cannot get fetch parameters of deleted instance";
+                    bool success = false;
+                    try {
+                        resp = await Client.RequestPropertiesAsync(createdInstanceId, null);
+                    }
+                    catch (BasilException be) {
+                        success = true;
+                        var temp = be;  // suppress non-use warning
+                    }
+                    if (!success) {
+                        throw new BasilException("Fetched forgotton instance parameters");
+                    }
+                    BasilTest.log.InfoFormat("{0}: {1}: TEST SUCCESS", _logHeader, testName);
                 }
-                catch (BasilException be) {
-                    success = true;
-                    var temp = be;  // suppress non-use warning
-                }
-                if (!success) {
-                    throw new BasilException("Fetched forgotton instance parameters");
-                }
-                BasilTest.log.InfoFormat("{0}: {1}: TEST SUCCESS", _logHeader, testName);
             }
             catch (BasilException be) {
                 BasilTest.log.InfoFormat("{0}: {1}: TEST FAILED: {2}: {3}", _logHeader, testName, testPhase, be);
@@ -233,44 +269,63 @@ namespace org.herbal3d.BasilTest {
             int numToCreate = 10;
 
             try {
-                // Create displayables
-                testPhase = "Creating displayables";
-                for (int ii = 0; ii < numToCreate; ii++) {
-                    BT.ItemId createdItemId = await CreateTestDisplayable();
-                    createdItems.Add(createdItemId);
-                }
-
-                // Verify all ten exist by fetching their parameters.
-                testPhase = "Verifying displayables created";
-                foreach (var item in createdItems) {
-                    BT.Props resp2 = await Client.RequestPropertiesAsync(item, null);
-                }
-
-                // Choose one of the instances to delete
-                var rand = new Random();
-                BT.ItemId deletedDisplayableId = createdItems[rand.Next(createdItems.Count)];
-
-                // Delete the one selected instance
-                testPhase = "Deleting displayable";
-                BT.Props resp3 = await Client.DeleteItemAsync(deletedDisplayableId);
-
-                // Verify all the displayables are still there except for the one deleted one
-                testPhase = "Verifying displayables except for deleted displayable";
-                foreach (var item in createdItems) {
-                    bool success = true;
-                    try {
-                        BT.Props resp4 = await Client.RequestPropertiesAsync(item, null);
-                    }
-                    catch (BasilException) {
-                        if (item.Id != deletedDisplayableId.Id) {
-                            success = false;
+                using (new BTimeSpan(span => {
+                    var msPerOp = (float)(span.TotalMilliseconds / createdItems.Count);
+                    BasilTest.log.DebugFormat("{0} {1}: {2}s to complete test",
+                                    _logHeader, testName, span.TotalSeconds);
+                })) {
+                    testPhase = "Creating displayables";
+                    using (new BTimeSpan(span => {
+                        var msPerOp = (float)(span.TotalMilliseconds / numToCreate);
+                        BasilTest.log.DebugFormat("{0} {1}: {2}s {3}ms/req to create {4} displayables",
+                                    _logHeader, testName, span.TotalSeconds, msPerOp, numToCreate);
+                    })) {
+                        /*
+                        Task.WaitAll(Enumerable.Range(0, numToCreate).Select(nn => {
+                            return Task.Run(async () => {
+                                BT.ItemId createdItemId = await CreateTestDisplayable();
+                                createdItems.Add(createdItemId);
+                            });
+                        }).ToArray());
+                        */
+                        for (int ii = 0; ii < numToCreate; ii++) {
+                            BT.ItemId createdItemId = await CreateTestDisplayable();
+                            createdItems.Add(createdItemId);
                         }
                     }
-                    if (!success) {
-                        throw new BasilException("Other instance missing: " + item.Id);
+
+                    // Verify all ten exist by fetching their parameters.
+                    testPhase = "Verifying displayables created";
+                    foreach (var item in createdItems) {
+                        BT.Props resp2 = await Client.RequestPropertiesAsync(item, null);
                     }
+
+                    // Choose one of the instances to delete
+                    var rand = new Random();
+                    BT.ItemId deletedDisplayableId = createdItems[rand.Next(createdItems.Count)];
+
+                    // Delete the one selected instance
+                    testPhase = "Deleting displayable";
+                    BT.Props resp3 = await Client.DeleteItemAsync(deletedDisplayableId);
+
+                    // Verify all the displayables are still there except for the one deleted one
+                    testPhase = "Verifying displayables except for deleted displayable";
+                    foreach (var item in createdItems) {
+                        bool success = true;
+                        try {
+                            BT.Props resp4 = await Client.RequestPropertiesAsync(item, null);
+                        }
+                        catch (BasilException) {
+                            if (item.Id != deletedDisplayableId.Id) {
+                                success = false;
+                            }
+                        }
+                        if (!success) {
+                            throw new BasilException("Other instance missing: " + item.Id);
+                        }
+                    }
+                    BasilTest.log.InfoFormat("{0}: {1}: TEST SUCCESS", _logHeader, testName);
                 }
-                BasilTest.log.InfoFormat("{0}: {1}: TEST SUCCESS", _logHeader, testName);
             }
             catch (BasilException be) {
                 BasilTest.log.InfoFormat("{0}: {1}: TEST FAILED: {2}: {3}", _logHeader, testName, testPhase, be);
@@ -314,19 +369,23 @@ namespace org.herbal3d.BasilTest {
                     BasilTest.log.DebugFormat("{0} {1}: {2}s {3}ms/req to create {4} instances",
                                     _logHeader, testName, span.TotalSeconds, msPerOp, rangeMax*rangeMax*rangeMax);
                 })) {
+                    var createAllTasks = new List<Task>();
                     foreach (int xx in range) {
                         foreach (int yy in range) {
                             foreach (int zz in range) {
-                                testPhase = "Creating instance of displayable";
-                                BT.Props resp2 = await CreateInstanceAt(createdDisplayableId,
-                                                                        100.0 + (10.0 * xx),
-                                                                        100.0 + (10.0 * yy),
-                                                                        100.0 + (10.0 * zz) );
-                                BT.ItemId createdInstanceId = new BT.ItemId(resp2["ItemId"]);
-                                createdItems.Add(createdInstanceId);
-                            }
-                        }
-                    }
+                                createAllTasks.Add(Task.Run( async () => {
+                                    testPhase = "Creating instance of displayable";
+                                    BT.Props resp2 = await CreateInstanceAt(createdDisplayableId,
+                                                                            100.0 + (10.0 * xx),
+                                                                            100.0 + (10.0 * yy),
+                                                                            100.0 + (10.0 * zz));
+                                    BT.ItemId createdInstanceId = new BT.ItemId(resp2["ItemId"]);
+                                    createdItems.Add(createdInstanceId);
+                                }));
+                            };
+                        };
+                    };
+                    await Task.WhenAll(createAllTasks);
                 }
 
                 // Verify all the instances are there by getting their parameters
